@@ -1,0 +1,38 @@
+{% extends 'layout/app.twig' %}
+
+  {% block  body %}
+
+  {% if auth.check %}
+
+    {% include 'layout/partials/header.twig' %}
+
+
+    <!-- Left Sidebar  -->
+    {% include 'layout/partials/sidebar.twig' %}
+
+    <!-- End Left Sidebar  -->
+    <!-- Page wrapper  -->
+    <div class="page-wrapper">
+
+        <!-- Bread crumb -->
+        {% include 'layout/partials/breadcrumb.twig' %}
+        <!-- End Bread crumb -->
+
+            <!-- Flash -->
+        {% include 'layout/partials/flash.twig' %}
+        <!-- End flash -->
+
+        <!-- Container fluid  -->
+        <div class="container-fluid">
+            <!-- Start Page Content -->
+        {% block content %}
+
+
+        {% endblock %}
+
+            <!-- End PAge Content -->
+        </div>
+        <!-- End Container fluid  -->
+
+        {% endif %}
+{% endblock %}

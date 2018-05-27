@@ -1,0 +1,81 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+<div class="row">
+<div class="col-lg-7 offset-md-2">
+    <div class="card card-main">
+        <div class="card-title">
+            <h3 class="text-primary">Create new user</h3>
+        </div>
+
+        <div class="card-body">
+            <div class="basic-form">
+                <form method="POST" action="{{ path_for('auth.store') }}">
+                <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text"   name="name" class="form-control {{ errors.name ? 'is-invalid':' ' }} "
+                         placeholder="Full name" value="{{ old.name}}">
+                        {% if errors.name %}
+                        <div class="invalid-feedback">
+                            {{ errors.name | first}}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email address</label>
+                        <input type="email" name="email" class="form-control {{ errors.email ? 'is-invalid':'' }}" 
+                        placeholder="valid email address" value="{{ old.email }}">
+
+                        {% if errors.email %}
+                            <div class="invalid-feedback">
+                                {{ errors.email | first}}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone </label>
+                        <input type="text"  name="phone" class="form-control {{ errors.phone ? 'is-invalid': '' }}" 
+                        placeholder="Phone number" value="{{ old.phone }}">
+
+                        {% if errors.phone %}
+                            <div class="invalid-feedback">
+                                {{ errors.phone | first}}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Role</label>
+                        <select class="form-control {{ errors.role ? 'is-invalid':''}} custom-select text-capitalize" name="role" data-placeholder="Choose a Category"
+                         tabindex="1">
+                         <option value="">Select Role</option>
+                            {% for role in helper.roles %}
+                            <option value="{{ role.id }}">{{ role.role}}</option>
+                            {% endfor %}
+                            
+                        </select>
+
+                            {% if errors.role %}
+                            <div class="invalid-feedback">
+                                {{ errors.role | first}}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                   {{ csrf.field | raw }}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+        
+
+    </div>
+</div>
+
+{% endblock %}
+
