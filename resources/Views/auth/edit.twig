@@ -5,17 +5,19 @@
  <div class="col-md-6 offset-md-3">
 
         <div class="card-title">
-            <h3 class="text-primary">Create new user</h3>
+            <h5 class="text-primary text-capitalize">
+             <i class="fa fa-pencil" aria-hidden="true"></i>  Update {{ user.name }}  information
+            </h5>
         </div>
         <hr>
 
         <div class="card-body">
             <div class="basic-form">
-                <form method="POST" action="{{ path_for('auth.store') }}">
+                <form method="POST" action="{{ path_for('user.edit',{id:user.id}) }}" class="text-capitalize">
                 <div class="form-group">
                         <label>Full Name</label>
                         <input type="text"   name="name" class="form-control {{ errors.name ? 'is-invalid':' ' }} "
-                         placeholder="Full name" value="{{ old.name}}">
+                         placeholder="Full name" value="{{ user.name}}">
                         {% if errors.name %}
                         <div class="invalid-feedback">
                             {{ errors.name | first}}
@@ -26,10 +28,9 @@
                     <div class="form-group">
                         <label>Email address</label>
                         <input type="email" name="email" class="form-control {{ errors.email ? 'is-invalid':'' }}" 
-                        placeholder="valid email address" value="{{ old.email }}">
+                        placeholder="valid email address" value="{{ user.email }}">
 
-                        
-                     <div class="tel">
+                         <div class="tel">
                          <small class="text-mute"> e.g name@example.com</small>
                     </div>
 
@@ -44,11 +45,12 @@
                     <div class="form-group">
                         <label>Phone </label>
                         <input type="text"  name="phone" class="form-control {{ errors.phone ? 'is-invalid': '' }}" 
-                        placeholder="Phone number" value="{{ old.phone }}">
+                        placeholder="Phone number" value="{{ user.phone }}">
 
-                     <div class="tel">
+                        <div class="tel">
                          <small class="text-mute"> e.g +256700000000 or 0700000000</small>
-                    </div>
+                       </div>
+
 
                         {% if errors.phone %}
                             <div class="invalid-feedback">
@@ -75,8 +77,9 @@
                             </div>
                         {% endif %}
                     </div>
-
+                    <input type="hidden"  name="_METHOD" value="PUT"/>
                    {{ csrf.field | raw }}
+
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>

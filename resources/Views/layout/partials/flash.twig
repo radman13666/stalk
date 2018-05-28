@@ -2,7 +2,7 @@
 {% if flash.getMessage('success')%}
     <div class="col-md-7 offset-md-2">
         <div class="alert alert-success" role="alert">
-            {{ flash.getMessage('success') | first }}
+           <i class="fa fa-smile-o" aria-hidden="true"></i>  {{ flash.getMessage('success') | first }}
         </div>
     </div>
 {% endif %}
@@ -10,7 +10,7 @@
 {% if flash.getMessage('danger')%}
     <div class="col-md-7 offset-md-2">
         <div class="alert alert-danger" role="alert">
-            {{ flash.getMessage('danger') | first }}
+           <i class="fa fa-minus-circle" aria-hidden="true"></i>   {{ flash.getMessage('danger') | first }}
         </div>
     </div>
 {% endif %}

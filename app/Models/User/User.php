@@ -12,9 +12,12 @@ class User extends Model
         'email',
         'password',
         'phone',
-        'role',
+        'role_id',
         'api_token',
-        'status'
+        'status',
+        'deleted',
+        'deleted_at',
+        'deleted_by'
     ];
 
 }

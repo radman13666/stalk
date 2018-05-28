@@ -15,7 +15,7 @@
     <div class="page-wrapper">
 
         <!-- Bread crumb -->
-        {% include 'layout/partials/breadcrumb.twig' %}
+        {# {% include 'layout/partials/breadcrumb.twig' %} #}
         <!-- End Bread crumb -->
 
             <!-- Flash -->
@@ -25,10 +25,19 @@
         <!-- Container fluid  -->
         <div class="container-fluid">
             <!-- Start Page Content -->
-        {% block content %}
+
+              <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                                                <div class="card-body">
+                            {% block content %}
 
 
-        {% endblock %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+                <!-- End PAge Content -->
 
             <!-- End PAge Content -->
         </div>

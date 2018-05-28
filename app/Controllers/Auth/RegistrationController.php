@@ -30,7 +30,7 @@ class RegistrationController extends Controller
         $Validator = $this->Validator->validate($request,[
                                 'name' => v::notEmpty(),
                                 'email' => v::email()->emailExist(),
-                                'phone' => v::notEmpty()->phoneExist(),
+                                'phone' => v::phone()->phoneExist(),
                                 'role'  => v::notEmpty()
                             ]);
         
@@ -52,13 +52,13 @@ class RegistrationController extends Controller
             'email'    => $request->getParam('email'),
             'password' => password_hash($password,PASSWORD_DEFAULT),
             'phone'    => $request->getParam('phone'),
-            'role'     => $request->getParam('role')
+            'role_id'     => $request->getParam('role')
         ]);
 
         // flash message
         $this->flash->addMessage('success','A new user  has been successfully added ');
 
-        return $response->withRedirect($this->router->pathFor('auth.register'));
+        return $response->withRedirect($this->router->pathFor('user.index'));
 
     }
 

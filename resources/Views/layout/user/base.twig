@@ -1,0 +1,103 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+
+
+        <h4 class="card-title"><i class="fa fa-users" aria-hidden="true"></i>
+            All Users
+                <a href="{{ path_for('auth.register') }}" class="btn  btn-primary pull-right">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                Add user
+                </a>
+            </h4>
+        <h6 class="card-subtitle">Manage all users</h6>
+
+            <form method="POST" action="{{ path_for('user.search') }}">
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <input type="text"  value="{{old.name}}" name="name" class="form-control" placeholder="Search by name">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="email" name="email"  value="{{ old.email}}" class="form-control" placeholder="Search by email">
+                    </div>
+
+                    <div class="col-md-2">
+                        <select id="inputState" class="form-control text-capitalize" name="role" >
+                            <option value="" selected>Choose...</option>
+                            {% for role in helper.roles %}
+                            <option value="{{ role.id }}">{{ role.role}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    {{ csrf.field | raw}}
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </form>
+
+
+            <div class="table-responsive m-t-40">
+
+
+            {# <div class="dt-buttons"><a class="dt-button buttons-copy buttons-html5" 
+            tabindex="0" aria-controls="example23" href="#"><span>Copy</span></a>
+            <a class="dt-button buttons-csv buttons-html5" tabindex="0" aria-controls="example23" href="#"><span>CSV</span></a><a class="dt-button buttons-excel buttons-html5" tabindex="0" aria-controls="example23" href="#"><span>Excel</span></a><a class="dt-button buttons-pdf buttons-html5" tabindex="0" aria-controls="example23" href="#"><span>PDF</span></a>
+            <a class="dt-button buttons-print" tabindex="0" aria-controls="example23" href="#"><span>Print</span></a></div> #}
+
+                <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Privileges</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        
+                    </tfoot>
+                    <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.email }}</td>
+                            <td>{{ item.phone }}</td>
+                            <td class="text-capitalize">
+                              {{ item.role }}
+                            </td>
+
+                             <td>
+                              <a href="{{ path_for('user.edit',{id:item.id})}}" onClick="return confirm('Are you sure  you want to edit?')" class="btn btn-success">
+                               <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                              </a>
+                               
+                            </td>
+                            <td>
+                            <form method="POST" action="{{ path_for('user.trash',{id:item.id})}}">
+                                <button class="btn btn-danger" onClick=" return confirm('Are you sure you want to delete this user ?')" type="submit">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                <input type="hidden" name="_METHOD" value="PUT">
+                                {{ csrf.field | raw}}
+                                </button>
+                            </form>
+                            </td>
+                          
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                {% block base %}
+
+                {% endblock %}
+            </div>
+             
+        </div>
+        
+    </div>
+{% endblock %}
