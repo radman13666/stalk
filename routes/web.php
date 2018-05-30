@@ -5,17 +5,56 @@
  * This contains all the web routes
  * 
  */
-$app->get('/','LoginController:index')->setName('auth.login');
-$app->post('/','LoginController:authenticate');
-$app->get('/logout','LoginController:logout')->setName('auth.logout');
 
-$app->get('/dashboard','HomeController:index')->setName('dashboard');
+use App\Middleware\GuestMiddleware;
+use App\Middleware\AuthMiddleware;
 
-$app->get('/register','RegistrationController:create')->setName('auth.register');
-$app->post('/register','RegistrationController:store')->setName('auth.store');
 
-$app->get('/users','UserController:index')->setName('user.index');
-$app->post('/users','UserController:search')->setName('user.search');
-$app->get('/users/{id}/edit','UserController:edit')->setName('user.edit');
-$app->put('/users/{id}/edit','UserController:update');
-$app->put('/users/{id}/trash','UserController:trashUser')->setName('user.trash');
+
+$app->group('',function(){
+    $this->get('/','LoginController:index')->setName('auth.login');
+    $this->post('/','LoginController:authenticate');
+})->add( new GuestMiddleware($container));
+
+
+$app->group('', function(){
+    $this->get('/logout','LoginController:logout')->setName('auth.logout');
+    
+    $this->get('/dashboard','HomeController:index')->setName('dashboard');
+    
+    $this->get('/register','RegistrationController:create')->setName('auth.register');
+    $this->post('/register','RegistrationController:store')->setName('auth.store');
+    
+    // users
+    $this->get('/users','UserController:index')->setName('user.index');
+    $this->post('/users','UserController:search')->setName('user.search');
+    $this->get('/users/{id}/edit','UserController:edit')->setName('user.edit');
+    $this->put('/users/{id}/edit','UserController:update'); 
+    $this->put('/users/{id}/trash','UserController:trashUser')->setName('user.trash');
+
+    // subjects
+    $this->get('/subjects','SubjectController:index')->setName('subject.index');
+    
+    $this->get('/subjects/create','SubjectController:create')->setName('subject.create');
+    $this->post('/subjects/create','SubjectController:store');
+    $this->post('/subjects','SubjectController:search');
+
+    $this->get('/subject/{id}/edit','SubjectController:edit')->setName('subject.edit');
+    $this->put('/subject/{id}/edit','SubjectController:update');
+    $this->put('/subject/{id}/trash','SubjectController:trash')->setName('subject.trash');
+
+    // courses
+
+    $this->get('/courses','CourseController:index')->setName('course.index');
+    
+    $this->get('/courses/create','CourseController:create')->setName('course.create');
+    $this->post('/courses/create','CourseController:store');
+
+    $this->get('/course/{id}/edit','CourseController:edit')->setName('course.edit');
+    $this->put('/course/{id}/edit','CourseController:update');
+    $this->put('/course/{id}/trash','CourseController:trash')->setName('course.trash');
+  
+    
+})->add( new AuthMiddleware($container));
+
+

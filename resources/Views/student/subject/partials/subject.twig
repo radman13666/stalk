@@ -1,0 +1,93 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+
+        <h4 class="card-title text-primary"><i class="fa fa-address-book" aria-hidden="true"></i>
+            All  Subjects
+                <a href="{{ path_for('subject.create') }}" class="btn  btn-primary pull-right">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                New subject
+                </a>
+            </h4>
+
+    <div class="col-md-8">
+        <h6 class="card-subtitle">Manage all Subjects</h6>
+
+            <form method="POST" action="{{ path_for('subject.index')}}">
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <input type="text"  value="{{old.name}}" name="name" class="form-control" placeholder="Search by name">
+                    </div>
+                  
+
+                    <div class="col-md-2">
+                        <select id="inputState" class="form-control text-capitalize" name="category" >
+                            <option value="" selected>Choose...</option>
+                            <option value="art" >Art</option>
+                            <option value="science" >Science</option>
+                            
+                        </select>
+                    </div>
+
+                    {{ csrf.field | raw}}
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </form>
+
+
+            <div class="table-responsive m-t-40">
+
+
+                <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        
+                    </tfoot>
+                    <tbody class="text-capitalize">
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.category }}</td>
+
+                             <td>
+                              <a href="{{ path_for('subject.edit',{id:item.id})}}" onClick="return confirm('Are you sure  you want to edit this subject ?')" class="btn btn-success">
+                               <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                              </a>
+                               
+                            </td>
+                            <td>
+                            <form method="POST" action="{{ path_for('subject.trash',{id:item.id})}}">
+                                <button class="btn btn-danger" onClick=" return confirm('Are you sure you want to delete this subject?')" type="submit">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                <input type="hidden" name="_METHOD" value="PUT">
+                                {{ csrf.field | raw}}
+                                </button>
+                            </form>
+                            </td>
+                          
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                {% block subject %}
+
+                {% endblock %}
+            </div>
+             
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}

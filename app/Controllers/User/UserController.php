@@ -131,7 +131,7 @@ class UserController extends Controller
         $user = User::find($args['id']);
 
         $user->update([
-            'deleted_by' => (int)$this->auth->user()->id,
+            'deleted_by' => $this->auth->user()->name,
             'deleted'    => '1',
             'deleted_at' => date('Y-m-d H:i:s')
         ]);

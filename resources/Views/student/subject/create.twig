@@ -1,0 +1,54 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+ 
+ <div class="col-md-6 offset-md-3">
+
+        <div class="card-title">
+            <h5 class="text-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i>
+             Add a new subject</h5>
+        </div>
+        <hr>
+
+        <div class="card-body">
+            <div class="basic-form">
+                <form method="POST" action="{{ path_for('subject.create') }}">
+                <div class="form-group">
+                        <label>Subject Name</label>
+                        <input type="text"   name="name" class="form-control {{ errors.name ? 'is-invalid':' ' }} "
+                         placeholder="subject name" value="{{ old.name}}">
+                        {% if errors.name %}
+                        <div class="invalid-feedback">
+                            {{ errors.name | first}}
+                        </div>
+                        {% endif %}
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label">Category</label>
+                        <select class="form-control {{ errors.category ? 'is-invalid':''}} custom-select text-capitalize" name="category" 
+                        data-placeholder="Choose a Category"
+                         tabindex="1">
+                         <option value="">Choose ...</option>
+                            <option value="art">Art</option>
+                            <option value="science">Science</option>
+                            
+                        </select>
+
+                            {% if errors.category %}
+                            <div class="invalid-feedback">
+                                {{ errors.category | first}}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                   {{ csrf.field | raw }}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+</div>
+
+{% endblock %}
+
