@@ -54,7 +54,9 @@ ini_set('display_errors','On');
      * Setting global variabless
      */
     $view->getEnvironment()->addGlobal('helper',[
-        'roles' => $container->helper->allRoles(),
+        'roles'      => $container->helper->allRoles(),
+        'districts'  => $container->helper->allDistricts(),
+        'subjects'   => $container->helper->allSubjects(),
     ]);
 
     //Auth
@@ -96,6 +98,10 @@ $container['db'] = function($container) use ($capsule) {
      return new \App\Helpers\Helper;
  };
 
+ $container['files'] = function($container){
+    return new \App\Helpers\Files;
+ };
+
  /**
   * Respect validation class
   */
@@ -107,6 +113,11 @@ $container['db'] = function($container) use ($capsule) {
 //   Flash message
 $container['flash'] = function($container){
     return new \Slim\Flash\Messages;
+};
+// Form Request
+
+$container['FormRequest'] = function($container){
+    return new \App\FormRequest\FormRequest;
 };
 
 /**

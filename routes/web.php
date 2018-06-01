@@ -54,7 +54,21 @@ $app->group('', function(){
     $this->put('/course/{id}/edit','CourseController:update');
     $this->put('/course/{id}/trash','CourseController:trash')->setName('course.trash');
   
+    // Students
+    $this->get('/students','StudentController:index')->setName('student.index');
     
+    $this->get('/students/create','StudentController:create')->setName('student.create');
+    $this->post('/students/create','StudentController:store');
+
+    $this->get('/students/secondary','SecondaryController:create')->setName('secondary.create');
+    $this->post('/students/secondary','SecondaryController:store');
+
+
+    // schools
+    $this->get('/schools','SchoolController:index')->setName('school.index');
+
+    $this->get('/schools/create','SchoolController:create')->setName('school.create');
+
 })->add( new AuthMiddleware($container));
 
 

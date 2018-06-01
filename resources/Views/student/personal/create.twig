@@ -1,0 +1,397 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+    <div class="card-header">
+        <h4 class="m-b-0 text-info "><i class="fa fa-plus-circle" aria-hidden="true"></i>
+            Add a new student
+         </h4>
+    </div>
+ 
+    <div class="card-body">
+        <form action="{{ path_for('student.create')}}"  method ="POST" class="form-horizontal" enctype="multipart/form-data">
+            <div class="form-body">
+                <h3 class="box-title m-t-15">Person Information</h3>
+                <hr class="m-t-0 m-b-40">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Full Name <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"  name="name" class="form-control {{ errors.name ? 'is-invalid' :'' }} " 
+                                     placeholder="John doe" value="{{ old.name}}">
+                                 {% if errors.name %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.name | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                     <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Date of Birth <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <input type="date"  name="dob" class="form-control {{ errors.dob ? 'is-invalid' :'' }}"
+                                 value="{{old.dob}}"  placeholder="dd/mm/yyyy">
+
+                                {% if errors.dob %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.dob | first }} </div> 
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Gender <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <select class="form-control custom-select {{ errors.gender ? 'is-invalid' :'' }}" name="gender">
+                                    <option value="">Choose ..</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                                 {% if errors.gender %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.gender | first }} </div> 
+                                {% endif %}
+                                 </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Level  <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <select class="form-control custom-select {{ errors.level ? 'is-invalid' :'' }}" name="level">
+                                    <option value="">Choose ..</option>
+                                    <option value="1">Secondary</option>
+                                    <option value="2">Tertiary</option>
+                                     <option value="3">University</option>
+                                </select>
+
+                                {% if errors.level %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.level | first }} </div> 
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+                   <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3 ">District <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <select class="form-control custom-select {{ errors.district ? 'is-invalid' :'' }}" name="district">
+                                    <option value="">Choose ..</option>
+                                    {% for district in helper.districts %}
+                                    <option value="{{ district.id}}">{{ district.name }}</option>
+                                    {% endfor %}
+                                </select>
+
+                                {% if errors.district %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.district | first }} </div> 
+                                {% endif %}
+                                
+                                 </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Sub county 
+                             <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                               <input type="text" class="form-control {{ errors.subcounty ? 'is-invalid' :'' }}"
+                                placeholder="Sub county" name="subcounty" value="{{old.subcounty}}">
+
+                               {% if errors.subcounty %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.subcounty | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+                    <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">PLE Entry grade 
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control {{ errors.entry_grade ? 'is-invalid' :'' }}" value="{{ old.entry_grade}}"
+                                     name="entry_grade" placeholder="P.L.E Grade">
+
+                                      {% if errors.entry_grade %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.entry_grade | first }} </div> 
+                                {% endif %}
+                             </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Village </label>
+                            <div class="col-md-9">
+                               <input type="text" vale="{{old.village}}" class="form-control {{ errors.village ? 'is-invalid' :'' }}
+                               " name="village" placeholder="Village">
+
+                                {% if errors.village %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.village | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                  <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Ethnicity</label>
+                            <div class="col-md-9">
+                               <input type="text" name="ethnicity" class="form-control {{ errors.ethnicity ? 'is-invalid' :'' }}"
+                                placeholder="..." value="{{ old.ethnicity}}">
+
+                                 {% if errors.ethnicity %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.ethnicity | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Photo</label>
+                            <div class="col-md-9">
+                                <input type="file"  name="photo" class="form-control {{ errors.photo ? 'is-invalid' :'' }}" 
+                                    placeholder="..."  accept="image/*" required>
+
+                                  {% if errors.photo %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.photo | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <h3 class="box-title">Contact Information</h3>
+                <hr class="m-t-0 m-b-40">
+                <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Student Phone No.
+                               
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control {{ errors.student_phone ? 'is-invalid' :'' }}"
+                                 name="student_phone" value="{{ old.student_phone}}">
+
+                                 {% if errors.student_phone %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.student_phone | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Student Email</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control {{ errors.student_email ? 'is-invalid':''}}" name="student_email" 
+                                value="{{ old.student_email }}">
+
+                                   {% if errors.student_email %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.student_email | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                   <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">1st Parent Name
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control {{ errors.parent1_name ? 'is-invalid':''}}"
+                                 name="parent1_name" value="{{ old.parent1_name}}">
+
+                                {% if errors.parent1_name  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.parent1_name | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">1st Parent Phone No.
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control  {{ errors.parent1_phone ? 'is-invalid':''}}"
+                                 name="parent1_phone" value="{{ old.parent1_phone }}">
+
+                                  {% if errors.parent1_phone  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.parent1_phone | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">2nd Parent Name</label>
+                            <div class="col-md-9">
+                                <input type="text" name="parent2_name" class="form-control {{ errors.parent2_name ? 'is-invalid':''}}" 
+                                value="{{ old.parent2_name}}">
+
+                                  {% if errors.parent2_name %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.parent2_name | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">2nd Parent Phone No.</label>
+                            <div class="col-md-9">
+                                <input type="text" name="parent2_phone"  value="{{ old.parent2_phone}}"
+                                class="form-control {{ errors.parent2_phone ? 'is-invalid':''}}">
+
+                                  {% if errors.parent2_phone  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.parent2_phone | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Current State</label>
+                            <div class="col-md-9">
+                                 <select class="form-control custom-select {{ errors.current_state ? 'is-invalid':''}}" name="current_state">
+                                    <option value="">Choose ..</option>
+                                    <option value="continuing">Continuing</option>
+                                     <option value="completed">Completed</option>
+                                    <option value="dropout">Dropout</option>
+                                </select>
+
+                                 {% if errors.current_state  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.current_state | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Funder 
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                 <input type="text" name="funder" class="form-control {{ errors.funder ? 'is-invalid':''}}" 
+                                 placeholder="Funder e.g Irish" value="{{ old.funder }}"> 
+
+                               {% if errors.funder  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.funder | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+            </div>
+            <hr>
+            <h3 class="box-title m-t-15">Other Information</h3>
+            
+               <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Reason for dropout</label>
+                            <div class="col-md-9">
+                                  <div class="form-group">
+                                        <textarea class="textarea_editor form-control" name="dropout_reason"
+                                        rows="8" placeholder="Enter reason for drop out ..." style="height:80px">
+                                        {{ old.dropout_reason}}
+                                        </textarea>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+
+                    <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Any other notes</label>
+                            <div class="col-md-9">
+                                  <div class="form-group">
+                                        <textarea name="notes" class="textarea_editor form-control" rows="10" placeholder="Enter text ..." style="height:350px">
+                                        {{ old.notes }}
+                                        </textarea>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+
+
+            <div class="form-actions ">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="pull-right">
+                             
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                        <div class="col-md-2 offset-md-10">
+                            <div class="pull-right">
+                                <button type="submit" class="btn  btn-lg btn-primary btn-block">
+                                   Continue 
+                                        <i class="fa fa-fast-forward" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            {{ csrf.field | raw}}
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -35,3 +35,13 @@ $container['CourseController'] = function($container){
 $container['StudentController'] = function($container){
     return new \App\Controllers\Student\StudentController($container);
 };
+
+// Secondary controller
+$container['SecondaryController'] = function($container){
+    return new \App\Controllers\Student\SecondaryController($container);
+};
+
+// School controller
+$container['SchoolController'] = function($container){
+    return new \App\Controllers\Category\SchoolController($container);
+};
