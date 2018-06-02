@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 class School extends Model
 {
     protected $fillable = [
-        'name',
+        'school_name',
         'school_code',
         'level',
+        'district_id',
         'about',
         'created_by'
     ];

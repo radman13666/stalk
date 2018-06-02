@@ -57,6 +57,7 @@ ini_set('display_errors','On');
         'roles'      => $container->helper->allRoles(),
         'districts'  => $container->helper->allDistricts(),
         'subjects'   => $container->helper->allSubjects(),
+        'levels'     => $container->helper->allLevels(),
     ]);
 
     //Auth

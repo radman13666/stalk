@@ -1,0 +1,148 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+    <div class="card-header">
+        <h4 class="m-b-0 text-info "><i class="fa fa-plus-circle" aria-hidden="true"></i>
+            Add a new school (Institution)
+         </h4>
+    </div>
+ 
+    <div class="card-body">
+        <form action="{{ path_for('school.create')}}"  method ="POST" class="form-horizontal">
+            <div class="form-body">
+                <h3 class="box-title m-t-15">School or Institution Information</h3>
+                <hr class="m-t-0 m-b-40">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">School Name <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"  name="school_name" class="form-control {{ errors.school_name ? 'is-invalid' :'' }} " 
+                                     placeholder="School or Institution name " value="{{ old.school_name}}">
+                                 {% if errors.school_name %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.school_name | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+
+                  <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">School Registration No.
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"  name="school_code" class="form-control {{ errors.school_code ? 'is-invalid' :'' }} " 
+                                     placeholder="School /Institution  Reg No. if any " value="{{ old.school_code}}">
+                                 {% if errors.school_code %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.school_code | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+                <div class="row">
+                    <!--/span-->
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Level  <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <select class="form-control custom-select {{ errors.level ? 'is-invalid' :'' }}" name="level">
+                                    <option value="">Choose ..</option>
+                                    {% for level in helper.levels %}
+                                    <option value="{{ level.name }}">{{ level.name | capitalize }}</option>
+                                    {% endfor %}
+                                </select>
+
+                                {% if errors.level %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.level | first }} </div> 
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+                  <!--/row-->
+                <div class="row">
+                    <!--/span-->
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">District  <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <select class="form-control custom-select {{ errors.district_id ? 'is-invalid' :'' }}" name="district_id">
+                                    <option value="">Choose ..</option>
+
+                                    {% for district in  helper.districts %}
+                                     <option value="{{ district.id }}">{{ district.district_name }}</option>
+                                    {% endfor %}
+                                </select>
+
+                                {% if errors.district_id %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.district_id | first }} </div> 
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+           
+                 <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">About/Contact the Institution </label>
+                            <div class="col-md-9">
+                                  <div class="form-group">
+                                  <label class="text-primary"> About us, address, contact e.t.c</label>
+                                        <textarea name="about" class="textarea_editor form-control" rows="10" style="height:350px">
+                                        {{ old.about }}
+                                       
+                                        </textarea>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+
+            <div class="form-actions ">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="pull-right">
+                             
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                        <div class="col-md-2 offset-md-10">
+                            <div class="pull-right">
+                                <button type="submit" class="btn  btn-lg btn-primary btn-block">
+                                   Submit
+                                </button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            {{ csrf.field | raw}}
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

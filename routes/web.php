@@ -66,8 +66,27 @@ $app->group('', function(){
 
     // schools
     $this->get('/schools','SchoolController:index')->setName('school.index');
-
+    $this->post('/schools','SchoolController:search');
+    
+    // create
     $this->get('/schools/create','SchoolController:create')->setName('school.create');
+    $this->post('/schools/create','SchoolController:store');
+
+    //update
+    $this->get('/schools/{id}/update','SchoolController:edit')->setName('school.edit');
+    $this->post('/schools/{id}/update','SchoolController:update'); 
+
+
+    // Banks
+    $this->get('/banks','BankController:index')->setName('bank.index');
+    $this->post('/banks','BankController:search');
+    // create
+    $this->get('/banks/create','BankController:create')->setName('bank.create');
+    $this->post('/banks/create','BankController:store');
+    // update
+    $this->get('/banks/{id}/update','BankController:edit')->setName('bank.edit');
+    $this->post('/banks/{id}/update','BankController:update');
+
 
 })->add( new AuthMiddleware($container));
 

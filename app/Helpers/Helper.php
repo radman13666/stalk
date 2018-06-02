@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\User\Role;
 use App\Models\Student\Subject;
+use App\Models\Category\Level;
 use App\Models\Student\District;
 /**
  * This contains all helper methods
@@ -35,7 +36,19 @@ class Helper
      */
     public function allDistricts($request,$response)
     {
-        return District::orderBy('name','ASC')->get();
+        return District::orderBy('district_name','ASC')->get();
+    }
+
+    /**
+     * Levels
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @return void
+     */
+    public function allLevels($request,$response)
+    {
+        return Level::all();
     }
 
     /**

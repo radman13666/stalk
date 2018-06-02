@@ -45,3 +45,8 @@ $container['SecondaryController'] = function($container){
 $container['SchoolController'] = function($container){
     return new \App\Controllers\Category\SchoolController($container);
 };
+
+// Bank controller
+$container['BankController'] = function($container){
+    return new \App\Controllers\Category\BankController($container);
+};

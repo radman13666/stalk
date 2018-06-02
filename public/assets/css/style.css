@@ -5403,7 +5403,8 @@ tbody tr th {
 }
 tbody tr td {
   font-family: 'Poppins', sans-serif;
-  color: #40474a;#99abb4;
+  color: #40474a;
+  /* #99abb4; */
 }
 tbody tr td:last-child {
   text-align: right;
@@ -5416,6 +5417,7 @@ tbody tr td:last-child {
 .table > thead > tr > th {
   line-height: 32px;
   vertical-align: top;
+  padding-left: 13px;
 }
 .table > thead > tr > th {
   border-bottom: 1px solid #e7e7e7;
