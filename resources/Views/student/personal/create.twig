@@ -93,7 +93,7 @@
                                 <select class="form-control custom-select {{ errors.district ? 'is-invalid' :'' }}" name="district">
                                     <option value="">Choose ..</option>
                                     {% for district in helper.districts %}
-                                    <option value="{{ district.id}}">{{ district.name }}</option>
+                                    <option value="{{ district.id}}">{{ district.district_name | capitalize }}</option>
                                     {% endfor %}
                                 </select>
 
@@ -312,8 +312,13 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
-                                 <input type="text" name="funder" class="form-control {{ errors.funder ? 'is-invalid':''}}" 
-                                 placeholder="Funder e.g Irish" value="{{ old.funder }}"> 
+
+                             <select class="form-control custom-select {{ errors.funder ? 'is-invalid':''}}" name="funder">
+                                    <option value="">Choose ..</option>
+                                    {% for funder in helper.funders %}
+                                         <option value="{{ funder.funder_name}}">{{ funder.funder_name | capitalize}}</option>
+                                    {% endfor %}
+                                </select> 
 
                                {% if errors.funder  %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.funder | first }} </div> 

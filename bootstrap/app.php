@@ -58,6 +58,11 @@ ini_set('display_errors','On');
         'districts'  => $container->helper->allDistricts(),
         'subjects'   => $container->helper->allSubjects(),
         'levels'     => $container->helper->allLevels(),
+        'secondary'  => $container->helper->allSecondary(),
+        'tertiary'   => $container->helper->allTertiary(),
+        'university' => $container->helper->allUniversity(),
+        'funders'    => $container->helper->allFunders(),
+        'banks'      => $container->helper->allBanks(),
     ]);
 
     //Auth

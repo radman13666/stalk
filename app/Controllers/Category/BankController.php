@@ -77,7 +77,7 @@ class BankController extends Controller
     }
 
     /**
-     * Search methods
+     * Search method
      *
      * @param [type] $request
      * @param [type] $response
@@ -95,4 +95,62 @@ class BankController extends Controller
             'items' => $search
         ]);
     }
+
+
+     /**
+     * Return  Bank edit view
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function edit($request,$response,$args)
+    {
+        $bank = Bank::find($args['id']);
+       
+        return $this->view->render($response,'category/bank/edit.twig',[
+            'bank' => $bank
+        ]);
+    }
+
+    /**
+     * update bank
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function update($request,$response,$args)
+    {
+       
+        // validation
+        $validate = $this->Validator->validate($request,[
+                'bank_name'   => v::notEmpty(),
+        ]);
+
+        // validation falied
+        if($validate->failed())
+        {
+        return $response->withRedirect($this->router->pathFor('bank.edit'));
+        }
+            //update the subject
+        $bank = Bank::find($args['id']);
+      
+        $bank->update([
+            'bank_name'   => $request->getParam('bank_name'),
+            'website'     => $request->getParam('website'),
+            'other_notes' => $request->getParam('other_notes'),
+        ]);
+
+        // flash message
+        $this->flash->addMessage('success', ucwords($request->getParam('bank_name')).'  has been updated ');
+
+        return $response->withRedirect($this->router->pathFor('bank.index'));
+        
+    }
+
+
+
 }

@@ -41,12 +41,12 @@ class SecondaryController extends Controller
         // Handling validation
 
         $validate = $this->Validator->validate($request,[
-            'school_name'     =>  v::notEmpty(),
+            'school_id'     =>  v::notEmpty(),
             's_form'          =>  v::notEmpty(),
             // 'stream'          =>  v::notEmpty(),
             // 'subjects'        =>  v::notEmpty(),
             // 'student_id'      =>  v::notEmpty(),
-            'school_code'     =>  v::notEmpty(),
+            // 'school_code'     =>  v::notEmpty(),
             'year_start'      =>  v::notEmpty(),
             'year_stop'       =>  v::notEmpty(),
             'bank'            =>  v::notEmpty(),
@@ -57,8 +57,7 @@ class SecondaryController extends Controller
             // 'second_term'     =>  v::notEmpty(),
             // 'third_term'      =>  v::notEmpty(),
         ]);
-
-    
+  
         // validation failed
 
         if($validate->failed())
@@ -66,12 +65,14 @@ class SecondaryController extends Controller
             return $response->withRedirect($this->router->pathFor('secondary.create'));
         };
 
+    // var_dump ((int) trim($request->getParam('school_id')));
+    // die();
+
         // post info
         Secondary::create([
-            'school_name'      => $request->getParam('school_name'),
+            'school_id'        => $request->getParam('school_id'),
             's_form'           => $request->getParam('s_form'),
             'stream'           => $request->getParam('stream'),
-            'subjects'         => $request->getParam('subjects'),
             'student_id'       => $_SESSION['student_id'],
             'school_code'      => $request->getParam('school_code'),
             'year_start'       => $request->getParam('year_start'),
@@ -84,6 +85,7 @@ class SecondaryController extends Controller
             'first_term'       => $request->getParam('first_term'),
             'second_term'      => $request->getParam('second_term'),
             'third_term'       => $request->getParam('third_term'),
+            'created_by'       => $this->auth->user()->name
             ]);
 
         /**
@@ -115,7 +117,7 @@ class SecondaryController extends Controller
             }
           
         }
-        
+    
         // unsetting session
         unset($_SESSION['student_id']);
         

@@ -20,10 +20,16 @@
                             <label class="control-label text-right col-md-3">School Name <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
-                                <input type="text"  name="school_name" class="form-control {{ errors.school_name ? 'is-invalid' :'' }} " 
-                                     placeholder="School Name" value="{{ old.school_name}}">
-                                 {% if errors.school_name %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.school_name | first }} </div> 
+                                <select class="form-control custom-select {{ errors.school_id ? 'is-invalid' :'' }}" 
+                                name="school_id">
+                                    <option value="">Choose School.</option>
+
+                                    {% for item in helper.secondary %}
+                                         <option value="{{ item.id}}">{{ item.school_name | capitalize}}</option>
+                                    {% endfor %}
+                                </select>
+                                 {% if errors.school_id %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.school_id | first }} </div> 
                                 {% endif %}
                                 </div>
                         </div>
@@ -88,7 +94,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3 ">School UNEB REG/NO. <span class="text-danger">*</span></label>
+                            <label class="control-label text-right col-md-3 ">School UNEB REG/NO.</label>
                             <div class="col-md-9">
 
                                  <input type="text"  name="school_code" class="form-control {{ errors.school_code ? 'is-invalid' :'' }} " 
@@ -106,7 +112,7 @@
                             <label class="control-label text-right col-md-3">Year of Start 
                              <span class="text-danger">*</span></label>
                             <div class="col-md-9">
-                             <input type="date" name="year_start" class="form-control {{ errors.year_start ? 'is-invalid':''}}">
+                             <input type="date" name="year_start" value="{{ old.year_start}}" class="form-control {{ errors.year_start ? 'is-invalid':''}}">
 
                              {% if errors.year_start  %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.year_start  | first }} </div> 
@@ -125,7 +131,7 @@
                             <label class="control-label text-right col-md-3">Year of completion <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
-                            <input type="date" name="year_stop" class="form-control {{ errors.year_stop ? 'is-invalid':''}}">
+                            <input type="date" name="year_stop" value="{{ old.year_stop}}" class="form-control {{ errors.year_stop ? 'is-invalid':''}}">
 
                              {% if errors.year_stop  %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.year_stop  | first }} </div> 
@@ -138,8 +144,14 @@
                         <div class="form-group row">
                             <label class="control-label text-right col-md-3">Bank <span class="text-danger">*</span></label>
                             <div class="col-md-9">
-                               <input type="text" vale="{{old.bank}}" class="form-control {{ errors.bank ? 'is-invalid' :'' }}
-                               " name="bank" placeholder="Bank">
+                             <select class="form-control custom-select {{ errors.bank ? 'is-invalid' :'' }}" 
+                                name="bank">
+                                    <option value="">Choose ..</option>
+                                    {% for bank in helper.banks %}
+                                     <option value="{{ bank.bank_name}}">{{ bank.bank_name | capitalize}}</option>
+                                    {% endfor %}
+                                    
+                                </select>
 
                                 {% if errors.bank %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.bank | first }} </div> 
@@ -169,7 +181,7 @@
                         <div class="form-group row">
                             <label class="control-label text-right col-md-3">Bank Account No.<span class="text-danger">*</span></label>
                             <div class="col-md-9">
-                                <input type="text"  name="bank_account" class="form-control {{ errors.bank_account ? 'is-invalid' :'' }}" 
+                                <input type="text" value="{{ old.bank_account }}"  name="bank_account" class="form-control {{ errors.bank_account ? 'is-invalid' :'' }}" 
                                     placeholder="...Account Number...">
 
                                   {% if errors.bank_account %}
@@ -342,9 +354,8 @@
                         <div class="row">
                         <div class="col-md-2 offset-md-10">
                             <div class="pull-right">
-                                <button type="submit" class="btn  btn-lg btn-primary btn-block">
+                                <button type="submit" class="btn   btn-primary btn-block">
                                   Complete Registration
-                                        <i class="fa fa-fast-forward" aria-hidden="true"></i>
                                 </button>
                             </div>
                             </div>

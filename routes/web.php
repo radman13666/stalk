@@ -74,7 +74,7 @@ $app->group('', function(){
 
     //update
     $this->get('/schools/{id}/update','SchoolController:edit')->setName('school.edit');
-    $this->post('/schools/{id}/update','SchoolController:update'); 
+    $this->put('/schools/{id}/update','SchoolController:update'); 
 
 
     // Banks
@@ -85,7 +85,7 @@ $app->group('', function(){
     $this->post('/banks/create','BankController:store');
     // update
     $this->get('/banks/{id}/update','BankController:edit')->setName('bank.edit');
-    $this->post('/banks/{id}/update','BankController:update');
+    $this->put('/banks/{id}/update','BankController:update');
 
 
 })->add( new AuthMiddleware($container));

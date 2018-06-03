@@ -4,6 +4,7 @@ namespace App\Controllers\Student;
 
 use App\Controllers\Controller;
 use App\Models\Student\Student;
+use App\Models\Category\School;
 use App\Models\Student\District;
 
 
@@ -22,7 +23,13 @@ class StudentController extends Controller
      */
     public function index($request,$response,$args)
     {
-        return $this->view->render($response,'student/personal/index.twig');
+        $students = Student::leftJoin('secondary','secondary.student_id','=','students.id')
+                            ->leftJoin('schools','schools.id','=','secondary.school_id')
+                            ->get();
+
+        return $this->view->render($response,'student/personal/index.twig',[
+            'items' => $students
+        ]);
     }
 
     /**
@@ -116,9 +123,10 @@ class StudentController extends Controller
         
         // setting last inserted id into session
          $_SESSION['student_id'] = $create->id;
+         
     
         // flash message
-        $this->flash->addMessage('success',' Complete '.ucwords($create->name).' registration' );
+        $this->flash->addMessage('danger',' Please complete '.ucwords($create->name).' registration' );
 
         return $response->withRedirect($this->router->pathFor('secondary.create'));
     

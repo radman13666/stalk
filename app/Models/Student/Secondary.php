@@ -9,7 +9,7 @@ class Secondary extends Model
 
     protected $fillable = [
 
-        'school_name',
+        'school_id',
         's_form',
         'stream',
         'subjects',

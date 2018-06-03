@@ -3,8 +3,11 @@
 namespace App\Helpers;
 
 use App\Models\User\Role;
-use App\Models\Student\Subject;
 use App\Models\Category\Level;
+use App\Models\Category\Funder;
+use App\Models\Category\Bank;
+use App\Models\Category\School;
+use App\Models\Student\Subject;
 use App\Models\Student\District;
 /**
  * This contains all helper methods
@@ -63,6 +66,62 @@ class Helper
         return Subject::where('deleted','0')->orderBy('name','ASC')->get();
 
     }
+
+    /**
+     * Return all secondary schools
+     *
+     * @return void
+     */
+    public function allSecondary()
+    {
+        return School::where('level','secondary')->get();
+    }
+
+     /**
+     * Return all tertiary institution
+     *
+     * @return void
+     */
+    public function allTertiary()
+    {
+        return School::where('level','tertiary')->get();
+    }
+
+
+     /**
+     * Return all universities
+     *
+     * @return void
+     */
+    public function allUniversity()
+    {
+        return School::where('level','university')->get();
+    }
+
+
+     /**
+     * Return all funders
+     *
+     * @return void
+     */
+    public function allFunders()
+    {
+        return Funder::orderBy('funder_name','ASC')->get();
+    }
+
+
+    /**
+     * Return all banks
+     *
+     * @return void
+     */
+    public function allBanks()
+    {
+        return Bank::orderBy('bank_name','ASC')->get();
+    }
+
+
+
 
 
 
