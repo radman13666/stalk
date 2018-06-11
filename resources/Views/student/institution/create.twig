@@ -1,0 +1,391 @@
+{% extends 'layout/master.twig'  %}
+
+{% block content %}
+
+
+    <div class="card-header">
+        <h4 class="m-b-0 text-info "><i class="fa fa-plus-circle" aria-hidden="true"></i>
+        Complete Student Registration
+         </h4>
+    </div>
+ 
+    <div class="card-body">
+        <form action="{{ path_for('institution.create')}}"  method ="POST" class="form-horizontal" enctype="multipart/form-data">
+            <div class="form-body">
+                <h3 class="box-title m-t-15">Institution Information</h3>
+                <hr class="m-t-0 m-b-40">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Institution Name <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control custom-select {{ errors.institution_name ? 'is-invalid' :'' }}" 
+                                name="institution_name">
+                                    <option value="">Choose Institution.</option>
+
+                                    {% for item in institutions %}
+                                         <option value="{{ item.id}}">{{ item.school_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                 {% if errors.institution_name %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.institution_name | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                     <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Level  <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <select class="form-control custom-select {{ errors.s_form ? 'is-invalid' :'' }}" 
+                                name="s_form">
+                                    <option value="">Choose ..</option>
+                                    <option value="Year One">Year One</option>
+                                    <option value="Year Two">Year Two</option>
+                                    <option value="Year Three">Year Three</option>
+                                    <option value="Year Four">Year Four</option>
+                                    <option value="Year Five">Year Five</option>
+                                </select>
+
+                                {% if errors.s_form %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.s_form | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Student Registration Number 
+                            <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                  <input type="text"  name="registration_number" class="form-control {{ errors.registration_number ? 'is-invalid' :'' }} " 
+                                     placeholder="Registration No. " value="{{ old.registration_number}}">
+                                 {% if errors.registration_number %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.registration_number | first }} </div> 
+                                {% endif %}
+                                 </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Student Number </label>
+                            <div class="col-md-9">
+                               <input type="text"  name="student_number" class="form-control {{ errors.student_number ? 'is-invalid' :'' }} " 
+                                     placeholder="student Number (Optional)" value="{{ old.student_number}}">
+                                 {% if errors.student_number %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.student_number | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+                   <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3 ">Accommodation
+                             <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+
+                                 <select class="form-control custom-select {{ errors.hostel_id ? 'is-invalid' :'' }}" 
+                                name="hostel_id">
+                                    <option value="">Choose ..</option>
+                                    {% for hostel in helper.hostels %}
+                                    <option value="{{ hostel.id }}">{{ hostel.hostel_name }}</option>
+                                    {% endfor %}
+                                    
+                                </select>
+                                 {% if errors.hostel_id %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.hostel_id| first }} </div> 
+                                {% endif %}
+                                 </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Year of Start 
+                             <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                             <input type="date" name="year_start" value="{{ old.year_start}}" class="form-control {{ errors.year_start ? 'is-invalid':''}}">
+
+                             {% if errors.year_start  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.year_start  | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+                    <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Year of completion <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                            <input type="date" name="year_stop" value="{{ old.year_stop}}" class="form-control {{ errors.year_stop ? 'is-invalid':''}}">
+
+                             {% if errors.year_stop  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.year_stop  | first }} </div> 
+                                {% endif %}
+                             </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Course Name <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                             <select class="form-control custom-select {{ errors.course_id ? 'is-invalid' :'' }}" 
+                                name="course_id">
+                                    <option value="">Choose ..</option>
+                                    {% for course in helper.courses %}
+                                     <option value="{{ course.id}}">{{ course.name | capitalize}}</option>
+                                    {% endfor %}
+                                    
+                                </select>
+
+                                {% if errors.course_id %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.course_id | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                  <!--/row-->
+           
+
+                 <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3"> Qualification  <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <select class="form-control custom-select {{ errors.qualification ? 'is-invalid' :'' }}" 
+                                name="qualification">
+                                    <option value="">Choose ..</option>
+                                    {% for qualification in qualifications %}
+                                    <option value="{{ qualification.qualification_name }}">
+                                    {{ qualification.qualification_name }}</option>
+                                    {% endfor %}
+                                    
+                                </select>
+                                 {% if errors.qualification %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.qualification | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                           
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+
+                <h3 class="box-title">Student Bank Details</h3>
+                <hr class="m-t-0 m-b-40">
+                <!--/row-->
+              
+                 <!--/row-->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Student Bank Name
+                            <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                 <select class="form-control custom-select {{ errors.student_bank_name ? 'is-invalid' :'' }}" 
+                                name="student_bank_name">
+                                    <option value="">Choose ..</option>
+                                    {% for bank in helper.banks %}
+                                     <option value="{{ bank.bank_name}}">{{ bank.bank_name | capitalize}}</option>
+                                    {% endfor %}
+                                    
+                                </select>
+
+                                {% if errors.student_bank_name %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.student_bank_name | first }} </div> 
+                                {% endif %}
+                             </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Student Bank Details </label>
+                            <div class="col-md-9">
+                                 <textarea class="textarea_editor form-control {{ errors.student_bank_details ? 'is-invalid' : ''}}" name="student_bank_details"
+                                        rows="8"  style="height:150px">
+                                        {{ old.student_bank_details}}
+                                        </textarea>
+                                    </div>
+
+                                {% if errors.student_bank_details %}
+                                <div class="form-control-feedback invalid-feedback">
+                                    {{ errors.student_bank_details | first }}
+                                </div>
+                             {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                   
+                <!--/row-->
+            </div>
+          
+       
+         <h3 class="box-title">Institution Bank Details</h3>
+                <hr class="m-t-0 m-b-40">
+                   
+                 <!--/row-->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Institution Bank Name
+                            <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                 <select class="form-control custom-select {{ errors.institution_bank_name ? 'is-invalid' :'' }}" 
+                                name="institution_bank_name">
+                                    <option value="">Choose ..</option>
+                                    {% for bank in helper.banks %}
+                                     <option value="{{ bank.bank_name}}">{{ bank.bank_name | capitalize}}</option>
+                                    {% endfor %}
+                                    
+                                </select>
+
+                                {% if errors.institution_bank_name %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.institution_bank_name | first }} </div> 
+                                {% endif %}
+                             </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Institution Bank Details </label>
+                            <div class="col-md-9">
+                                 <textarea class="textarea_editor form-control {{ errors.institution_bank_details ? 'is-invalid' : ''}}"
+                                  name="institution_bank_details"
+                                        rows="8"  style="height:150px">
+                                        {{ old.institution_bank_details}}
+                                        </textarea>
+                                    </div>
+
+                                {% if errors.institution_bank_details %}
+                                <div class="form-control-feedback invalid-feedback">
+                                    {{ errors.institution_bank_details | first }}
+                                </div>
+                             {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+          <h3 class="box-title">Other Bank Details (Optional)</h3>
+                <hr class="m-t-0 m-b-40">
+                   
+                 <!--/row-->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">other Bank Name
+                            <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                 <select class="form-control custom-select {{ errors.other_bank_name ? 'is-invalid' :'' }}" 
+                                name="other_bank_name">
+                                    <option value="">Choose ..</option>
+                                    {% for bank in helper.banks %}
+                                     <option value="{{ bank.bank_name}}">{{ bank.bank_name | capitalize}}</option>
+                                    {% endfor %}
+                                    
+                                </select>
+
+                                {% if errors.other_bank_name %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.other_bank_name | first }} </div> 
+                                {% endif %}
+                             </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Other Bank Details </label>
+                            <div class="col-md-9">
+                                 <textarea class="textarea_editor form-control {{ errors.other_bank_details ? 'is-invalid' : ''}}"
+                                  name="other_bank_details"
+                                        rows="8"  style="height:150px">
+                                        {{ old.other_bank_details}}
+                                        </textarea>
+                                    </div>
+
+                                {% if errors.other_bank_details %}
+                                <div class="form-control-feedback invalid-feedback">
+                                    {{ errors.other_bank_details | first }}
+                                </div>
+                             {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+    
+                <!--/row-->
+       
+       
+
+            <div class="form-actions ">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="pull-right">
+                             
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                        <div class="col-md-2 offset-md-10">
+                            <div class="pull-right">
+                                <button type="submit" class="btn   btn-primary btn-block">
+                                  Complete Registration
+                                </button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            {{ csrf.field | raw}}
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

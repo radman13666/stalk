@@ -63,6 +63,8 @@ ini_set('display_errors','On');
         'university' => $container->helper->allUniversity(),
         'funders'    => $container->helper->allFunders(),
         'banks'      => $container->helper->allBanks(),
+        'hostels'    => $container->helper->allHostels(),
+        'courses'    => $container->helper->allCourses()
     ]);
 
     //Auth
@@ -107,6 +109,11 @@ $container['db'] = function($container) use ($capsule) {
  $container['files'] = function($container){
     return new \App\Helpers\Files;
  };
+//  student helper
+$container['students'] = function($container)
+{
+    return new \App\Helpers\Students;
+};
 
  /**
   * Respect validation class

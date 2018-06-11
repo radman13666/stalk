@@ -1,0 +1,143 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+    <div class="card-header">
+        <h4 class="m-b-0 text-info ">
+            <a  class="btn btn-xs btn-primary" href="{{ path_for('hostel.index')}}">
+            <i class="fa fa-angle-double-left" aria-hidden="true"></i> Back</a> 
+
+             {{ hostel.hostel_name}}
+         </h4>
+    </div>
+ 
+    <div class="card-body">
+
+ <div class="card col-md-10 offset-md-2">
+  <div class="card-body">
+        <form action="{{ path_for('hostel.edit',{id:hostel.id})}}"  method ="POST" class="form-horizontal">
+            <div class="form-body">
+                <h3 class="box-title m-t-15">Hostel Details</h3>
+                <hr class="m-t-0 m-b-40">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Hostel  Name <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"  name="hostel_name" class="form-control {{ errors.hostel_name ? 'is-invalid' :'' }} " 
+                                     placeholder="Hostel name" value="{{ hostel.hostel_name}}">
+                                 {% if errors.hostel_name %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.hostel_name | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+
+                  <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Hostel Owner Name  <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"  name="owner_name" class="form-control {{ errors.owner_name ? 'is-invalid' :'' }} " 
+                                     placeholder=" e.g John Doe " value="{{ hostel.owner_name}}">
+                                 {% if errors.owner_name %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.owner_name | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+
+               
+                 <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Hostel Owner Phone  <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"  name="owner_phone" class="form-control {{ errors.owner_phone ? 'is-invalid' :'' }} " 
+                                     placeholder="owner Phone " value="{{ hostel.owner_phone}}">
+                                 {% if errors.owner_phone %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.owner_phone | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+
+                 <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Hostel Owner Email 
+                            </label>
+                            <div class="col-md-9">
+                                <input type="email"  name="owner_email" class="form-control {{ errors.owner_email ? 'is-invalid' :'' }} " 
+                                     placeholder="e.g example@gmail.com " value="{{ hostel.owner_email}}">
+                                 {% if errors.owner_email %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.owner_email | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+           
+                 <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Hostel Address </label>
+                            <div class="col-md-9">
+                                  <div class="form-group">
+                                  <label class="text-primary"> </label>
+                                        <textarea name="hostel_address" class="textarea_editor form-control" rows="10" style="height:350px">
+                                        {{ hostel.hostel_address }}
+                                       
+                                        </textarea>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+
+                <input type="hidden" name="_METHOD" value="PUT" />
+
+            <div class="form-actions ">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <div class="row">
+                            <div class="pull-right">
+                               <button type="submit" class="btn btn-primary btn-block">
+                                   Update
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="row">
+                        <div class="col-md-2 offset-md-10">
+                            <div class="pull-right">
+                              
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            {{ csrf.field | raw}}
+
+        </form>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}

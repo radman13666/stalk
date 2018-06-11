@@ -25,6 +25,11 @@ $container['UserController'] = function($container){
 $container['SubjectController'] = function($container){
     return new \App\Controllers\Student\SubjectController($container);
 };
+// my subject controller
+
+$container['MysubjectController'] = function($container){
+    return new \App\Controllers\Category\MysubjectController($container);
+};
 
 // course controller
 $container['CourseController'] = function($container){
@@ -49,4 +54,14 @@ $container['SchoolController'] = function($container){
 // Bank controller
 $container['BankController'] = function($container){
     return new \App\Controllers\Category\BankController($container);
+};
+
+// Hostel controller
+$container['HostelController'] = function($container){
+    return new \App\Controllers\Category\HostelController($container);
+};
+
+// Institution controller
+$container['InstitutionController'] = function($container){
+    return new \App\Controllers\Student\InstitutionController($container);
 };

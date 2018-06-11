@@ -2,8 +2,8 @@
 
 {% block content %}
 
-        <h4 class="card-title"><i class="fa fa-users" aria-hidden="true"></i>
-            All Users
+        <h4 class="card-title text-primary"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+            Manage students
                 <a href="{{ path_for('student.create') }}" class="btn  btn-primary pull-right">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 New student
@@ -11,7 +11,7 @@
             </h4>
         <h6 class="card-subtitle">Manage all users</h6>
 
-            <form method="POST" action="{{ path_for('user.search') }}">
+            <form method="POST" action="">
                 <div class="form-row">
                     <div class="col-md-4">
                         <input type="text"  value="{{old.name}}" name="name" class="form-control" placeholder="Search by name">
@@ -48,35 +48,53 @@
                 <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
                         <tr>
+                            <th>Photo</th>
                             <th>Name</th>
                             <th>School</th>
                             <th>District</th>
-                            <th>Age</th>
-                            <th>Current State</th>
-                            <th>Delete</th>
+                            <th>Gender</th>
+                            <th>Contact</th>
+                            <th>Status</th>
+                            <th>Edit</th>
+                            <th>View</th>
+                            <th>Del</th>
                         </tr>
                     </thead>
                     <tfoot>
                         
                     </tfoot>
-                    <tbody>
+                    <tbody class="">
                     {% for item in items %}
                         <tr>
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.email }}</td>
-                            <td>{{ item.phone }}</td>
-                            <td class="text-capitalize">
-                              {{ item.role }}
+                            <td>
+                            {% if item.photo %}
+                                 <img src="{{path}}{{item.photo}}" alt="photo" height="40" with="40" class="rounded-circle">
+                            {% else %}
+                                 <img src="{{path}}/profile.png" alt="photo" height="40" with="40" class="rounded-circle">
+                            {% endif %}
                             </td>
-
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.school_name }} {{ item.school }}</td>
+                            <td>{{ item.dist_name}}</td>
+                            <td>{{ item.gender | capitalize }}</td>
+                            <td>{{ item.parent1_phone }}</td>
+                            <td>{{ item.current_state }}</td>
                              <td>
-                              <a href="{{ path_for('user.edit',{id:item.id})}}" onClick="return confirm('Are you sure  you want to edit?')" class="btn btn-success">
+                              <a href="{{ path_for('student.edit',{id:item.id})}}" 
+                              onClick="return confirm('Are you sure  you want to edit {{ item.name }}?')" class="btn btn-info">
                                <i class="fa fa-pencil-square" aria-hidden="true"></i>
                               </a>
                                
                             </td>
+
+                                 <td>
+                              <a href="{{ path_for('student.edit',{id:item.id})}}" class="btn btn-primary">
+                               <i class="fa fa-eye" aria-hidden="true"></i>
+                              </a>
+                               
+                            </td>
                             <td>
-                            <form method="POST" action="{{ path_for('user.trash',{id:item.id})}}">
+                            <form method="POST" action="">
                                 <button class="btn btn-danger" onClick=" return confirm('Are you sure you want to delete this user ?')" type="submit">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                 <input type="hidden" name="_METHOD" value="PUT">

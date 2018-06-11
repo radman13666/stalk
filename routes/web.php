@@ -56,13 +56,26 @@ $app->group('', function(){
   
     // Students
     $this->get('/students','StudentController:index')->setName('student.index');
-    
+    //create
     $this->get('/students/create','StudentController:create')->setName('student.create');
     $this->post('/students/create','StudentController:store');
+    // update
+    $this->get('/students/{id}/edit','StudentController:edit')->setName('student.edit');
+    $this->put('/students/{id}/edit','StudentController:update');
+
 
     $this->get('/students/secondary','SecondaryController:create')->setName('secondary.create');
     $this->post('/students/secondary','SecondaryController:store');
 
+    $this->get('/students/secondary/{id}/edit','SecondaryController:edit')->setName('secondary.edit');
+    $this->put('/students/secondary/{id}/edit','SecondaryController:update')->setName('secondary.update');
+
+    // subjects
+    $this->get('/secondary/{id}/mysubjects','MysubjectController:index')->setName('mysubject.index');
+    $this->delete('/secondary/{id}/mysubjects','MysubjectController:delete')->setName('mysubject.delete');
+    $this->post('/secondary/{id}/mysubjects','MysubjectController:store')->setName('mysubject.post');
+
+  
 
     // schools
     $this->get('/schools','SchoolController:index')->setName('school.index');
@@ -87,6 +100,24 @@ $app->group('', function(){
     $this->get('/banks/{id}/update','BankController:edit')->setName('bank.edit');
     $this->put('/banks/{id}/update','BankController:update');
 
+
+    // Hostel
+    $this->get('/hostels','HostelController:index')->setName('hostel.index');
+    $this->post('/hostels','HostelController:search');
+
+    $this->get('/hostels/create','HostelController:create')->setName('hostel.create');
+    $this->post('/hostels/create','HostelController:store');
+
+    // edit
+    $this->get('/hostels/{id}/edit','HostelController:edit')->setName('hostel.edit');
+    $this->put('/hostels/{id}/edit','HostelController:update');
+    
+    
+    // institutions
+    $this->get('/institutions/create','InstitutionController:create')->setName('institution.create');
+    $this->post('/institutions/create','InstitutionController:store');
+
+    $this->get('/institutions/{id}/edit','InstitutionController:edit')->setName('institution.edit');
 
 })->add( new AuthMiddleware($container));
 

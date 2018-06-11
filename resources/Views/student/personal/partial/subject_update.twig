@@ -1,0 +1,63 @@
+{% extends 'student/personal/partial/base.twig' %}
+
+{% block  basecontent %}
+
+ <div class="container">
+    <div class="row">
+
+
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-primary">Registered Subjects
+                 <span class="badge badge-pill badge-primary">{{ subjects | length}}</span>
+                 </h4>
+                    <ul class="list-group">
+                        {% for subject in subjects %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ subject.name }}
+                                <form method="post" action="{{ path_for('mysubject.delete',{id:subject.id})}}">
+                                  <input type="hidden" name="_METHOD" value="DELETE" />
+                                    <button onClick=" return confirm('Are you sure you want to delete this subject?')" class="btn btn-danger btn-xs" type="submit">
+                                        <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                                        Del
+                                    </button>
+                                    {{ csrf.field | raw}}
+                                </form>
+                            </li>
+                        {% endfor %}
+                    </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-primary">Add More Subjects</h4>
+                    <ul class="list-group">
+                        {% for sub in allsubjects %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ sub.name }}
+                                <form method="post" action="{{ path_for('mysubject.post',{id: sub.id})}}">
+
+                                <input type="hidden" name="student_id" value="{{student.id}}" />
+                            
+                                    <button onClick="return confirm('Are you sure you want to do this ?')" class="btn btn-success btn-xs" type="submit">
+                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                         Add
+                                    </button>
+                                    {{ csrf.field | raw}}
+                                </form>
+                            </li>
+                        {% endfor %}
+                    </ul>
+            </div>
+        </div>
+    </div>
+
+    </div>
+ </div>
+{% endblock %}
+

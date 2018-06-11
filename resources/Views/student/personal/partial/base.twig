@@ -1,0 +1,63 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+
+<ul class=" student-list list-inline ">
+{% if student.photo %}
+<img src="{{path}}{{student.photo}}" height="60" width="60" class="rounded-circle" />
+{% else %}
+<img src="{{path}}/profile.png" height="60" width="60" class="rounded-circle" />
+{% endif %}
+
+ <a href="{{path_for('student.edit',{id:student.id})}}">
+    <li class=" btn btn-primary  student-list-item  list-inline-item " >
+        <i class="fa fa-user" aria-hidden="true"></i>
+             School/Institution  Information 
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+    </li>
+ </a>
+
+{% if student.level == 'secondary'%}
+ <a href="{{path_for('secondary.update',{id:info.id})}}">
+  <li class=" btn btn-primary  student-list-item  list-inline-item " >
+      <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+             Edit  School  Information  
+       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+  </li>
+</a>
+
+<a href="{{path_for('mysubject.index',{id:student.id})}}">
+  <li class=" btn btn-primary  student-list-item  list-inline-item " >
+        <i class="fa fa-address-book" aria-hidden="true"></i>   Edit Subjects 
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+  </li>
+</a>
+
+{% endif %}
+
+{% if student.level == 'tertiary' or student.level == 'university' %}
+
+  <a href="{{path_for('institution.edit',{id:info.id})}}">
+  <li class=" btn btn-primary  student-list-item  list-inline-item " >
+        <i class="fa fa-address-book" aria-hidden="true"></i>   
+         Edit  Institution  Information  
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+  </li>
+</a>
+
+
+{% endif %}
+
+
+
+</ul>
+
+
+{% block basecontent %}
+
+{% endblock %}
+
+
+
+{% endblock %}

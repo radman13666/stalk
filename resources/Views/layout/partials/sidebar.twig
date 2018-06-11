@@ -69,6 +69,16 @@
                                 <li><a href="{{ path_for('bank.create') }}">New Bank</a></li>
                             </ul>
                         </li>
+
+                     <li> <a class="has-arrow  " href="#" aria-expanded="false"> 
+                       <i class="fa fa-building" aria-hidden="true"></i>
+                        <span class="hide-menu">Hostels</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{ path_for('hostel.index')}}">Hostels</a></li>
+                                <li><a href="{{ path_for('hostel.create') }}">New Hostel</a></li>
+                            </ul>
+                        </li>
+
                         <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-table"></i><span class="hide-menu">Tables</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="table-bootstrap.html">Basic Tables</a></li>

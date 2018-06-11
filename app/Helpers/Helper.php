@@ -7,6 +7,8 @@ use App\Models\Category\Level;
 use App\Models\Category\Funder;
 use App\Models\Category\Bank;
 use App\Models\Category\School;
+use App\Models\Category\Hostel;
+use App\Models\Student\Course;
 use App\Models\Student\Subject;
 use App\Models\Student\District;
 /**
@@ -98,6 +100,19 @@ class Helper
         return School::where('level','university')->get();
     }
 
+    /**
+     * Return both tertiary and universities
+     *
+     * @return void
+     */
+    public function allInstitutions()
+    {
+      $institutes = School::where('level','university')
+                         ->orWhere('level','tertiary')
+                         ->get();
+       return $institutes;
+    }
+
 
      /**
      * Return all funders
@@ -121,8 +136,29 @@ class Helper
     }
 
 
+    /**
+     * Return all hostels
+     *
+     * @return void
+     */
+    public function allHostels()
+    {
+        return Hostel::orderBy('hostel_name','ASC')->get();
+    }
 
 
+  /**
+     * All Courses
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @return void
+     */
+    public function allCourses()
+    { 
+        return Course::where('deleted','0')->orderBy('name','ASC')->get();
+
+    }
 
 
 }

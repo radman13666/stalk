@@ -1,15 +1,15 @@
-{% extends 'layout/master.twig' %}
+{% extends 'student/personal/partial/base.twig' %}
 
-{% block content %}
+{% block  basecontent %}
 
-    <div class="card-header">
-        <h4 class="m-b-0 text-info "><i class="fa fa-plus-circle" aria-hidden="true"></i>
-            Add a new student
-         </h4>
+<div class="card-header" style="margin-top:40px;">
+        <h5 class="m-b-0 text-info  text-capitalize"> <i class="fa fa-pencil" aria-hidden="true"></i>  
+            {{ student.name }} 
+         </h5>
     </div>
  
-    <div class="card-body">
-        <form action="{{ path_for('student.create')}}"  method ="POST" class="form-horizontal" enctype="multipart/form-data">
+    <div class="card-body text-capitalize">
+        <form action="{{ path_for('student.edit',{id:student.id})}}"  method ="POST" class="form-horizontal" enctype="multipart/form-data">
             <div class="form-body">
                 <h3 class="box-title m-t-15">Person Information</h3>
                 <hr class="m-t-0 m-b-40">
@@ -20,7 +20,7 @@
                             </label>
                             <div class="col-md-9">
                                 <input type="text"  name="name" class="form-control {{ errors.name ? 'is-invalid' :'' }} " 
-                                     placeholder="John doe" value="{{ old.name}}">
+                                     placeholder="John doe" value="{{ student.name  }}">
                                  {% if errors.name %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.name | first }} </div> 
                                 {% endif %}
@@ -33,7 +33,7 @@
                             <label class="control-label text-right col-md-3">Date of Birth <span class="text-danger">*</span></label>
                             <div class="col-md-9">
                                 <input type="date"  name="dob" class="form-control {{ errors.dob ? 'is-invalid' :'' }}"
-                                 value="{{old.dob}}"  placeholder="dd/mm/yyyy">
+                                 value="{{student.dob}}"  placeholder="dd/mm/yyyy">
 
                                 {% if errors.dob %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.dob | first }} </div> 
@@ -51,7 +51,7 @@
                             <label class="control-label text-right col-md-3">Gender <span class="text-danger">*</span></label>
                             <div class="col-md-9">
                                 <select class="form-control custom-select {{ errors.gender ? 'is-invalid' :'' }}" name="gender">
-                                    <option value="">Choose ..</option>
+                                    <option value="{{ student.gender}}">{{ student.gender}}</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>
@@ -67,7 +67,7 @@
                             <label class="control-label text-right col-md-3">Level  <span class="text-danger">*</span></label>
                             <div class="col-md-9">
                                 <select class="form-control custom-select {{ errors.level ? 'is-invalid' :'' }}" name="level">
-                                    <option value="">Choose ..</option>
+                                    <option value="{{ student.level}}">{{ student.level }}</option>
                                     {% for level in helper.levels %}
                                      <option value="{{ level.name }}">{{ level.name | capitalize }}</option>
                                     {% endfor %}
@@ -91,9 +91,9 @@
                             <label class="control-label text-right col-md-3 ">District <span class="text-danger">*</span></label>
                             <div class="col-md-9">
                                 <select class="form-control custom-select {{ errors.district ? 'is-invalid' :'' }}" name="district">
-                                    <option value="">Choose ..</option>
+                                    <option value="{{ student.district}}{{ student.dist_name}}">{{ student.dist_name | capitalize}}</option>
                                     {% for district in helper.districts %}
-                                    <option value="{{ district.id}}{{district.district_name}}">{{ district.district_name | capitalize }}</option>
+                                    <option value="{{ district.id}}{{ district.district_name}}">{{ district.district_name | capitalize }}</option>
                                     {% endfor %}
                                 </select>
 
@@ -104,8 +104,6 @@
                                  </div>
                         </div>
                     </div>
-                    
-                 
                     <!--/span-->
                     <div class="col-md-6">
                         <div class="form-group row">
@@ -113,7 +111,7 @@
                              <span class="text-danger">*</span></label>
                             <div class="col-md-9">
                                <input type="text" class="form-control {{ errors.subcounty ? 'is-invalid' :'' }}"
-                                placeholder="Sub county" name="subcounty" value="{{old.subcounty}}">
+                                placeholder="Sub county" name="subcounty" value="{{student.subcounty}}">
 
                                {% if errors.subcounty %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.subcounty | first }} </div> 
@@ -133,7 +131,7 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control {{ errors.entry_grade ? 'is-invalid' :'' }}" value="{{ old.entry_grade}}"
+                                <input type="text" class="form-control {{ errors.entry_grade ? 'is-invalid' :'' }}" value="{{ student.entry_grade}}"
                                      name="entry_grade" placeholder="P.L.E Grade">
 
                                       {% if errors.entry_grade %}
@@ -147,7 +145,7 @@
                         <div class="form-group row">
                             <label class="control-label text-right col-md-3">Village </label>
                             <div class="col-md-9">
-                               <input type="text" vale="{{old.village}}" class="form-control {{ errors.village ? 'is-invalid' :'' }}
+                               <input type="text" value="{{student.village}}" class="form-control {{ errors.village ? 'is-invalid' :'' }}
                                " name="village" placeholder="Village">
 
                                 {% if errors.village %}
@@ -165,7 +163,7 @@
                             <label class="control-label text-right col-md-3">Ethnicity</label>
                             <div class="col-md-9">
                                <input type="text" name="ethnicity" class="form-control {{ errors.ethnicity ? 'is-invalid' :'' }}"
-                                placeholder="..." value="{{ old.ethnicity}}">
+                                placeholder="..." value="{{ student.ethnicity}}">
 
                                  {% if errors.ethnicity %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.ethnicity | first }} </div> 
@@ -176,13 +174,19 @@
                     <!--/span-->
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Photo</label>
+                            <label class="control-label text-right col-md-3">Change Photo</label>
                             <div class="col-md-9">
                                 <input type="file"  name="photo" class="form-control {{ errors.photo ? 'is-invalid' :'' }}" 
                                     placeholder="..."  accept="image/*">
 
                                   {% if errors.photo %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.photo | first }} </div> 
+                                {% endif %}
+
+                                {% if student.photo %}
+                                <img src="{{path}}{{student.photo}}" height="60" width="60" class="rounded-circle" />
+                                {% else %}
+                                <img src="{{path}}/profile.png" height="60" width="60" class="rounded-circle" />
                                 {% endif %}
                             </div>
                         </div>
@@ -200,7 +204,7 @@
                             </label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control {{ errors.student_phone ? 'is-invalid' :'' }}"
-                                 name="student_phone" value="{{ old.student_phone}}">
+                                 name="student_phone" value="{{ student.student_phone}}">
 
                                  {% if errors.student_phone %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.student_phone | first }} </div> 
@@ -213,7 +217,7 @@
                             <label class="control-label text-right col-md-3">Student Email</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control {{ errors.student_email ? 'is-invalid':''}}" name="student_email" 
-                                value="{{ old.student_email }}">
+                                value="{{ student.student_email }}">
 
                                    {% if errors.student_email %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.student_email | first }} </div> 
@@ -231,7 +235,7 @@
                             </label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control {{ errors.parent1_name ? 'is-invalid':''}}"
-                                 name="parent1_name" value="{{ old.parent1_name}}">
+                                 name="parent1_name" value="{{ student.parent1_name}}">
 
                                 {% if errors.parent1_name  %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.parent1_name | first }} </div> 
@@ -247,7 +251,7 @@
                             </label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control  {{ errors.parent1_phone ? 'is-invalid':''}}"
-                                 name="parent1_phone" value="{{ old.parent1_phone }}">
+                                 name="parent1_phone" value="{{ student.parent1_phone }}">
 
                                   {% if errors.parent1_phone  %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.parent1_phone | first }} </div> 
@@ -264,7 +268,7 @@
                             <label class="control-label text-right col-md-3">2nd Parent Name</label>
                             <div class="col-md-9">
                                 <input type="text" name="parent2_name" class="form-control {{ errors.parent2_name ? 'is-invalid':''}}" 
-                                value="{{ old.parent2_name}}">
+                                value="{{ student.parent2_name}}">
 
                                   {% if errors.parent2_name %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.parent2_name | first }} </div> 
@@ -277,7 +281,7 @@
                         <div class="form-group row">
                             <label class="control-label text-right col-md-3">2nd Parent Phone No.</label>
                             <div class="col-md-9">
-                                <input type="text" name="parent2_phone"  value="{{ old.parent2_phone}}"
+                                <input type="text" name="parent2_phone"  value="{{ student.parent2_phone}}"
                                 class="form-control {{ errors.parent2_phone ? 'is-invalid':''}}">
 
                                   {% if errors.parent2_phone  %}
@@ -295,7 +299,7 @@
                             <label class="control-label text-right col-md-3">Current State</label>
                             <div class="col-md-9">
                                  <select class="form-control custom-select {{ errors.current_state ? 'is-invalid':''}}" name="current_state">
-                                    <option value="">Choose ..</option>
+                                    <option value="{{ student.current_state}}">{{ student.current_state | capitalize}}</option>
                                     <option value="continuing">Continuing</option>
                                      <option value="completed">Completed</option>
                                     <option value="dropout">Dropout</option>
@@ -316,7 +320,7 @@
                             <div class="col-md-9">
 
                              <select class="form-control custom-select {{ errors.funder ? 'is-invalid':''}}" name="funder">
-                                    <option value="">Choose ..</option>
+                                    <option value="{{ student.funder }}">{{ student.funder | capitalize}}</option>
                                     {% for funder in helper.funders %}
                                          <option value="{{ funder.funder_name}}">{{ funder.funder_name | capitalize}}</option>
                                     {% endfor %}
@@ -343,7 +347,7 @@
                                   <div class="form-group">
                                         <textarea class="textarea_editor form-control" name="dropout_reason"
                                         rows="8" placeholder="Enter reason for drop out ..." style="height:80px">
-                                        {{ old.dropout_reason}}
+                                        {{ student.dropout_reason}}
                                         </textarea>
                                     </div>
                             </div>
@@ -359,7 +363,7 @@
                             <div class="col-md-9">
                                   <div class="form-group">
                                         <textarea name="notes" class="textarea_editor form-control" rows="10" placeholder="Enter text ..." style="height:350px">
-                                        {{ old.notes }}
+                                        {{ student.notes }}
                                         </textarea>
                                     </div>
                             </div>
@@ -368,6 +372,7 @@
                 </div>
                 <!--/row-->
 
+            <input type="hidden" name="_METHOD" value="PUT" />
 
             <div class="form-actions ">
                 <div class="row">
@@ -379,13 +384,13 @@
                         </div>
                     </div>
 
+
                     <div class="col-md-6">
                         <div class="row">
                         <div class="col-md-2 offset-md-10">
                             <div class="pull-right">
                                 <button type="submit" class="btn  btn-lg btn-primary btn-block">
-                                   Continue 
-                                        <i class="fa fa-fast-forward" aria-hidden="true"></i>
+                                   Update
                                 </button>
                             </div>
                             </div>

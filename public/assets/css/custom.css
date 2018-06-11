@@ -4,3 +4,29 @@
 .pagination-main{
     margin: 10px;
 }
+
+.cardheader-main {
+    padding: .15rem 1.0rem;
+    margin-bottom: 0;
+    background-color: #21ba450a;
+    /* background-color:#21ba4529; */
+    /* #028ee12b; */
+    /* #21ba452b; */
+    /*  */
+    border-bottom: 1px solid rgba(109, 51, 51, 0.28);
+    
+}
+.card-title-main{
+    color: #fff;
+}
+
+/* wizard */
+
+.student-list {
+    background: #ece5e5;
+    padding: 10px; 
+}
+.student-list-item {
+    margin-left: 20px;
+    margin-right: 20px;
+}

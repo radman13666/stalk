@@ -8,6 +8,8 @@ class Files
 {
     public $filename;
 
+    public $directory;
+
     //
     public function uploadFile($request,$field)
     {
@@ -27,6 +29,21 @@ class Files
             (is_writable($directory))? $newFile->moveTo($directory.$this->filename): '';   
 
         }
+    }
+
+    // return directory]
+    public function fileDir()
+    {
+        $directory = 'http://'.$_SERVER['HTTP_HOST'].'/stalk/storage/images/students/';
+        return $directory;
+    }
+
+    // root path
+    public function rootPath()
+    {
+        $root = $_SERVER['DOCUMENT_ROOT'].'/stalk/storage/images/students/';
+        return $root;
+
     }
 
 }

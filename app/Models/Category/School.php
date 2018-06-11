@@ -14,4 +14,6 @@ class School extends Model
         'created_by'
     ];
 
+
+
 }

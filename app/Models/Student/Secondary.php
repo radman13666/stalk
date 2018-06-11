@@ -14,6 +14,7 @@ class Secondary extends Model
         'stream',
         'subjects',
         'student_id',
+        'student_number',
         'school_code',
         'year_start',
         'year_stop',

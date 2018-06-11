@@ -2,6 +2,8 @@
 namespace App\Controllers\Student;
 
 use App\Controllers\Controller;
+use App\Models\Student\Student;
+use App\Models\Category\School;
 use App\Models\Student\Secondary;
 use App\Models\Student\StudentSubject;
 use Respect\Validation\Validator as v;
@@ -19,6 +21,13 @@ class SecondaryController extends Controller
      */
     public function create($request,$response,$args)
     {
+          // check for student session
+          if(!isset($_SESSION['student_id']))
+          {
+              $this->flash->addMessage('danger','Please start a new student registration from here');
+              return $response->withRedirect($this->router->pathFor('student.create'));
+          }
+    
         return $this->view->render($response,'student/secondary/create.twig');
 
     }
@@ -31,13 +40,7 @@ class SecondaryController extends Controller
      */
     public function store($request,$response)
     {
-        // check for student session
-        if(!isset($_SESSION['student_id']))
-        {
-            $this->flash->addMessage('danger','Please start a new student registration from here');
-            return $response->withRedirect($this->router->pathFor('student.create'));
-        }
-  
+
         // Handling validation
 
         $validate = $this->Validator->validate($request,[
@@ -65,15 +68,15 @@ class SecondaryController extends Controller
             return $response->withRedirect($this->router->pathFor('secondary.create'));
         };
 
-    // var_dump ((int) trim($request->getParam('school_id')));
-    // die();
+  
 
         // post info
-        Secondary::create([
+       $secondary = Secondary::create([
             'school_id'        => $request->getParam('school_id'),
             's_form'           => $request->getParam('s_form'),
             'stream'           => $request->getParam('stream'),
             'student_id'       => $_SESSION['student_id'],
+            'student_number'   => $request->getParam('student_number'),
             'school_code'      => $request->getParam('school_code'),
             'year_start'       => $request->getParam('year_start'),
             'year_stop'        => $request->getParam('year_stop'),
@@ -117,6 +120,14 @@ class SecondaryController extends Controller
             }
           
         }
+
+        /**
+         * Update student school and level
+         * 
+         */
+
+        $this->students->schoolForm($secondary->student_id,$secondary);
+
     
         // unsetting session
         unset($_SESSION['student_id']);
@@ -127,4 +138,80 @@ class SecondaryController extends Controller
         return $response->withRedirect($this->router->pathFor('student.index'));   
     }
 
-}
+    /**
+     * Return edit view
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function  edit($request,$response,$args)
+    {
+        
+        $secondary = Secondary::find($args['id']);
+
+        //get student
+        $student = Student::find($secondary->student_id);
+       
+        // get school name
+        $school = School::where('id','=',$secondary->school_id)->get();
+
+        return $this->view->render($response,'student/personal/partial/secondary_edit.twig',[
+            'info'    => $secondary,
+            'school'  => $school[0],
+            'student' => $student,
+            'path'    => $this->files->fileDir()
+        ]);
+
+    }
+    
+    /**
+     * Update
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+     public function update($request,$response,$args)
+     {
+       
+      
+         $old_data = Secondary::find($args['id']);
+
+         $update = $old_data->update([
+            'school_id'        => $request->getParam('school_id'),
+            's_form'           => $request->getParam('s_form'),
+            'stream'           => $request->getParam('stream'),
+            'student_number'   => $request->getParam('student_number'),
+            'school_code'      => $request->getParam('school_code'),
+            'year_start'       => $request->getParam('year_start'),
+            'year_stop'        => $request->getParam('year_stop'),
+            'bank'             => $request->getParam('bank'),
+            'bank_address'     => $request->getParam('bank_address'),
+            'bank_account'     => $request->getParam('bank_account'),
+            'fav_subject'      => $request->getParam('fav_subject'),
+            'fav_sport'        => $request->getParam('fav_sport'),
+            'first_term'       => $request->getParam('first_term'),
+            'second_term'      => $request->getParam('second_term'),
+            'third_term'       => $request->getParam('third_term'),
+         ]);
+        
+        //  new data
+        $new_data = Secondary::find($args['id']);
+        // var_dump($new_data->student_id);
+        // die();
+         $this->students->schoolForm($new_data->student_id,$new_data);
+           //   add a flash message
+        $this->flash->addMessage('success', 'Information has been updated successfully');
+        
+        return $response->withRedirect($this->router->pathFor('secondary.edit',[
+            'id' => $new_data->id
+        ]));
+        
+
+     }
+ 
+
+} 
