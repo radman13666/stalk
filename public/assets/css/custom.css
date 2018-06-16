@@ -30,3 +30,19 @@
     margin-left: 20px;
     margin-right: 20px;
 }
+
+/* single page */
+.single_p
+{
+  color:   rgba(0,0,0,.9);
+  line-height: 24px;
+  font-size: 17px;
+
+}
+.text-mute
+{
+    color:#524949 !important;
+}
+.single_item{
+    font-weight: bold;
+}

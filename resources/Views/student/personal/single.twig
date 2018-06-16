@@ -1,0 +1,183 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+<div class="row align-self-center">
+    <div class="col-md-10 offset-md-1">
+        <div class="card d-flex justify-content-center" >
+            <div class="card-body">
+                  <a href="{{ path_for('student.edit',{id:student.id})}}" class="btn btn-outline-primary float-right">
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                  Edit</a>
+                <div class="col-md-4 offset-md-3">
+          
+
+                <div class="img " style="padding-left:30px">
+                
+                    {% if student.photo %}
+                    <img src="{{path}}{{student.photo}}" height="120" width="120" class="rounded-circle" />
+                    {% else %}
+                    <img src="{{path}}/profile.png" height="120" width="120" class="rounded-circle" />
+                    {% endif %}
+                
+                </div>
+                 <h2 class="card-title text-info ">{{ student.name }}</h2>
+                 <span class="text-justify">
+                    <ul class="list-inline">
+                    <li class="list-inline-item">{{ school.school_name}} | </li>
+                    <li class="list-inline-item">{{ student.gender == 'F' ? 'Female':'Male'}}</li>
+                    <li class="list-inline-item">{{ student.dob}}</li>
+                    </ul> 
+                   
+                    <ul class="list-inline font-weight-bold ">
+                    <li class="list-inline-item text-success">
+                        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                        {{ student.current_state | capitalize }}  
+                    </li>
+                    <li class="list-inline-item text-warning">
+                       <i class="fa fa-check-circle" aria-hidden="true"></i>
+                        {{ student.level | capitalize }}
+                    </li>
+                    <li class="list-inline-item">
+                     <i class="fa fa-bolt" aria-hidden="true"></i>
+                     {{ student.s_form | capitalize }}</li>
+                    </ul> 
+
+                </span>
+                </div>
+
+                <h3 class="text-info font-weight-bold">
+                   <i class="fa fa-product-hunt" aria-hidden="true"></i>  &nbsp;&nbsp; &nbsp;&nbsp;
+                    Personal Information
+                     
+                </h3>
+                <hr>
+                    <div class="single_p">
+                        <p><span class="text-mute"> Full Name:</span> 
+                            <span class="single_item"> 
+                                 {{ student.name }}
+                            </span>
+                        </p>
+
+                        <p> <span class="text-mute"> Level :</span>
+                          <span class="single_item"> 
+                                {{ student.level | capitalize }}
+                           </span>
+                        </p>
+
+                        <p> <span class="text-mute"> Age :</span> 
+                          <span class="single_item"> 
+                                {{ student.dob }}
+                          </span>
+                        </p>
+
+                        <p> <span class="text-mute"> District :</span>
+                          <span class="single_item"> 
+                                {{ student.dist_name }}
+                           </span>
+                        </p>
+
+                        <p> <span class="text-mute"> Form :</span>   
+                            <span class="single_item"> 
+                                {{ student.s_form }}
+                            </span>
+                        </p>
+
+                        <p> <span class="text-mute"> PLE Grade :</span> 
+                            <span class="single_item"> 
+                                {{ student.entry_grade }}
+                            </span>
+                        </p>
+
+                        <p> <span class="text-mute"> Student Tel No :</span> 
+                            <span class="single_item"> 
+                                    {{ student.student_phone}}
+                            </span>
+                        </p>
+
+                        <p> <span class="text-mute"> Student Email :</span>   
+                            <span class="single_item"> 
+                                {{ student.email }}
+                            </span>
+                        </p>
+                        
+                        <p> <span class="text-mute">Ethnicity:</span>   
+                            <span class="single_item"> 
+                                 {{ student.ethnicity}}
+                            </span>
+                        </p>
+
+                        <p> <span class="text-mute"> Subcounty:</span>  
+                            <span class="single_item"> 
+                                {{ student.subcounty | capitalize }}
+                            </span>
+                        </p>
+
+
+                        <p> <span class="text-mute"> Village :</span>  
+                            <span class="single_item"> 
+                                {{ student.village | capitalize}}
+                            </span>
+                        </p>
+
+                        <p> <span class="text-mute">  Funder:</span> 
+                            <span class="single_item"> 
+                                    {{ student.funder | capitalize }}
+                            </span>
+                        </p>
+
+                        <p> <span class="text-mute"> 1st  Parent Name :</span>   
+                            <span class="single_item"> 
+                                 {{ student.parent1_name}}
+                            </span>
+                        </p>
+
+                        <p> <span class="text-mute">  1st Parent Tel No. :</span> 
+                          <span class="single_item"> 
+                                {{ student.parent1_phone }}
+                          </span>
+                        </p>
+
+                        <p> <span class="text-mute"> 2nd  Parent Name :</span>   
+                            <span class="single_item"> 
+                                {{ student.parent2_name}}
+                             </span>
+                        </p>
+
+                        <p> <span class="text-mute">  2nd Parent Tel No. :</span>
+                          <span class="single_item"> 
+                           {{ student.parent2_phone }}
+                           </span>
+                        </p>
+                    <br>
+                    <hr>
+                     <p> <span class="text-mute font-weight-bold">  Reason for Drop out:</span>
+                    <br>
+                    <br>
+                         {{ student.dropout_reason  | raw  }}</p>
+                      <hr>
+                        <p> <span class="text-mute font-weight-bold"> Notes:</span>
+                        <br>
+                        <br>
+                      
+                        {{ student.notes  | raw }}</p>
+                    </div>
+
+                </div>
+        </div>
+
+
+  {% if student.level == 'secondary'%}
+
+  {% include 'student/personal/partial/secondary_single.twig' %}
+
+  {% else %}
+
+  {% include 'student/personal/partial/institution_single.twig' %}
+
+  {% endif %}
+
+
+    </div>
+</div>
+{% endblock %}

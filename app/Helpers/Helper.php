@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\User\Role;
 use App\Models\Category\Level;
+use App\Models\Category\Form;
 use App\Models\Category\Funder;
 use App\Models\Category\Bank;
 use App\Models\Category\School;
@@ -113,6 +114,18 @@ class Helper
        return $institutes;
     }
 
+    /**
+     * Return both tertiary and universities
+     *
+     * @return void
+     */
+    public function allSchools()
+    {
+      $schools = School::orderBy('school_name','ASC')->get();
+       return $schools;
+    }
+
+
 
      /**
      * Return all funders
@@ -160,5 +173,15 @@ class Helper
 
     }
 
+
+    /**
+     * All Forms
+     * @return void
+     */
+    public function allForms()
+    { 
+        return Form::orderBy('form_name','ASC')->get();
+
+    }
 
 }

@@ -2,6 +2,9 @@
 
 {% block content %}
 
+<div class="">
+
+</div>
 
 <ul class=" student-list list-inline ">
 {% if student.photo %}
@@ -13,7 +16,7 @@
  <a href="{{path_for('student.edit',{id:student.id})}}">
     <li class=" btn btn-primary  student-list-item  list-inline-item " >
         <i class="fa fa-user" aria-hidden="true"></i>
-             School/Institution  Information 
+            Personal  Information  {{ category}}
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
     </li>
  </a>
@@ -40,7 +43,7 @@
 
   <a href="{{path_for('institution.edit',{id:info.id})}}">
   <li class=" btn btn-primary  student-list-item  list-inline-item " >
-        <i class="fa fa-address-book" aria-hidden="true"></i>   
+        <i class="fa fa-university" aria-hidden="true"></i> 
          Edit  Institution  Information  
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
   </li>
@@ -49,7 +52,11 @@
 
 {% endif %}
 
-
+ <a href="{{ path_for('student.show',{id:student.id})}}" class="btn btn-success dflex-align-right">
+  <li class="student-list-item list-inline-item " >
+    <i class="fa fa-eye" aria-hidden="true"></i> View
+    </li>
+ </a>
 
 </ul>
 

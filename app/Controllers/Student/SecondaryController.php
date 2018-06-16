@@ -5,6 +5,7 @@ use App\Controllers\Controller;
 use App\Models\Student\Student;
 use App\Models\Category\School;
 use App\Models\Student\Secondary;
+use App\Models\Student\Institution;
 use App\Models\Student\StudentSubject;
 use Respect\Validation\Validator as v;
 
@@ -32,7 +33,7 @@ class SecondaryController extends Controller
 
     }
     /**
-     * Store information
+     * Store  seondary students information
      *
      * @param [type] $request
      * @param [type] $response
@@ -85,9 +86,9 @@ class SecondaryController extends Controller
             'bank_account'     => $request->getParam('bank_account'),
             'fav_subject'      => $request->getParam('fav_subject'),
             'fav_sport'        => $request->getParam('fav_sport'),
-            'first_term'       => $request->getParam('first_term'),
-            'second_term'      => $request->getParam('second_term'),
-            'third_term'       => $request->getParam('third_term'),
+            'first_term'       => nl2br(trim($request->getParam('first_term'))),
+            'second_term'      => nl2br(trim($request->getParam('second_term'))),
+            'third_term'       => nl2br(trim($request->getParam('third_term'))),
             'created_by'       => $this->auth->user()->name
             ]);
 
@@ -177,8 +178,20 @@ class SecondaryController extends Controller
      public function update($request,$response,$args)
      {
        
-      
-         $old_data = Secondary::find($args['id']);
+       //   pull old data
+        $old_data = Secondary::find($args['id']);
+
+        //  pull student information
+        $student = Student::find($old_data->student_id);
+
+        // check if the student exist in instution table
+        $institution = Institution::find($student->id);
+
+        if($institution)
+        {
+            $del =  $institution->delete();
+        }
+       
 
          $update = $old_data->update([
             'school_id'        => $request->getParam('school_id'),
@@ -193,18 +206,17 @@ class SecondaryController extends Controller
             'bank_account'     => $request->getParam('bank_account'),
             'fav_subject'      => $request->getParam('fav_subject'),
             'fav_sport'        => $request->getParam('fav_sport'),
-            'first_term'       => $request->getParam('first_term'),
-            'second_term'      => $request->getParam('second_term'),
-            'third_term'       => $request->getParam('third_term'),
+            'first_term'       => nl2br(trim($request->getParam('first_term'))),
+            'second_term'      => nl2br(trim($request->getParam('second_term'))),
+            'third_term'       => nl2br(trim($request->getParam('third_term'))),
          ]);
         
         //  new data
         $new_data = Secondary::find($args['id']);
-        // var_dump($new_data->student_id);
-        // die();
+       
          $this->students->schoolForm($new_data->student_id,$new_data);
            //   add a flash message
-        $this->flash->addMessage('success', 'Information has been updated successfully');
+        $this->flash->addMessage('success', ucwords($student->name).'  Information has been updated successfully');
         
         return $response->withRedirect($this->router->pathFor('secondary.edit',[
             'id' => $new_data->id

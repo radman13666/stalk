@@ -64,7 +64,9 @@ ini_set('display_errors','On');
         'funders'    => $container->helper->allFunders(),
         'banks'      => $container->helper->allBanks(),
         'hostels'    => $container->helper->allHostels(),
-        'courses'    => $container->helper->allCourses()
+        'courses'    => $container->helper->allCourses(),
+        'schools'    => $container->helper->allSchools(),
+        'forms'      => $container->helper->allForms()
     ]);
 
     //Auth

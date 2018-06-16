@@ -687,7 +687,7 @@ li {
 }
 p {
   font-family: 'Poppins', sans-serif;
-  color: #99abb4;
+  /* color: #99abb4; */
 }
 .h2,
 .h3,
@@ -2257,7 +2257,7 @@ textarea {
 .card {
   background: #ffffff none repeat scroll 0 0;
   margin: 15px 0;
-  padding: 20px;
+  padding: 40px;
   border: 0 solid #e7e7e7;
   border-radius: 5px;
   box-shadow: 0 5px 20px 0 rgba(0,0,0,0.15);
@@ -2268,7 +2268,7 @@ textarea {
 }
 .card-title {
   font-weight: 500;
-  font-size: 18px;
+  /* font-size: 18px; */
   line-height: 22px;
 }
 .card-title h4 {

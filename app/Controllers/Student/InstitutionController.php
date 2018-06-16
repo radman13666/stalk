@@ -161,4 +161,85 @@ class InstitutionController extends Controller
 
     }
 
+    /**
+     * Update information
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function update($request,$response,$args)
+    {
+
+       
+
+        $institution = Institution::find($args['id']);
+         // validation
+         $validator = $this->Validator->validate($request,[
+            'institution_name'          => v::notEmpty(),
+            'course_id'                 => v::notEmpty(),
+            'qualification'             => v::notEmpty(),
+            // 'student_number'            => v::notEmpty(),
+            'registration_number'       => v::notEmpty(),
+            'year_start'                => v::notEmpty(),
+            'year_stop'                 => v::notEmpty(),
+            'hostel_id'                 => v::notEmpty(),
+            's_form'                   => v::notEmpty(),
+            'student_bank_name'         => v::notEmpty(),
+            'student_bank_details'      => v::notEmpty(),
+            'institution_bank_name'     => v::notEmpty(),
+            'institution_bank_details'  => v::notEmpty(),
+            // 'other_bank_name'           => v::notEmpty(),
+            // 'other_bank_details'        => v::notEmpty(),
+        ]);
+
+        // validation failed
+        if($validator->failed())
+        {
+            return $response->withRedirect($this->router->pathFor('institution.edit',[
+                'id' => $args['id']
+            ]));
+        }
+
+        /**
+         * Update the information
+         */
+
+        $update = $institution->update([
+            'school_id'                => ucwords($request->getParam('institution_name')),
+            'course_id'                => $request->getParam('course_id'),
+            'qualification'            => $request->getParam('qualification'),
+            'student_number'           => $request->getParam('student_number'),
+            'registration_number'      => $request->getParam('registration_number'),
+            'year_start'               => $request->getParam('year_start'),
+            'year_stop'                => $request->getParam('year_stop'),
+            'hostel_id'                => $request->getParam('hostel_id'),
+            's_form'                   => $request->getParam('s_form'),
+            'student_bank_name'        => $request->getParam('student_bank_name'),
+            'student_bank_details'     => $request->getParam('student_bank_details'),
+            'institution_bank_name'    => $request->getParam('institution_bank_name'),
+            'institution_bank_details' => $request->getParam('institution_bank_details'),
+            'other_bank_name'          => $request->getParam('other_bank_name'),
+            'other_bank_details'       => $request->getParam('other_bank_details'),
+            'created_by'               => ucwords($this->auth->user()->name)
+        ]);
+
+        /**
+        * Update student school and level
+        * 
+        */
+        $new_data = Institution::find($args['id']);
+
+        $this->students->schoolForm($new_data->student_id,$new_data);
+
+        //   add a flash message
+        $this->flash->addMessage('success', 'Information has been updated successfully');
+        
+        return $response->withRedirect($this->router->pathFor('institution.edit',[
+            'id' => $new_data->id
+        ]));
+
+    }
+
 }

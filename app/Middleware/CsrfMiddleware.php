@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Middleware;
+/**
+ * Csrf Middleware to prevent csrf attack
+ */
 
 class CsrfMiddleware extends Middleware 
 {

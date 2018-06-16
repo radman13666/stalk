@@ -56,12 +56,16 @@ $app->group('', function(){
   
     // Students
     $this->get('/students','StudentController:index')->setName('student.index');
+    $this->get('/students/search','StudentController:search')->setName('student.search');
     //create
     $this->get('/students/create','StudentController:create')->setName('student.create');
     $this->post('/students/create','StudentController:store');
     // update
     $this->get('/students/{id}/edit','StudentController:edit')->setName('student.edit');
     $this->put('/students/{id}/edit','StudentController:update');
+
+    // single
+    $this->get('/students/{id}/view','StudentController:show')->setName('student.show');
 
 
     $this->get('/students/secondary','SecondaryController:create')->setName('secondary.create');
@@ -118,6 +122,7 @@ $app->group('', function(){
     $this->post('/institutions/create','InstitutionController:store');
 
     $this->get('/institutions/{id}/edit','InstitutionController:edit')->setName('institution.edit');
+    $this->put('/institutions/{id}/edit','InstitutionController:update');
 
 })->add( new AuthMiddleware($container));
 

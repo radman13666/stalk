@@ -1,6 +1,9 @@
 <?php
 namespace App\Middleware;
 
+/**
+ * Middleware to handle old input
+ */
 class OldInputMiddleware extends Middleware
 {
     public function __invoke($request,$response,$next)

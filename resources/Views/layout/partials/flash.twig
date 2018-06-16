@@ -14,3 +14,12 @@
         </div>
     </div>
 {% endif %}
+
+
+{% if flash.getMessage('warning')%}
+    <div class="col-md-7 offset-md-2">
+        <div class="alert alert-warning" role="alert">
+           <i class="fa fa-minus-circle" aria-hidden="true"></i>   {{ flash.getMessage('warning') | first }}
+        </div>
+    </div>
+{% endif %}

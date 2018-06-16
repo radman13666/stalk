@@ -8,7 +8,7 @@ class Auth
 {
    
     /**
-     * Return authenticated info
+     * Return authenticated user info
      *
      * @return void
      */
