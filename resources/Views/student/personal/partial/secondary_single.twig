@@ -14,13 +14,13 @@
 
                         <p> <span class="text-mute"> Year of Start :</span>
                             <span class="single_item">  
-                                {{ institution.year_start }}
+                                {{ institution.year_start | date('d M, Y') }}
                             </span>
                         </p>
 
                         <p> <span class="text-mute"> Year of Completion :</span> 
                             <span class="single_item"> 
-                                {{ institution.year_stop }}
+                                {{ institution.year_stop | date('d M, Y')}}
                             </span>
                          </p>
 

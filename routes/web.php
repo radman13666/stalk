@@ -57,6 +57,8 @@ $app->group('', function(){
     // Students
     $this->get('/students','StudentController:index')->setName('student.index');
     $this->get('/students/search','StudentController:search')->setName('student.search');
+    // trash
+    $this->put('/students/{id}/trash','StudentController:trash')->setName('student.trash');
     //create
     $this->get('/students/create','StudentController:create')->setName('student.create');
     $this->post('/students/create','StudentController:store');

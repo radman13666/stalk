@@ -1,65 +1,193 @@
+
 {% extends 'layout/master.twig' %}
 
 {% block content %}
 
-    <div class="row">
-                    <div class="col-md-3">
-                        <div class="card p-30">
-                            <div class="media">
-                                <div class="media-left meida media-middle">
-                                    <span><i class="fa fa-usd f-s-40 color-primary"></i></span>
-                                </div>
-                                <div class="media-body media-text-right">
-                                    <h2>568120</h2>
-                                    <p class="m-b-0">Total Revenue</p>
-                                </div>
-                            </div>
+<div class="car ">
+
+    <h3 class="card-tite  font-weight-bold "> 
+        <span class="text-success">
+                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+        </span>
+
+        &nbsp;&nbsp; 
+
+        <span class="text-success">  Hello  </span> 
+        &nbsp;&nbsp; 
+        <span class="text-info">{{ auth.user.name}}</span>
+
+    <small class="float-right text-warning">
+            <i class="fa fa-certificate" aria-hidden="true"></i> 
+           <span class="text-capitalize "> 
+                {{ auth.permission.role}}
+           </span>
+    </small>
+    </h3>
+  
+
+</div>
+<hr>
+<br>
+
+
+        <div class="card">
+        <div class="card-body">
+
+        <div class="row">
+           <a href="{{path_for('student.index')}}">
+            <div class="col-md-3">
+                <div class="card p-30">
+                    <div class="media">
+                        <div class="media-left meida media-middle">
+                            <span>
+
+                                <i class="fa fa-users f-s-40 color-primary" aria-hidden="true"></i>
+                            </span>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card p-30">
-                            <div class="media">
-                                <div class="media-left meida media-middle">
-                                    <span><i class="fa fa-shopping-cart f-s-40 color-success"></i></span>
-                                </div>
-                                <div class="media-body media-text-right">
-                                    <h2>1178</h2>
-                                    <p class="m-b-0">Sales</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card p-30">
-                            <div class="media">
-                                <div class="media-left meida media-middle">
-                                    <span><i class="fa fa-archive f-s-40 color-warning"></i></span>
-                                </div>
-                                <div class="media-body media-text-right">
-                                    <h2>25</h2>
-                                    <p class="m-b-0">Stores</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card p-30">
-                            <div class="media">
-                                <div class="media-left meida media-middle">
-                                    <span><i class="fa fa-user f-s-40 color-danger"></i></span>
-                                </div>
-                                <div class="media-body media-text-right">
-                                    <h2>847</h2>
-                                    <p class="m-b-0">Customer</p>
-                                </div>
-                            </div>
+                        <div class="media-body media-text-right">
+                            <h2>{{ students}}</h2>
+                            <p class="m-b-0">Students</p>
                         </div>
                     </div>
                 </div>
-{# 
-                <div class="row bg-white m-l-0 m-r-0 box-shadow ">
+                </a>
+            </div>
 
-                </div> #}
-              
+           
+            <div class="col-md-3">
+             <a href="{{ path_for('school.index')}}">
+                <div class="card p-30">
+                    <div class="media">
+                        <div class="media-left meida media-middle">
+                            <span>
+                            <i class="fa fa-university f-s-40 color-success" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="media-body media-text-right">
+                            <h2>{{ schools }}</h2>
+                            <p class="m-b-0">Institutions</p>
+                        </div>
+                    </div>
+                </div>
+                 </a>
+            </div>
+           
+            <div class="col-md-3">
+               <a href="{{ path_for('bank.index')}}">
+                <div class="card p-30">
+                    <div class="media">
+                        <div class="media-left meida media-middle">
+                            <span>
+                            <i class="fa fa-credit-card-alt f-s-40 color-warning" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="media-body media-text-right">
+                            <h2>{{ banks }}</h2>
+                            <p class="m-b-0">Banks</p>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+          
+            <div class="col-md-3">
+                <a href="{{ path_for('user.index')}}">
+                <div class="card p-30">
+                    <div class="media">
+                        <div class="media-left meida media-middle">
+                            <span><i class="fa fa-user-plus f-s-40 color-danger"></i></span>
+                        </div>
+                        <div class="media-body media-text-right">
+                            <h2>{{ users }}</h2>
+                            <p class="m-b-0">Users</p>
+                        </div>
+                    </div>
+                </div>
+                 </a>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    {# second row #}
+
+        <div class="card">
+        <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-3">
+               <a href="{{ path_for('course.index')}}">
+                <div class="card p-30">
+                    <div class="media">
+                        <div class="media-left meida media-middle">
+                            <span>
+                                <i class="fa fa-id-card f-s-40 color-warning" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="media-body media-text-right">
+                            <h2>{{ courses}}</h2>
+                            <p class="m-b-0">Courses</p>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+
+
+            <div class="col-md-3">
+               <a href="{{ path_for('subject.index')}}">
+                <div class="card p-30">
+                    <div class="media">
+                        <div class="media-left meida media-middle">
+                            <span>
+                            <i class="fa fa-address-book f-s-40 color-danger" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="media-body media-text-right">
+                            <h2>{{ subjects }}</h2>
+                            <p class="m-b-0">Subjects</p>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+{# 
+            <div class="col-md-3">
+               <a href="{{ path_for('course.index')}}">
+                <div class="card p-30">
+                    <div class="media">
+                        <div class="media-left meida media-middle">
+                            <span>
+                            <i class="fa fa-book f-s-40 color-primary" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="media-body media-text-right">
+                            <h2>{{ districts }}</h2>
+                            <p class="m-b-0">Districts</p>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div> #}
+
+            <div class="col-md-3">
+               <a href="{{ path_for('hostel.index')}}">
+                <div class="card p-30">
+                    <div class="media">
+                        <div class="media-left meida media-middle">
+                            <span><i class="fa fa-building f-s-40 color-info"></i></span>
+                        </div>
+                        <div class="media-body media-text-right">
+                            <h2>{{ hostels  }}</h2>
+                            <p class="m-b-0">Hostels</p>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+        </div>
+
+</div>
+ </div>             
 
 {% endblock %}

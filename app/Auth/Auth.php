@@ -3,6 +3,7 @@
 namespace App\Auth;
 
 use App\Models\User\User;
+use App\Models\User\Role;
 
 class Auth 
 {
@@ -53,6 +54,20 @@ class Auth
     {
         unset($_SESSION['user']);
         return true;
+    }
+
+    /**
+     * This method return user roles
+     *
+     * @return void
+     */
+    public function permission()
+    {
+        $role = Role::where('id','=',$this->user()->role_id)
+                    ->get();
+
+        return $role[0];
+
     }
 
 }

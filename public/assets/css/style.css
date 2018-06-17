@@ -825,7 +825,8 @@ h6.h1 {
 }
 .color-success,
 .text-success {
-  color: #26dad2;
+  /* color: #26dad2; */
+  color:#21ba45
 }
 .color-info,
 .text-info {
@@ -4795,7 +4796,12 @@ footer p {
 .recent-comment .media-body p {
   margin-bottom: 10px;
   line-height: 16px;
-  color: #99abb4;
+  /* color: #99abb4; */
+
+  color: #616d88;
+  font-size: 15px;
+  font-weight: bold;
+
 }
 .recent-comment .comment-date {
   position: absolute;

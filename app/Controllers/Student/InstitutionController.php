@@ -57,18 +57,21 @@ class InstitutionController extends Controller
             'institution_name'          => v::notEmpty(),
             'course_id'                 => v::notEmpty(),
             'qualification'             => v::notEmpty(),
-            // 'student_number'            => v::notEmpty(),
             'registration_number'       => v::notEmpty(),
             'year_start'                => v::notEmpty(),
             'year_stop'                 => v::notEmpty(),
             'hostel_id'                 => v::notEmpty(),
-            's_form'                   => v::notEmpty(),
+            's_form'                    => v::notEmpty(),
             'student_bank_name'         => v::notEmpty(),
-            'student_bank_details'      => v::notEmpty(),
+            'student_bank_account'      => v::notEmpty(),
+            'student_bank_address'      => v::notEmpty(),
             'institution_bank_name'     => v::notEmpty(),
-            'institution_bank_details'  => v::notEmpty(),
+            'institution_bank_account'  => v::notEmpty(),
+            'institution_bank_address'  => v::notEmpty(),
+            // 'student_number'            => v::notEmpty(),
             // 'other_bank_name'           => v::notEmpty(),
-            // 'other_bank_details'        => v::notEmpty(),
+            // 'other_bank_account'        => v::notEmpty(),
+            // 'other_bank_address'        => v::notEmpty(),
         ]);
 
         // validation failed
@@ -91,11 +94,14 @@ class InstitutionController extends Controller
                         'hostel_id'                => $request->getParam('hostel_id'),
                         's_form'                   => $request->getParam('s_form'),
                         'student_bank_name'        => $request->getParam('student_bank_name'),
-                        'student_bank_details'     => $request->getParam('student_bank_details'),
+                        'student_bank_account'     => $request->getParam('student_bank_account'),
+                        'student_bank_address'     => $request->getParam('student_bank_address'),
                         'institution_bank_name'    => $request->getParam('institution_bank_name'),
-                        'institution_bank_details' => $request->getParam('institution_bank_details'),
+                        'institution_bank_account' => $request->getParam('institution_bank_account'),
+                        'institution_bank_address' => $request->getParam('institution_bank_address'),
                         'other_bank_name'          => $request->getParam('other_bank_name'),
-                        'other_bank_details'       => $request->getParam('other_bank_details'),
+                        'other_bank_account'       => $request->getParam('other_bank_account'),
+                        'other_bank_address'       => $request->getParam('other_bank_address'),
                         'created_by'               => ucwords($this->auth->user()->name)
                     ]);
     
@@ -172,26 +178,27 @@ class InstitutionController extends Controller
     public function update($request,$response,$args)
     {
 
-       
-
         $institution = Institution::find($args['id']);
          // validation
          $validator = $this->Validator->validate($request,[
             'institution_name'          => v::notEmpty(),
             'course_id'                 => v::notEmpty(),
             'qualification'             => v::notEmpty(),
-            // 'student_number'            => v::notEmpty(),
             'registration_number'       => v::notEmpty(),
             'year_start'                => v::notEmpty(),
             'year_stop'                 => v::notEmpty(),
             'hostel_id'                 => v::notEmpty(),
-            's_form'                   => v::notEmpty(),
+            's_form'                    => v::notEmpty(),
             'student_bank_name'         => v::notEmpty(),
-            'student_bank_details'      => v::notEmpty(),
+            'student_bank_account'      => v::notEmpty(),
+            'student_bank_address'      => v::notEmpty(),
             'institution_bank_name'     => v::notEmpty(),
-            'institution_bank_details'  => v::notEmpty(),
+            'institution_bank_account'  => v::notEmpty(),
+            'institution_bank_address'  => v::notEmpty(),
+            // 'student_number'            => v::notEmpty(),
             // 'other_bank_name'           => v::notEmpty(),
-            // 'other_bank_details'        => v::notEmpty(),
+            // 'other_bank_account'        => v::notEmpty(),
+            // 'other_bank_address'        => v::notEmpty(),
         ]);
 
         // validation failed
@@ -217,12 +224,15 @@ class InstitutionController extends Controller
             'hostel_id'                => $request->getParam('hostel_id'),
             's_form'                   => $request->getParam('s_form'),
             'student_bank_name'        => $request->getParam('student_bank_name'),
-            'student_bank_details'     => $request->getParam('student_bank_details'),
+            'student_bank_account'     => $request->getParam('student_bank_account'),
+            'student_bank_address'     => $request->getParam('student_bank_address'),
             'institution_bank_name'    => $request->getParam('institution_bank_name'),
-            'institution_bank_details' => $request->getParam('institution_bank_details'),
+            'institution_bank_account' => $request->getParam('institution_bank_account'),
+            'institution_bank_address' => $request->getParam('institution_bank_address'),
             'other_bank_name'          => $request->getParam('other_bank_name'),
-            'other_bank_details'       => $request->getParam('other_bank_details'),
-            'created_by'               => ucwords($this->auth->user()->name)
+            'other_bank_account'       => $request->getParam('other_bank_account'),
+            'other_bank_address'       => $request->getParam('other_bank_address'),
+            
         ]);
 
         /**

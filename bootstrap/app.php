@@ -71,8 +71,9 @@ ini_set('display_errors','On');
 
     //Auth
     $view->getEnvironment()->addGlobal('auth',[
-        'user' => $container->auth->user(),
-        'check' =>  $container->auth->check()
+        'user'       => $container->auth->user(),
+        'check'      =>  $container->auth->check(),
+        'permission' => $container->auth->permission(),
     ]);
 
     // flash message

@@ -19,11 +19,14 @@ class Institution extends Model
         'hostel_id',
         's_form',
         'student_bank_name',
-        'student_bank_details',
+        'student_bank_account',
+        'student_bank_address',
         'institution_bank_name',
-        'institution_bank_details',
+        'institution_bank_account',
+        'institution_bank_address',
         'other_bank_name' ,
-        'other_bank_details',
+        'other_bank_account',
+        'other_bank_address',
         'created_by'
        
     ];

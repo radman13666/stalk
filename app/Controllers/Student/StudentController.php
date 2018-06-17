@@ -2,9 +2,12 @@
 
 namespace App\Controllers\Student;
 
+use Carbon\Carbon as Carbon;
 use App\Controllers\Controller;
 use App\Models\Student\Student;
+use App\Models\Student\Course;
 use App\Models\Category\School;
+use App\Models\Category\Hostel;
 use App\Models\Student\District;
 use App\Models\Student\Secondary;
 use App\Models\Student\Institution;
@@ -41,6 +44,7 @@ class StudentController extends Controller
 
         $students = School::Join('students', 'schools.id','=','students.school')
                             ->orderBy('students.name','ASC')
+                            ->where('students.deleted','0')
                             ->paginate(10,['*'],'page',$request->getParam('page'));
                                          
         $path = $this->files->fileDir();
@@ -464,6 +468,7 @@ class StudentController extends Controller
                            ->where('students.gender','like',"%$gender%")
                            ->where('students.current_state','like',"%$status%")
                            ->where('students.s_form','like',"%$form%")
+                           ->where('deleted','0')
                            ->orderBy('students.name','ASC')
                            ->get();
                                         
@@ -491,6 +496,11 @@ class StudentController extends Controller
         $student   = Student::find($args['id']);
         $school = School::find($student->school);
 
+        // calculating student age
+        $dob = Carbon::parse($student->dob);
+        $now  = Carbon::now();
+
+      
         // check student level
        if($student->level=='secondary')
        {
@@ -498,13 +508,17 @@ class StudentController extends Controller
 
             $subjects = StudentSubject::leftJoin('subjects','subjects.id','subject_id')
                                         ->where('student_id',$student->id)->get();
+            
+            
        }
        else
        {
-            $institution = Institution::where('student_id',$student->id)->get();
+             $institution = Institution::where('student_id',$student->id)->get();
+             $course      = Course::find($institution[0]->course_id);
+             $hostel      = Hostel::find($institution[0]->hostel_id);
        }
 
-        $secondary  = Secondary::where('student_id',$student->id)->get();
+        // $secondary  = Secondary::where('student_id',$student->id)->get();
         $path = $this->files->fileDir();
 
         return $this->view->render($response,'student/personal/single.twig',[
@@ -512,11 +526,39 @@ class StudentController extends Controller
             'school'      => $school,
             'path'        => $path,
             'institution' => $institution[0],
-            'subjects'   => $subjects
+            'subjects'    => $subjects,
+            'course'      => $course,
+            'hostel'      => $hostel,
+            'age'         => $dob->diffInYears($now)
         ]);
            
     }
 
+
+    /**
+     * Trash 
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function trash($request,$response,$args)
+    {
+        $trash = Student::find($args['id']);
+        
+            $trash->update([
+                'deleted_by' => $this->auth->user()->name,
+                'deleted'    => '1',
+                'deleted_at' => date('Y-m-d H:i:s')
+            ]);
+    
+            // flash message
+        $this->flash->addMessage('danger', ucwords($trash->name).'  has been  deleted');
+         
+        return $response->withRedirect($this->router->pathFor('student.index'));
+
+    }
 
 
 }

@@ -12,6 +12,19 @@
                             </span>
                         </p>
 
+                         <p><span class="text-mute"> Qualification:</span>
+                            <span class="single_item"> 
+                                 {{ institution.qualification }}
+                            </span>
+                        </p>
+
+                        <p><span class="text-mute"> Course:</span>
+                            <span class="single_item"> 
+                                 {{ course.name }}
+                            </span>
+                        </p>
+
+
                          <p><span class="text-mute"> Registration number:</span>
                             <span class="single_item"> 
                                  {{ institution.registration_number  }}
@@ -27,58 +40,142 @@
 
                         <p> <span class="text-mute"> Year of Start :</span>
                             <span class="single_item">  
-                                {{ institution.year_start }}
+                                {{ institution.year_start | date('d M, Y') }}
                             </span>
                         </p>
 
                         <p> <span class="text-mute"> Year of Completion :</span> 
                             <span class="single_item"> 
-                                {{ institution.year_stop }}
+                                {{ institution.year_stop | date('d M, Y')}}
                             </span>
                          </p>
 
-                        <p> <span class="text-mute"> Bank :</span> 
+                        <p> <span class="text-mute"> Form:</span> 
                             <span class="single_item"> 
-                                {{institution.bank }}
+                                {{institution.s_form }}
                             </span>
                          </p>
-
-                        <p> <span class="text-mute"> Bank Account :</span>
-                            <span class="single_item"> 
-                                {{institution.bank_account }}
-                            </span>
-                        </p>
-
-                        <p> <span class="text-mute"> Bank Address:</span> 
-                            <span class="single_item"> 
-                                {{ institution.bank_address }}
-                            </span>
-                        </p>
-
-                        <p> <span class="text-mute"> Student Index/Number :</span>
-                            <span class="single_item"> 
-                                {{institution.student_number}}
-                            </span>
-                        </p>
-
-                        <p> <span class="text-mute"> stream:</span> 
-                            <span class="single_item"> 
-                                {{institution.stream }}
-                            </span>
-                        </p>
-                        
-                        <p> <span class="text-mute"> Favourite Subject:</span>
-                            <span class="single_item"> 
-                                {{ institution.fav_subject }}
-                            </span>
-                        </p>
-
-                        <p> <span class="text-mute"> Favourite Sport :</span> 
-                            <span class="single_item"> 
-                                {{institution.fav_sport}}
-                            </span>
-                         </p> 
                     </div>
             </div>
         </div>
 
+
+       <div class="card d-flex justify-content-center" >
+            <div class="card-body">
+                <h3 class="text-info"> <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+                &nbsp;&nbsp; &nbsp;&nbsp; Bank Details
+                
+                </h3>
+                <hr>
+                   <div class="single_p" style="">
+                   {# Student bank details #}
+                        <p><span class="text-mute"> Student Bank:</span>
+                            <span class="single_item"> 
+                                 {{ institution.student_bank_name  }}
+                            </span>
+                        </p>
+
+                         <p><span class="text-mute"> Student Bank Account:</span>
+                            <span class="single_item"> 
+                                 {{ institution.student_bank_account}}
+                            </span>
+                        </p>
+
+                         <p><span class="text-mute"> Student Bank Address:</span>
+                            <span class="single_item"> 
+                                 {{ institution.student_bank_address}}
+                            </span>
+                        </p>
+
+                        <hr>
+                     {# Institution bank details #}
+                        <p><span class="text-mute"> Institution Bank:</span>
+                            <span class="single_item"> 
+                                 {{ institution.institution_bank_name  }}
+                            </span>
+                        </p>
+
+                         <p><span class="text-mute"> Institution Bank Account:</span>
+                            <span class="single_item"> 
+                                 {{ institution.institution_bank_account}}
+                            </span>
+                        </p>
+
+                         <p><span class="text-mute"> Institution  Bank Address:</span>
+                            <span class="single_item"> 
+                                 {{ institution.institution_bank_address}}
+                            </span>
+                        </p>
+                         {# Student bank details #}
+
+                         {% if  institution.other_bank_name %}
+                        <hr>
+                        <p><span class="text-mute"> Other Bank:</span>
+                            <span class="single_item"> 
+                                 {{ institution.other_bank_name  }}
+                            </span>
+                        </p>
+
+                         <p><span class="text-mute"> Other Bank Account:</span>
+                            <span class="single_item"> 
+                                 {{ institution.other_bank_account}}
+                            </span>
+                        </p>
+
+                         <p><span class="text-mute"> Other Bank Address:</span>
+                            <span class="single_item"> 
+                                 {{ institution.other_bank_address}}
+                            </span>
+                        </p>
+                        {% endif %}
+                      
+                    </div>
+            </div>
+        </div>
+
+
+<div class="card d-flex justify-content-center" >
+            <div class="card-body">
+                <h3 class="text-info"> <i class="fa fa-hourglass-end" aria-hidden="true"></i>
+                &nbsp;&nbsp; &nbsp;&nbsp; Accommodation
+                
+                </h3>
+                <hr>
+                   <div class="single_p" style="">
+                   {# Student bank details #}
+                        <p><span class="text-mute"> Hostel:</span>
+                            <span class="single_item"> 
+                                 {{ hostel.hostel_name  }}
+                            </span>
+                        </p>
+
+                         <p><span class="text-mute"> Owner Name:</span>
+                            <span class="single_item"> 
+                                 {{ hostel.owner_name  }}
+                            </span>
+                        </p>
+
+                         <p><span class="text-mute"> Owner Phone:</span>
+                            <span class="single_item"> 
+                                {{ hostel.owner_phone  }}
+                            </span>
+                        </p>
+
+                           <p><span class="text-mute"> Owner Email:</span>
+                            <span class="single_item"> 
+                                {{ hostel.owner_email  }}
+                            </span>
+                        </p>
+                        <hr>
+                        <p><span class="text-mut font-weight-bold"> Address:</span>
+                        <br>
+                            <span class="single_iem"> 
+                                {{ hostel.hostel_address  }}
+                            </span>
+                        </p>
+
+
+                     
+                    </div>
+            </div>
+        </div>
