@@ -9,9 +9,7 @@
 @import url(spinners.css);
 @import url(animate.css);
 /*
-    Template: Ela Admin
-    Author: Zebra Theme
-    Developer by: Zebra Theme
+
 
     Table of Content
     ================
@@ -5508,7 +5506,7 @@ tbody tr td:last-child {
 }
 .login-form {
   background: #ffffff;
-  padding: 30px 30px 20px;
+  padding: 1px 30px 20px;
   border-radius: 2px;
 }
 .login-form h4 {
@@ -6188,7 +6186,7 @@ tbody tr td:last-child {
   color: #4680ff;
 }
 .media-body p {
-  color: #99abb4;
+  /* color: #99abb4; */
   line-height: 15px;
 }
 .example {

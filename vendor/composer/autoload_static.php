@@ -36,6 +36,7 @@ class ComposerStaticInitdcfe14263d5c414e4c3c56161a9f5487
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
+            'PhpOffice\\PhpSpreadsheet\\' => 25,
         ),
         'I' => 
         array (
@@ -104,6 +105,10 @@ class ComposerStaticInitdcfe14263d5c414e4c3c56161a9f5487
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'PhpOffice\\PhpSpreadsheet\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet',
         ),
         'Interop\\Container\\' => 
         array (

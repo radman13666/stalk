@@ -15,9 +15,12 @@ class LoginController extends Controller
      * @param [type] $response
      * @return void
      */
-    public function index($request,$response)
+    public function index($request,$response,$args)
     {
-        return $this->view->render($response,'home.twig');
+        $logo = 'http://'.$_SERVER['HTTP_HOST'].'/stalk/storage/images/logo/straighttalk.jpeg';
+        return $this->view->render($response,'home.twig',[
+            'logo' => $logo
+        ]);
     }
 
     /**

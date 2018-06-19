@@ -46,3 +46,11 @@
 .single_item{
     font-weight: bold;
 }
+
+/* dashboard */
+.m-b-0{
+
+  color: #616d88;
+  font-size: 15px;
+  font-weight: bold;
+}
