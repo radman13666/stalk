@@ -4,16 +4,19 @@
 
 
         <h4 class="card-title text-primary">  <i class="fa fa-building" aria-hidden="true"></i>
-           Manage Hostels
+           Manage Accomodation
+
+           {% if auth.permission.id in [2,3,4,5 ]%}
                 <a href="{{ path_for('hostel.create') }}" class="btn  btn-primary pull-right">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                New Hostel
+                New Accomodation
                 </a>
+            {% endif %}
             </h4>
 
     <div class="col-md-10 card">
      <div class="card-body">
-        <h6 class="card-subtitle">Manage  Hostels </h6>
+        <h6 class="card-subtitle">Manage  Accomodation </h6>
 
             <form method="POST" action="{{ path_for('hostel.index')}}">
                 <div class="form-row">
@@ -22,7 +25,7 @@
                     </div>
                   
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <input type="text"  value="{{old.owner_name}}" name="owner_name" class="form-control" placeholder="Owner name">
                     </div>
 
@@ -49,7 +52,7 @@
                             <th>Owner </th>
                             <th>Phone Number</th>
                             <th>Edit</th>
-                            <th>View</th>
+                            {# s #}
                             {# <th>Delete</th> #}
                         </tr>
                     </thead>
@@ -66,21 +69,30 @@
                             <td>{{ item.owner_phone }}</td>
 
                            <td>
+                           {% if auth.permission.id in [3,4,5 ]%}
                               <a href="{{ path_for('hostel.edit',{id:item.id})}}" 
-                              onClick="return confirm('Are you sure  you want to edit {{ item.hostel_name }}?')" class="btn btn-info">
+                              onClick="return confirm('Are you sure  you want to edit {{ item.hostel_name }}?')"
+                               class="btn btn-info">
                                <i class="fa fa-pencil-square" aria-hidden="true"></i>
                               </a>
+
+                            {% else  %}
+                            <button class="btn btn-info" disabled>
+                               <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                              </button>
+                            {% endif %}
                                
                             </td>
 
-                                 <td>
+                                 {# <td>
                               <a href="{{ path_for('hostel.edit',{id:item.id})}}" class="btn btn-primary">
                                <i class="fa fa-eye" aria-hidden="true"></i>
                               </a>
                                
-                            </td>
-                            <td>
-                            {# <form method="POST" action="">
+                            </td> #}
+                          
+                            {#   <td>
+                            <form method="POST" action="">
                                 <button class="btn btn-danger" onClick=" return confirm('Are you sure you want to delete this user ?')" type="submit">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                 <input type="hidden" name="_METHOD" value="PUT">

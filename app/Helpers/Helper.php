@@ -184,4 +184,14 @@ class Helper
 
     }
 
+    /**
+     * Displaying the logo
+     *
+     * @return void
+     */
+    public function logo()
+    {
+        return 'http://'.$_SERVER['HTTP_HOST'].'/stalk/storage/images/logo/straighttalk.jpeg';
+    }
+
 }

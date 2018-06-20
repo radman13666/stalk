@@ -10,8 +10,8 @@ require_once  __DIR__ .'/../vendor/autoload.php';
 
  use Respect\Validation\Validator as v;
 
- error_reporting(E_ALL);
-ini_set('display_errors','On');
+//  error_reporting(E_ALL);
+// ini_set('display_errors','On');
 
  $app = new \Slim\App([
      'settings' => [
@@ -66,7 +66,8 @@ ini_set('display_errors','On');
         'hostels'    => $container->helper->allHostels(),
         'courses'    => $container->helper->allCourses(),
         'schools'    => $container->helper->allSchools(),
-        'forms'      => $container->helper->allForms()
+        'forms'      => $container->helper->allForms(),
+        'logo'       => $container->helper->logo(),
     ]);
 
     //Auth

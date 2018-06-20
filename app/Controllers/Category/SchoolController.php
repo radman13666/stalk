@@ -76,7 +76,7 @@ class SchoolController extends Controller
                         ]);
 
         // flash messege
-        $this->flash->addMessage('success',ucwords($school->school_name).' has been created');
+        $this->flash->addMessage('success',ucwords($school->school_name).' has been added');
 
         return $response->withRedirect($this->router->pathFor('school.index'));
 

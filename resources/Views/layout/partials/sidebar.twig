@@ -19,7 +19,10 @@
                         </a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{ path_for('student.index')}}">All students</a></li>
+
+                                 {% if auth.permission.id in [2,3,4,5]  %}
                                 <li><a href="{{ path_for('student.create')}}">New student</a></li>
+                                {% endif %}
                         
                             </ul>
                         </li>
@@ -30,7 +33,10 @@
                         </a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{ path_for('school.index')}}">All Schools</a></li>
+
+                                 {% if auth.permission.id in [2,3,4,5]  %}
                                 <li><a href="{{ path_for('school.create')}}">New School</a></li>
+                                {% endif %}
                        
                             </ul>
                         </li>
@@ -41,7 +47,10 @@
                          <span class="hide-menu">Subjects</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{ path_for('subject.index')}}">All Subjects</a></li>
+
+                                 {% if auth.permission.id in [2,3,4,5]  %}
                                 <li><a href="{{ path_for('subject.create')}}">New subject</a></li> 
+                                {% endif %}
                             </ul>
                         </li>
 
@@ -50,7 +59,10 @@
                          <span class="hide-menu">Courses</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{ path_for('course.index')}}">All Courses</a></li>
+
+                                 {% if auth.permission.id in [2,3,4,5]  %}
                                 <li><a href="{{ path_for('course.create')}}">New Course</a></li> 
+                                {% endif %}
                             </ul>
                         </li>
 
@@ -59,7 +71,7 @@
 
                         <li class="nav-label">Categories</li>
                       
-
+                      {% if auth.permission == 4 %}
 					     <li> <a class="has-arrow  " href="#" aria-expanded="false">
                         <i class="fa fa-users" aria-hidden="true"></i>
                         <span class="hide-menu">Users</span></a>
@@ -68,14 +80,18 @@
                                 <li><a href="{{ path_for('auth.register')}}">New User</a></li>
                             </ul>
                         </li>
+                        {% endif %}
 
-
+                      
                         <li> <a class="has-arrow  " href="#" aria-expanded="false"> 
                         <i class="fa fa-money" aria-hidden="true"></i>
                         <span class="hide-menu">Banks</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{ path_for('bank.index')}}">Banks</a></li>
+                                <li><a href="{{ path_for('bank.index')}}">All Banks</a></li>
+
+                                {% if auth.permission.id in [2,3,4,5]  %}
                                 <li><a href="{{ path_for('bank.create') }}">New Bank</a></li>
+                                {% endif %}
                             </ul>
                         </li>
 
@@ -83,8 +99,12 @@
                        <i class="fa fa-building" aria-hidden="true"></i>
                         <span class="hide-menu">Hostels</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{ path_for('hostel.index')}}">Hostels</a></li>
-                                <li><a href="{{ path_for('hostel.create') }}">New Hostel</a></li>
+                                <li><a href="{{ path_for('hostel.index')}}">Accomodation</a></li>
+
+                                 {% if auth.permission.id in [2,3,4,5]  %}
+                                <li><a href="{{ path_for('hostel.create') }}">New Accomodation</a></li>
+                                {% endif %}
+
                             </ul>
                         </li>
                      

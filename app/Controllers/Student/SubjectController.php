@@ -20,6 +20,7 @@ class SubjectController extends Controller
     public function index($request,$response,$args)
     {
         $subjects = Subject::where('deleted','=','0')
+                            ->orderBy('name','ASC')
                             ->paginate(12,['*'],'page',$request->getParam('page'));
 
         return $this->view->render($response,'student/subject/index.twig',[

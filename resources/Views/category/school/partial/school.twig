@@ -5,10 +5,14 @@
 
         <h4 class="card-title text-primary"><i class="fa fa-university" aria-hidden="true"></i>
            Manage Schools or Institutions 
+           
+           {% if auth.permission.id in [2,3,4,5] %}
                 <a href="{{ path_for('school.create') }}" class="btn  btn-primary pull-right">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 New school
                 </a>
+            {% endif %}
+            
             </h4>
 
     <div class="col-md-10">
@@ -75,10 +79,15 @@
                             <td>{{ item.level }}</td>
 
                              <td>
+                             {% if auth.permission.id in [3,4,5 ]%}
                               <a href="{{ path_for('school.edit',{id:item.id})}}" onClick="return confirm('Are you sure  you want to edit this institution ?')" class="btn btn-success">
                                <i class="fa fa-pencil-square" aria-hidden="true"></i>
                               </a>
-                               
+                               {% endif %}
+
+                               <button  class="btn btn-success" disabled>
+                               <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                              </button>
                             </td>
                             {# <td>
                             <form method="POST" action="{{ path_for('subject.trash',{id:item.id})}}">

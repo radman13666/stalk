@@ -5,10 +5,13 @@
 
         <h4 class="card-title text-primary"><i class="fa fa-money" aria-hidden="true"></i>
            Manage Banks
+
+            {% if auth.permission.id in [2,3,4,5 ]%}
                 <a href="{{ path_for('bank.create') }}" class="btn  btn-primary pull-right">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 New Bank
                 </a>
+            {% endif %}
             </h4>
 
     <div class="col-md-7">
@@ -47,10 +50,17 @@
                         <tr>
                             <td>{{ item.bank_name }}</td>
                              <td>
-                              <a href="{{ path_for('bank.edit',{id:item.id})}}" onClick="return confirm('Are you sure  you want to edit this institution ?')" class="btn btn-success">
+                              {% if auth.permission.id in [2,3,4,5 ]%}
+                              <a href="{{ path_for('bank.edit',{id:item.id})}}"
+                               onClick="return confirm('Are you sure  you want to edit this institution ?')" 
+                               class="btn btn-info">
                                <i class="fa fa-pencil-square" aria-hidden="true"></i>
                               </a>
-                               
+                               {% else %}
+                                 <button class="btn btn-info" disabled>
+                               <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                              </button>
+                               {% endif %}
                             </td>
                             {# <td>
                             <form method="POST" action="{{ path_for('subject.trash',{id:item.id})}}">

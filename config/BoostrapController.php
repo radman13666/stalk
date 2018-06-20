@@ -65,3 +65,8 @@ $container['HostelController'] = function($container){
 $container['InstitutionController'] = function($container){
     return new \App\Controllers\Student\InstitutionController($container);
 };
+
+// Change Password controller
+$container['ChangePasswordController'] = function($container){
+    return new \App\Controllers\Setting\ChangePasswordController($container);
+};

@@ -4,10 +4,15 @@
 
         <h4 class="card-title text-primary"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
             Manage students
+
+            {% if auth.permission.id in [2,3,4,5] %}
                 <a href="{{ path_for('student.create') }}" class="btn  btn-primary pull-right">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 New student
                 </a>
+            {% endif %}
+
+         
             </h4>
         <h6 class="card-subtitle">Manage all users </h6>
 
@@ -116,10 +121,18 @@
                             <td>{{ item.s_form }}</td>
                             <td>{{ item.current_state }}</td>
                              <td>
+                             {% if auth.permission.id in [3,4,5] %}
                               <a href="{{ path_for('student.edit',{id:item.id})}}" 
                               onClick="return confirm('Are you sure  you want to edit {{ item.name }}?')" class="btn btn-info">
                                <i class="fa fa-pencil-square" aria-hidden="true"></i>
                               </a>
+                              {% else %}
+                              <button  onClick="return confirm('Are you sure  you want to edit {{ item.name }}?')" 
+                              class="btn btn-" disabled>
+                               <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                              </button>
+
+                              {% endif %}
                                
                             </td>
 
@@ -130,6 +143,8 @@
                                
                             </td>
                             <td>
+                            
+                            {% if auth.permission.id  in [4,5] %}
                             <form method="POST" action="{{path_for('student.trash',{id:item.id})}}">
                                 <button class="btn btn-danger" onClick=" return confirm('Are you sure you want to delete this user ?')" type="submit">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
@@ -137,6 +152,11 @@
                                 {{ csrf.field | raw}}
                                 </button>
                             </form>
+                            {% else %}
+                                <button  class="btn btn-danger" disabled>
+                               <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                              </button>
+                            {% endif %}
                             </td>
                           
                         </tr>

@@ -26,6 +26,7 @@ class HomeController  extends Controller
      */
     public function index($request,$response,$args)
     {
+
         $students = Student::where('deleted','0')->count();
         $courses  = Course::where('deleted','0')->count();
         $schools  = School::count();
@@ -33,6 +34,9 @@ class HomeController  extends Controller
         $subjects = Subject::where('deleted','0')->count();
         $users    = User::where('deleted','0')->count();
         $banks    = Bank::count();
+
+        // logo
+        
  
         return $this->view->render($response,'dashboard/dashboard.twig',[
             'students' => $students,
@@ -41,7 +45,7 @@ class HomeController  extends Controller
             'hostels'  => $hostels,
             'subjects' => $subjects,
             'users'    => $users,
-            'banks'    => $banks
+            'banks'    => $banks,
         ]);
 
     }
