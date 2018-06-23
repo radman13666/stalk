@@ -71,7 +71,7 @@
 
                         <li class="nav-label">Categories</li>
                       
-                      {% if auth.permission == 4 %}
+                      {% if auth.permission.id  in [4,5] %}
 					     <li> <a class="has-arrow  " href="#" aria-expanded="false">
                         <i class="fa fa-users" aria-hidden="true"></i>
                         <span class="hide-menu">Users</span></a>
@@ -97,7 +97,7 @@
 
                      <li> <a class="has-arrow  " href="#" aria-expanded="false"> 
                        <i class="fa fa-building" aria-hidden="true"></i>
-                        <span class="hide-menu">Hostels</span></a>
+                        <span class="hide-menu">Accomodation</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{ path_for('hostel.index')}}">Accomodation</a></li>
 
@@ -105,6 +105,17 @@
                                 <li><a href="{{ path_for('hostel.create') }}">New Accomodation</a></li>
                                 {% endif %}
 
+                            </ul>
+                        </li>
+
+                         <li class="nav-label">Reports</li>
+
+                         <li> <a class="has-arrow  " href="#" aria-expanded="false"> 
+                       <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                        <span class="hide-menu">Reports</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{ path_for('report.index')}}">Download Reports</a></li>
+                           
                             </ul>
                         </li>
                      

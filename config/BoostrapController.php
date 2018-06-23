@@ -70,3 +70,8 @@ $container['InstitutionController'] = function($container){
 $container['ChangePasswordController'] = function($container){
     return new \App\Controllers\Setting\ChangePasswordController($container);
 };
+
+// Generate report
+$container['ReportController'] = function($container){
+    return new \App\Controllers\Report\ReportController($container);
+};

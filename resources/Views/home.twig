@@ -3,7 +3,27 @@
 {% block body %}
         <div class="unix-login">
             <div class="container-fluid">
+            
                 <div class="row justify-content-center">
+
+             
+
+                <div class="col-lg-4">
+
+           
+              <img src="{{logo}}" height="270" width="270" alt="Logo" />
+
+                   <h2 class="text-danger font-weight-bold"> 
+                   Straight Talk Foundation   Bursary Database (STFBD)
+                   </h2>
+                   <h4 style="line-height: 2" class="text-info">
+
+                   STFBD keeps track of  all  students  on   Bursary offered by  Straight Talk Foundation in Karamonja Region.
+
+                   </h4>
+
+                </div>
+
                     <div class="col-lg-4">
                         <div class="login-content card">
 
@@ -11,8 +31,12 @@
 
                             <div class="login-form">
 
-                               <img src="{{logo}}" height="120" width="120" alt="Logo" />
-                                <h2 class="text-primary float-center">Login</h2>
+                              
+                                <h2 class="text-primary float-center">
+                                <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                                 &nbsp;&nbsp; &nbsp;&nbsp;
+                                Login
+                                </h2>
 
                                 <small>
                                 {% include 'layout/partials/flash.twig' %}
@@ -20,11 +44,11 @@
 
                                 <form method="POST" action="{{ path_for('auth.login')}}">
                                     <div class="form-group">
-                                        <label>Email address</label>
+                                        <label class="text-capitalize">Email address</label>
                                         <input type="email"  name="email" class="form-control" placeholder="Email">
                                     </div>
                                     <div class="form-group">
-                                        <label>Password</label>
+                                        <label class="text-capitalize">Password</label>
                                         <input type="password" name="password" class="form-control" placeholder="Password">
                                     </div>
                                     <div class="checkbox">
@@ -43,6 +67,7 @@
                             </div>
                         </div>
                     </div>
+                   
                 </div>
             </div>
         </div>

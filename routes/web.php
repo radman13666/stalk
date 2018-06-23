@@ -69,6 +69,10 @@ $app->group('', function(){
     $this->get('/hostels','HostelController:index')->setName('hostel.index');
     $this->post('/hostels','HostelController:search');
 
+    // Generating reports
+    $this->get('/reports','ReportController:index')->setName('report.index');
+    $this->post('/reports','ReportController:generate');
+
 
 })->add( new AuthMiddleware($container));
 

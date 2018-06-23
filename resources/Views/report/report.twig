@@ -1,0 +1,75 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+
+
+<form method="post" action="{{ path_for('report.index')}}">
+    <div class="form-row">
+
+        <div class="col-md-4">
+            <input type="text"  value="{{old.name}}" name="name" class="form-control" 
+            placeholder="Search by name">
+        </div>
+
+            <div class="col-md-4">
+            <select id="inputState" class="form-control text-capitalize" name="school" >
+                <option value="" selected>By Institution</option>
+                {% for school in helper.schools %}
+                <option value="{{ school.id }}">{{ school.school_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="col-md-4 mim" >
+            <select id="inputState" class="form-control text-capitalize" name="district" >
+                <option value="" selected>By District..</option>
+                {% for district in helper.districts %}
+                <option value="{{ district.district_name }}">{{ district.district_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="col-md-4">
+            <select id="inputState" class="form-control text-capitalize" name="form" >
+                <option value="" selected>By Form</option>
+                {% for form in helper.forms %}
+                <option value="{{ form.form_name }}">{{ form.form_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+            <div class="col-md-4">
+            <select id="inputState" class="form-control text-capitalize" name="gender" >
+                <option value="" selected>By Gender</option>
+                <option value="M" >Male</option>
+                    <option value="F">Female</option>
+            </select>
+        </div>
+        
+
+        <div class="col-md-4 mim">
+            <select id="inputState" class="form-control text-capitalize" name="status" >
+                    <option value="">Status.</option>
+                <option value="continuing">Continuing</option>
+                    <option value="completed">Completed</option>
+                <option value="dropout">Dropout</option>
+            </select>
+        </div>
+
+        {{ csrf.field | raw}}
+        <div class="col">
+            <button type="submit" class="btn btn-primary">
+            <i class="fa fa-download" aria-hidden="true"></i>
+            Export
+            
+            </button>
+        </div>
+
+
+    </div>
+</form>
+{% endblock %}

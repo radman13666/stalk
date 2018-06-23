@@ -17,6 +17,7 @@ class CrudMiddleware extends Middleware
             $this->container->flash->addMessage('danger','You do not have permission to perform this action');
 
             return $response->withRedirect($this->container->router->pathFor('dashboard'));
+          
         }
         $response = $next($request,$response);
         return $response;
