@@ -95,6 +95,18 @@
                             </ul>
                         </li>
 
+                    <li> <a class="has-arrow  " href="#" aria-expanded="false"> 
+                 <i class="fa fa-fax" aria-hidden="true"></i>
+                        <span class="hide-menu">Subcounties</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{ path_for('subcounty.index')}}">All Subcounties</a></li>
+
+                                {% if auth.permission.id in [2,3,4,5]  %}
+                                <li><a href="{{ path_for('subcounty.create') }}">New Subcounty</a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
+
                      <li> <a class="has-arrow  " href="#" aria-expanded="false"> 
                        <i class="fa fa-building" aria-hidden="true"></i>
                         <span class="hide-menu">Accomodation</span></a>

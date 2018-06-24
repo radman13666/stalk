@@ -75,3 +75,8 @@ $container['ChangePasswordController'] = function($container){
 $container['ReportController'] = function($container){
     return new \App\Controllers\Report\ReportController($container);
 };
+
+// subcounty controllers
+$container['SubcountyController'] = function($container){
+    return new \App\Controllers\Category\SubcountyController($container);
+};

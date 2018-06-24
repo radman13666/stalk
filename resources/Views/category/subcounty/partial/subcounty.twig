@@ -1,0 +1,94 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+
+        <h4 class="card-title text-primary">
+        <i class="fa fa-fax" aria-hidden="true"></i>
+           Manage Subcounties
+
+            {% if auth.permission.id in [2,3,4,5 ]%}
+                <a href="{{ path_for('subcounty.create') }}" class="btn  btn-primary pull-right">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                New Subcounty
+                </a>
+            {% endif %}
+            </h4>
+
+    <div class="col-md-10">
+        <h6 class="card-subtitle">Manage Subcounties</h6>
+
+            <form method="POST" action="{{ path_for('subcounty.index')}}">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <input type="text"  value="{{old.subcounty_name}}" name="subcounty_name" class="form-control"
+                         placeholder="Search by name">
+                    </div>
+
+                    <div class="col-md-4">
+                        <select class="form-control custom-select {{ errors.district_name ? 'is-invalid' :'' }}" name="district_name">
+                            <option value="">Choose ..</option>
+                                {% for district in helper.karamojadistricts %}
+                                    <option value="{{ district.district_name}}">{{ district.district_name}}</option>
+                                {% endfor %}
+                            </select>
+                
+                    </div>
+
+                    {{ csrf.field | raw}}
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </form>
+
+
+            <div class="table-responsive m-t-40">
+
+
+                <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>District</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        
+                    </tfoot>
+                    <tbody class="text-capitalize">
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.subcounty_name }}</td>
+                            <td>{{ item.district_name }}</td>
+                             <td>
+                              {% if auth.permission.id in [2,3,4,5 ]%}
+                              <a href="{{ path_for('subcounty.edit',{id:item.id})}}"
+                               onClick="return confirm('Are you sure  you want to edit this institution ?')" 
+                               class="btn btn-info">
+                               <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                              </a>
+                               {% else %}
+                                 <button class="btn btn-info" disabled>
+                               <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                              </button>
+                               {% endif %}
+                            </td>
+                            
+                          
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+             {% block subcounty %}
+             
+             {% endblock %}
+            </div>
+             
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}

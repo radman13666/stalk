@@ -1,0 +1,90 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+    <div class="card-header">
+        <h4 class="m-b-0 text-info ">
+      <i class="fa fa-fax" aria-hidden="true"></i>
+            Add a new Subcounty
+         </h4>
+    </div>
+
+    <div class="card-body">
+        <form action="{{ path_for('subcounty.edit',{id:subcounty.id})}}"  method ="POST" class="form-horizontal">
+            <div class="form-body">
+                <h3 class="box-title m-t-15">Subcounty Details</h3>
+                <hr class="m-t-0 m-b-40">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Subcounty Name <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"  name="subcounty_name" class="form-control {{ errors.subcounty_name ? 'is-invalid' :'' }} " 
+                                     placeholder="Subcounty " value="{{ subcounty.subcounty_name}}">
+                                 {% if errors.subcounty_name %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.subcounty_name | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+
+                  <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">District Name
+                            </label>
+                            <div class="col-md-9">
+                            <select class="form-control custom-select {{ errors.district_name ? 'is-invalid' :'' }}" name="district_name">
+                                    <option value="{{ subcounty.district_name}}">{{ subcounty.district_name }}</option>
+                                    {% for district in helper.karamojadistricts %}
+                                    <option value="{{ district.district_name}}">{{ district.district_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                 {% if errors.district_name %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.district_name | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+           
+                <input type="hidden" name="_METHOD" value="PUT" />
+           
+                <!--/row-->
+
+            <div class="form-actions ">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="pull-right">
+                             
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                        <div class="col-md-2 offset-md-5">
+                            <div class="pull-right">
+                                <button type="submit" class="btn   btn-primary btn-block">
+                                   Submit
+                                </button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            {{ csrf.field | raw}}
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

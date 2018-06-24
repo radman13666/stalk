@@ -46,6 +46,22 @@ class Helper
     }
 
     /**
+     * All district in Karamonja region
+     *
+     * @return void
+     */
+    public function karamojaDistricts()
+    {
+        $district =  District:: where('province','=','karamoja')
+                            ->orderBy('district_name','ASC')
+                            ->get();
+        // var_dump($district);
+        // die();
+        return $district;
+            
+    }
+
+    /**
      * Levels
      *
      * @param [type] $request

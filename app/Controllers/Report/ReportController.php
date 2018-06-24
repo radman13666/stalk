@@ -75,9 +75,26 @@ class ReportController extends Controller
         // Add some data
         $spreadsheet->setActiveSheetIndex(0)
                     ->setCellValue('A1', 'ID')
-                    ->setCellValue('B1', 'Name')
-                    ->setCellValue('C1', 'Course')
-                    ->setCellValue('D1', 'Email');
+                    ->setCellValue('B1', 'Full Name')
+                    ->setCellValue('C1', 'Date of Birth')
+                    ->setCellValue('D1', 'Enthnicity')
+                    ->setCellValue('E1', 'Gender')
+                    ->setCellValue('F1', 'School')
+                    ->setCellValue('G1', 'Form')
+                    ->setCellValue('H1', 'current State')
+                    ->setCellValue('I1', 'District')
+                    ->setCellValue('J1', 'Funder')
+                    ->setCellValue('K1', 'Student Phone')
+                    ->setCellValue('L1', 'Student Email')
+                    ->setCellValue('M1', 'Next of Kin')
+                    ->setCellValue('N1', 'Next of Kin Phone')
+                    ->setCellValue('O1', '2nd Next of Kin')
+                    ->setCellValue('P1', '2nd Next of Kin phone')
+                    ->setCellValue('Q1', 'Reason for Drop out')
+                    ->setCellValue('R1', 'Sub County')
+                    ->setCellValue('S1', 'Village');
+                   
+
 
         $count =0;
         foreach($students as $i => $student)
@@ -87,7 +104,22 @@ class ReportController extends Controller
             $spreadsheet->getActiveSheet()->setCellValue('A'.$i,$count+=1);
             $spreadsheet->getActiveSheet()->setCellValue('B'.$i,$student->name);
             $spreadsheet->getActiveSheet()->setCellValue('C'.$i,$student->dob);
-            $spreadsheet->getActiveSheet()->setCellValue('D'.$i,$student->gender);
+            $spreadsheet->getActiveSheet()->setCellValue('D'.$i,$student->ethnicity);
+            $spreadsheet->getActiveSheet()->setCellValue('E'.$i,$student->gender);
+            $spreadsheet->getActiveSheet()->setCellValue('F'.$i,$student->school_name);
+            $spreadsheet->getActiveSheet()->setCellValue('G'.$i,$student->s_form);
+            $spreadsheet->getActiveSheet()->setCellValue('H'.$i,$student->current_state);
+            $spreadsheet->getActiveSheet()->setCellValue('I'.$i,$student->dist_name);
+            $spreadsheet->getActiveSheet()->setCellValue('J'.$i,$student->funder);
+            $spreadsheet->getActiveSheet()->setCellValue('K'.$i,$student->student_phone);
+            $spreadsheet->getActiveSheet()->setCellValue('L'.$i,$student->student_email);
+            $spreadsheet->getActiveSheet()->setCellValue('M'.$i,$student->parent1_name);
+            $spreadsheet->getActiveSheet()->setCellValue('N'.$i,$student->parent1_phone);
+            $spreadsheet->getActiveSheet()->setCellValue('O'.$i,$student->parent2_name);
+            $spreadsheet->getActiveSheet()->setCellValue('P'.$i,$student->parent2_phone);
+            $spreadsheet->getActiveSheet()->setCellValue('Q'.$i,strip_tags($student->dropout_reason));
+            $spreadsheet->getActiveSheet()->setCellValue('R'.$i,$student->subcounty);
+            $spreadsheet->getActiveSheet()->setCellValue('S'.$i,$student->village);
         }
       
 

@@ -10,8 +10,8 @@ require_once  __DIR__ .'/../vendor/autoload.php';
 
  use Respect\Validation\Validator as v;
 
-//  error_reporting(E_ALL);
-// ini_set('display_errors','On');
+ error_reporting(E_ALL);
+ini_set('display_errors','On');
 
  $app = new \Slim\App([
      'settings' => [
@@ -56,6 +56,7 @@ require_once  __DIR__ .'/../vendor/autoload.php';
     $view->getEnvironment()->addGlobal('helper',[
         'roles'      => $container->helper->allRoles(),
         'districts'  => $container->helper->allDistricts(),
+        'karamojadistricts'  => $container->helper->karamojaDistricts(),
         'subjects'   => $container->helper->allSubjects(),
         'levels'     => $container->helper->allLevels(),
         'secondary'  => $container->helper->allSecondary(),

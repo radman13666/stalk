@@ -73,6 +73,10 @@ $app->group('', function(){
     $this->get('/reports','ReportController:index')->setName('report.index');
     $this->post('/reports','ReportController:generate');
 
+    // subcounty controller
+    $this->get('/subcounty','SubcountyController:index')->setName('subcounty.index');
+    $this->post('/subcounty','SubcountyController:search');
+
 
 })->add( new AuthMiddleware($container));
 
@@ -154,6 +158,10 @@ $app->group('', function(){
     $this->get('/institutions/{id}/edit','InstitutionController:edit')->setName('institution.edit');
     $this->put('/institutions/{id}/edit','InstitutionController:update');
 
+    // subcounty
+    $this->get('/subcounty/{id}/edit','SubcountyController:edit')->setName('subcounty.edit');
+    $this->put('/subcounty/{id}/edit','SubcountyController:update');
+
 })->add( new CruMiddleware($container));
 
 /*********************************************************************** 
@@ -195,6 +203,9 @@ $app->group('', function(){
     // institutions
     $this->get('/institutions/create','InstitutionController:create')->setName('institution.create');
     $this->post('/institutions/create','InstitutionController:store');
+    // subcounty
+    $this->get('/subcounty/create','SubcountyController:create')->setName('subcounty.create');
+    $this->post('/subcounty/create','SubcountyController:store');
 
 
 })->add( new CrMiddleware($container));
