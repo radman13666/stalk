@@ -46,20 +46,10 @@ class SecondaryController extends Controller
 
         $validate = $this->Validator->validate($request,[
             'school_id'     =>  v::notEmpty(),
-            's_form'          =>  v::notEmpty(),
-            // 'stream'          =>  v::notEmpty(),
-            // 'subjects'        =>  v::notEmpty(),
-            // 'student_id'      =>  v::notEmpty(),
-            // 'school_code'     =>  v::notEmpty(),
-            'year_start'      =>  v::notEmpty(),
-            'year_stop'       =>  v::notEmpty(),
-            'bank'            =>  v::notEmpty(),
-            'bank_address'    =>  v::notEmpty(),
-            'bank_account'    =>  v::notEmpty(),
-            // 'fav_subject'     =>  v::notEmpty(),
-            // 'fav_sport'       =>  v::notEmpty(),
-            // 'second_term'     =>  v::notEmpty(),
-            // 'third_term'      =>  v::notEmpty(),
+            's_form'        =>  v::notEmpty(),
+            // 'fav_subject'=>  v::notEmpty(),
+            // 'fav_sport'  =>  v::notEmpty(),
+      
         ]);
   
         // validation failed
@@ -78,17 +68,9 @@ class SecondaryController extends Controller
             'stream'           => $request->getParam('stream'),
             'student_id'       => $_SESSION['student_id'],
             'student_number'   => $request->getParam('student_number'),
-            'school_code'      => $request->getParam('school_code'),
-            'year_start'       => $request->getParam('year_start'),
-            'year_stop'        => $request->getParam('year_stop'),
-            'bank'             => $request->getParam('bank'),
-            'bank_address'     => $request->getParam('bank_address'),
-            'bank_account'     => $request->getParam('bank_account'),
+            'student_index'    => $request->getParam('student_index'),
             'fav_subject'      => $request->getParam('fav_subject'),
             'fav_sport'        => $request->getParam('fav_sport'),
-            'first_term'       => nl2br(trim($request->getParam('first_term'))),
-            'second_term'      => nl2br(trim($request->getParam('second_term'))),
-            'third_term'       => nl2br(trim($request->getParam('third_term'))),
             'created_by'       => $this->auth->user()->name
             ]);
 
@@ -198,17 +180,9 @@ class SecondaryController extends Controller
             's_form'           => $request->getParam('s_form'),
             'stream'           => $request->getParam('stream'),
             'student_number'   => $request->getParam('student_number'),
-            'school_code'      => $request->getParam('school_code'),
-            'year_start'       => $request->getParam('year_start'),
-            'year_stop'        => $request->getParam('year_stop'),
-            'bank'             => $request->getParam('bank'),
-            'bank_address'     => $request->getParam('bank_address'),
-            'bank_account'     => $request->getParam('bank_account'),
+            'student_index'    => $request->getParam('student_index'),
             'fav_subject'      => $request->getParam('fav_subject'),
             'fav_sport'        => $request->getParam('fav_sport'),
-            'first_term'       => nl2br(trim($request->getParam('first_term'))),
-            'second_term'      => nl2br(trim($request->getParam('second_term'))),
-            'third_term'       => nl2br(trim($request->getParam('third_term'))),
          ]);
         
         //  new data

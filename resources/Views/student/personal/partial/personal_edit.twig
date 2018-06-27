@@ -20,7 +20,7 @@
                             </label>
                             <div class="col-md-9">
                                 <input type="text"  name="name" class="form-control {{ errors.name ? 'is-invalid' :'' }} " 
-                                     placeholder="John doe" value="{{ student.name  }}">
+                                     placeholder="John doe" value="{{ student.name}}">
                                  {% if errors.name %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.name | first }} </div> 
                                 {% endif %}
@@ -51,7 +51,13 @@
                             <label class="control-label text-right col-md-3">Gender <span class="text-danger">*</span></label>
                             <div class="col-md-9">
                                 <select class="form-control custom-select {{ errors.gender ? 'is-invalid' :'' }}" name="gender">
-                                    <option value="{{ student.gender}}">{{ student.gender}}</option>
+
+                                    {% if student.gender == 'M' %}
+                                        <option value="M">Male </option>
+                                    {% else %}
+                                         <option value="F">Female </option>
+                                    {% endif %}
+                                    
                                     <option value="M">Male</option>
                                     <option value="F">Female</option>
                                 </select>
@@ -67,7 +73,7 @@
                             <label class="control-label text-right col-md-3">Level  <span class="text-danger">*</span></label>
                             <div class="col-md-9">
                                 <select class="form-control custom-select {{ errors.level ? 'is-invalid' :'' }}" name="level">
-                                    <option value="{{ student.level}}">{{ student.level }}</option>
+                                     <option value="{{ student.level}}">{{ student.level }}</option>
                                     {% for level in helper.levels %}
                                      <option value="{{ level.name }}">{{ level.name | capitalize }}</option>
                                     {% endfor %}
@@ -91,9 +97,9 @@
                             <label class="control-label text-right col-md-3 ">District <span class="text-danger">*</span></label>
                             <div class="col-md-9">
                                 <select class="form-control custom-select {{ errors.district ? 'is-invalid' :'' }}" name="district">
-                                    <option value="{{ student.district}}{{ student.dist_name}}">{{ student.dist_name | capitalize}}</option>
-                                    {% for district in helper.districts %}
-                                    <option value="{{ district.id}}{{ district.district_name}}">{{ district.district_name | capitalize }}</option>
+                                   <option value="{{ student.district}}{{ student.dist_name}}">{{ student.dist_name | capitalize}}</option>
+                                    {% for district in helper.karamojadistricts %}
+                                    <option value="{{ district.id}}{{district.district_name}}">{{ district.district_name | capitalize }}</option>
                                     {% endfor %}
                                 </select>
 
@@ -104,14 +110,21 @@
                                  </div>
                         </div>
                     </div>
+                    
+                 
                     <!--/span-->
                     <div class="col-md-6">
                         <div class="form-group row">
                             <label class="control-label text-right col-md-3">Sub county 
                              <span class="text-danger">*</span></label>
                             <div class="col-md-9">
-                               <input type="text" class="form-control {{ errors.subcounty ? 'is-invalid' :'' }}"
-                                placeholder="Sub county" name="subcounty" value="{{student.subcounty}}">
+                            <select  class="form-control {{ errors.subcounty ? 'is-invalid' :'' }}" name="subcounty">
+                           <option value="{{ student.subcounty}}">{{ student.subcounty }}</option>
+                            {% for subcounty in subcounties %}
+                            <option value="{{ subcounty.subcounty_name}}">{{ subcounty.subcounty_name}}</option>
+                            {% endfor %}
+                            </select>
+                            
 
                                {% if errors.subcounty %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.subcounty | first }} </div> 
@@ -123,19 +136,97 @@
                 </div>
                 <!--/row-->
 
-                    <!--/row-->
+               <!--row-->
+                <!--/span-->
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">PLE Entry grade 
-                                <span class="text-danger">*</span>
+                            <label class="control-label text-right col-md-3">Year of Start 
+                             <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                             <input type="date" name="year_start" value="{{ student.year_start}}" class="form-control {{ errors.year_start ? 'is-invalid':''}}">
+
+                             {% if errors.year_start  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.year_start  | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+             
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Year of completion <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control {{ errors.entry_grade ? 'is-invalid' :'' }}" value="{{ student.entry_grade}}"
-                                     name="entry_grade" placeholder="P.L.E Grade">
+                            <input type="date" name="year_stop" value="{{ student.year_stop}}" class="form-control {{ errors.year_stop ? 'is-invalid':''}}">
 
-                                      {% if errors.entry_grade %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.entry_grade | first }} </div> 
+                             {% if errors.year_stop  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.year_stop  | first }} </div> 
+                                {% endif %}
+                             </div>
+                        </div>
+                    </div>
+            </div>
+                    <!--/span-->
+             <!--/row-->
+
+             
+                   <!--row-->
+                <!--/span-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Year of Registration 
+                             <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                             <input type="date" name="registration_year" value="{{ student.registration_year}}" class="form-control {{ errors.registration_year ? 'is-invalid':''}}">
+
+                             {% if errors.registration_year  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.registration_year  | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+             
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">National ID Number 
+                            </label>
+                            <div class="col-md-9">
+                            <input type="text" name="national_id" value="{{ student.national_id}}" class="form-control {{ errors.national_id ? 'is-invalid':''}}">
+
+                             {% if errors.national_id  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.national_id  | first }} </div> 
+                                {% endif %}
+                             </div>
+                        </div>
+                    </div>
+            </div>
+                    <!--/span-->
+             <!--/row-->
+
+<br>
+
+
+            <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                         <label class="control-label text-right col-md-3">
+                            Tribe
+                            <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                            <select name="ethnicity" class="form-control {{ errors.ethnicity ? 'is-invalid' :'' }}">
+                                <option value="{{ student.ethnicity}}">{{ student.ethnicity}}</options> 
+                                {% for tribe in tribes %}
+                                      <option value="{{ tribe.tribe_name}}">{{ tribe.tribe_name}}</option>
+                                {% endfor %}
+                            </select>
+                                 {% if errors.ethnicity %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.ethnicity | first }} </div> 
                                 {% endif %}
                              </div>
                         </div>
@@ -145,7 +236,7 @@
                         <div class="form-group row">
                             <label class="control-label text-right col-md-3">Village </label>
                             <div class="col-md-9">
-                               <input type="text" value="{{student.village}}" class="form-control {{ errors.village ? 'is-invalid' :'' }}
+                               <input type="text" vale="{{student.village}}" class="form-control {{ errors.village ? 'is-invalid' :'' }}
                                " name="village" placeholder="Village">
 
                                 {% if errors.village %}
@@ -160,13 +251,15 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Ethnicity</label>
+                               <label class="control-label text-right col-md-3">PLE Entry grade 
+                                <span class="text-danger">*</span>
+                            </label>
                             <div class="col-md-9">
-                               <input type="text" name="ethnicity" class="form-control {{ errors.ethnicity ? 'is-invalid' :'' }}"
-                                placeholder="..." value="{{ student.ethnicity}}">
+                                <input type="text" class="form-control {{ errors.entry_grade ? 'is-invalid' :'' }}" value="{{ student.entry_grade}}"
+                                     name="entry_grade" placeholder="P.L.E Grade">
 
-                                 {% if errors.ethnicity %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.ethnicity | first }} </div> 
+                                      {% if errors.entry_grade %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.entry_grade | first }} </div> 
                                 {% endif %}
                             </div>
                         </div>
@@ -174,7 +267,47 @@
                     <!--/span-->
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Change Photo</label>
+                             <label class="control-label text-right col-md-3">UCE Grade 
+                                
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control {{ errors.uce_grade ? 'is-invalid' :'' }}" value="{{ student.uce_grade}}"
+                                     name="uce_grade" placeholder="U.C.E Grade">
+
+                                      {% if errors.uce_grade %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.uce_grade | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+
+
+             
+                   <!--row-->
+                <!--/span-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                                       <label class="control-label text-right col-md-3">UACE Grade 
+                                
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control {{ errors.uace_grade ? 'is-invalid' :'' }}" value="{{ student.uace_grade}}"
+                                     name="uace_grade" placeholder="U.A.C.E Grade">
+
+                                      {% if errors.uace_grade %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.uace_grade | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+             
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                           <label class="control-label text-right col-md-3">Photo</label>
                             <div class="col-md-9">
                                 <input type="file"  name="photo" class="form-control {{ errors.photo ? 'is-invalid' :'' }}" 
                                     placeholder="..."  accept="image/*">
@@ -183,16 +316,19 @@
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.photo | first }} </div> 
                                 {% endif %}
 
-                                {% if student.photo %}
+                                    {% if student.photo %}
                                 <img src="{{path}}{{student.photo}}" height="60" width="60" class="rounded-circle" />
                                 {% else %}
                                 <img src="{{path}}/profile.png" height="60" width="60" class="rounded-circle" />
                                 {% endif %}
-                            </div>
+                             </div>
                         </div>
                     </div>
+            </div>
                     <!--/span-->
-                </div>
+             <!--/row-->
+
+
                 <h3 class="box-title">Contact Information</h3>
                 <hr class="m-t-0 m-b-40">
                 <!--/row-->
@@ -204,7 +340,7 @@
                             </label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control {{ errors.student_phone ? 'is-invalid' :'' }}"
-                                 name="student_phone" value="{{ student.student_phone}}">
+                                 name="student_phone" value="{{ student.student_phone}}" placeholder="07777777777">
 
                                  {% if errors.student_phone %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.student_phone | first }} </div> 
@@ -230,7 +366,7 @@
                    <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">1st Parent Name
+                            <label class="control-label text-right col-md-3">Next of Kin Name
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
@@ -246,12 +382,12 @@
                     <!--/span-->
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">1st Parent Phone No.
+                            <label class="control-label text-right col-md-3">Next of Kin Phone No.
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control  {{ errors.parent1_phone ? 'is-invalid':''}}"
-                                 name="parent1_phone" value="{{ student.parent1_phone }}">
+                                 name="parent1_phone" value="{{student.parent1_phone}} " placeholder="0777777777">
 
                                   {% if errors.parent1_phone  %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.parent1_phone | first }} </div> 
@@ -265,7 +401,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">2nd Parent Name</label>
+                            <label class="control-label text-right col-md-3">2nd Next of Kin</label>
                             <div class="col-md-9">
                                 <input type="text" name="parent2_name" class="form-control {{ errors.parent2_name ? 'is-invalid':''}}" 
                                 value="{{ student.parent2_name}}">
@@ -279,10 +415,10 @@
                     <!--/span-->
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">2nd Parent Phone No.</label>
+                            <label class="control-label text-right col-md-3">2nd Next of Kin Phone No.</label>
                             <div class="col-md-9">
                                 <input type="text" name="parent2_phone"  value="{{ student.parent2_phone}}"
-                                class="form-control {{ errors.parent2_phone ? 'is-invalid':''}}">
+                                class="form-control {{ errors.parent2_phone ? 'is-invalid':''}}" placeholder="07777777777">
 
                                   {% if errors.parent2_phone  %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.parent2_phone | first }} </div> 
@@ -299,7 +435,7 @@
                             <label class="control-label text-right col-md-3">Current State</label>
                             <div class="col-md-9">
                                  <select class="form-control custom-select {{ errors.current_state ? 'is-invalid':''}}" name="current_state">
-                                    <option value="{{ student.current_state}}">{{ student.current_state | capitalize}}</option>
+                                    <option value="{{ student.current_state}}">{{ student.current_state}}</option>
                                     <option value="continuing">Continuing</option>
                                      <option value="completed">Completed</option>
                                     <option value="dropout">Dropout</option>
@@ -320,7 +456,7 @@
                             <div class="col-md-9">
 
                              <select class="form-control custom-select {{ errors.funder ? 'is-invalid':''}}" name="funder">
-                                    <option value="{{ student.funder }}">{{ student.funder | capitalize}}</option>
+                                    <option value="{{ student.funder }}">{{ student.funder }}</option>
                                     {% for funder in helper.funders %}
                                          <option value="{{ funder.funder_name}}">{{ funder.funder_name | capitalize}}</option>
                                     {% endfor %}
@@ -338,16 +474,41 @@
             </div>
             <hr>
             <h3 class="box-title m-t-15">Other Information</h3>
-            
-               <div class="row">
+
+              <div class="row">
                     <div class="col-md-12">
                         <div class="form-group row">
                             <label class="control-label text-right col-md-3">Reason for dropout</label>
                             <div class="col-md-9">
                                   <div class="form-group">
-                                        <textarea class="textarea_editor form-control" name="dropout_reason"
-                                        rows="8" placeholder="Enter reason for drop out ..." style="height:80px">
-                                        {{ student.dropout_reason}}
+
+                                <select class="form-control custom-select {{ errors.dropout_reason ? 'is-invalid':''}}"
+                                 name="dropout_reason">
+
+                                    <option value="{{ student.dropout_reason}}">{{ student.dropout_reason}}</option>
+                                    {% for dropout in dropouts %}
+                                         <option value="{{ dropout.reason}}">{{ dropout.reason }}</option>
+                                    {% endfor %}
+                                </select> 
+
+                               {% if errors.dropout_reason  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.dropout_reason | first }} </div> 
+                                {% endif %}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Comments or Other reasons</label>
+                            <div class="col-md-9">
+                                  <div class="form-group">
+                                        <textarea class="textarea_editor form-control" name="comments"
+                                        rows="8" placeholder="" style="height:80px">
+                                        {{ student.comments | raw | striptags }}
                                         </textarea>
                                     </div>
                             </div>
@@ -363,16 +524,15 @@
                             <div class="col-md-9">
                                   <div class="form-group">
                                         <textarea name="notes" class="textarea_editor form-control" rows="10" placeholder="Enter text ..." style="height:350px">
-                                        {{ student.notes }}
+                                        {{ student.notes | raw  | striptags}}
                                         </textarea>
                                     </div>
                             </div>
-                        </div>
+                        </div> 
                     </div>
                 </div>
                 <!--/row-->
-
-            <input type="hidden" name="_METHOD" value="PUT" />
+           <input type="hidden" name="_METHOD" value="PUT" />
 
             <div class="form-actions ">
                 <div class="row">
@@ -384,13 +544,13 @@
                         </div>
                     </div>
 
-
                     <div class="col-md-6">
                         <div class="row">
                         <div class="col-md-2 offset-md-10">
                             <div class="pull-right">
-                                <button type="submit" class="btn  btn-lg btn-primary btn-block">
+                                <button type="submit" class="btn   btn-primary btn-block">
                                    Update
+                                        <i class="fa fa-fast-forward" aria-hidden="true"></i>
                                 </button>
                             </div>
                             </div>
@@ -401,7 +561,6 @@
             </div>
 
             {{ csrf.field | raw}}
-
         </form>
     </div>
 </div>

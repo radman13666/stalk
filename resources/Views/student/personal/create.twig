@@ -92,7 +92,7 @@
                             <div class="col-md-9">
                                 <select class="form-control custom-select {{ errors.district ? 'is-invalid' :'' }}" name="district">
                                     <option value="">Choose ..</option>
-                                    {% for district in helper.districts %}
+                                    {% for district in helper.karamojadistricts %}
                                     <option value="{{ district.id}}{{district.district_name}}">{{ district.district_name | capitalize }}</option>
                                     {% endfor %}
                                 </select>
@@ -112,8 +112,13 @@
                             <label class="control-label text-right col-md-3">Sub county 
                              <span class="text-danger">*</span></label>
                             <div class="col-md-9">
-                               <input type="text" class="form-control {{ errors.subcounty ? 'is-invalid' :'' }}"
-                                placeholder="Sub county" name="subcounty" value="{{old.subcounty}}">
+                            <select  class="form-control {{ errors.subcounty ? 'is-invalid' :'' }}" name="subcounty">
+                            <option value="">Choose </option>
+                            {% for subcounty in subcounties %}
+                            <option value="{{ subcounty.subcounty_name}}">{{ subcounty.subcounty_name}}</option>
+                            {% endfor %}
+                            </select>
+                            
 
                                {% if errors.subcounty %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.subcounty | first }} </div> 
@@ -125,19 +130,97 @@
                 </div>
                 <!--/row-->
 
-                    <!--/row-->
+               <!--row-->
+                <!--/span-->
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">PLE Entry grade 
-                                <span class="text-danger">*</span>
+                            <label class="control-label text-right col-md-3">Year of Start 
+                             <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                             <input type="date" name="year_start" value="{{ old.year_start}}" class="form-control {{ errors.year_start ? 'is-invalid':''}}">
+
+                             {% if errors.year_start  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.year_start  | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+             
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Year of completion <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control {{ errors.entry_grade ? 'is-invalid' :'' }}" value="{{ old.entry_grade}}"
-                                     name="entry_grade" placeholder="P.L.E Grade">
+                            <input type="date" name="year_stop" value="{{ old.year_stop}}" class="form-control {{ errors.year_stop ? 'is-invalid':''}}">
 
-                                      {% if errors.entry_grade %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.entry_grade | first }} </div> 
+                             {% if errors.year_stop  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.year_stop  | first }} </div> 
+                                {% endif %}
+                             </div>
+                        </div>
+                    </div>
+            </div>
+                    <!--/span-->
+             <!--/row-->
+
+             
+                   <!--row-->
+                <!--/span-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Year of Registration 
+                             <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                             <input type="date" name="registration_year" value="{{ old.registration_year}}" class="form-control {{ errors.registration_year ? 'is-invalid':''}}">
+
+                             {% if errors.registration_year  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.registration_year  | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+             
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">National ID Number 
+                            </label>
+                            <div class="col-md-9">
+                            <input type="text" name="national_id" value="{{ old.national_id}}" class="form-control {{ errors.national_id ? 'is-invalid':''}}">
+
+                             {% if errors.national_id  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.national_id  | first }} </div> 
+                                {% endif %}
+                             </div>
+                        </div>
+                    </div>
+            </div>
+                    <!--/span-->
+             <!--/row-->
+
+<br>
+
+
+            <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                         <label class="control-label text-right col-md-3">
+                            Tribe
+                            <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                            <select name="ethnicity" class="form-control {{ errors.ethnicity ? 'is-invalid' :'' }}">
+                                <option value="">Choose</options> 
+                                {% for tribe in tribes %}
+                                      <option value="{{ tribe.tribe_name}}">{{ tribe.tribe_name}}</option>
+                                {% endfor %}
+                            </select>
+                                 {% if errors.ethnicity %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.ethnicity | first }} </div> 
                                 {% endif %}
                              </div>
                         </div>
@@ -162,13 +245,15 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Ethnicity</label>
+                               <label class="control-label text-right col-md-3">PLE Entry grade 
+                                <span class="text-danger">*</span>
+                            </label>
                             <div class="col-md-9">
-                               <input type="text" name="ethnicity" class="form-control {{ errors.ethnicity ? 'is-invalid' :'' }}"
-                                placeholder="..." value="{{ old.ethnicity}}">
+                                <input type="text" class="form-control {{ errors.entry_grade ? 'is-invalid' :'' }}" value="{{ old.entry_grade}}"
+                                     name="entry_grade" placeholder="P.L.E Grade">
 
-                                 {% if errors.ethnicity %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.ethnicity | first }} </div> 
+                                      {% if errors.entry_grade %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.entry_grade | first }} </div> 
                                 {% endif %}
                             </div>
                         </div>
@@ -176,7 +261,47 @@
                     <!--/span-->
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Photo</label>
+                             <label class="control-label text-right col-md-3">UCE Grade 
+                                
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control {{ errors.uce_grade ? 'is-invalid' :'' }}" value="{{ old.uce_grade}}"
+                                     name="uce_grade" placeholder="U.C.E Grade">
+
+                                      {% if errors.uce_grade %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.uce_grade | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+
+
+             
+                   <!--row-->
+                <!--/span-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                                       <label class="control-label text-right col-md-3">UACE Grade 
+                                
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control {{ errors.uace_grade ? 'is-invalid' :'' }}" value="{{ old.uace_grade}}"
+                                     name="uace_grade" placeholder="U.A.C.E Grade">
+
+                                      {% if errors.uace_grade %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.uace_grade | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+             
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                           <label class="control-label text-right col-md-3">Photo</label>
                             <div class="col-md-9">
                                 <input type="file"  name="photo" class="form-control {{ errors.photo ? 'is-invalid' :'' }}" 
                                     placeholder="..."  accept="image/*">
@@ -184,11 +309,14 @@
                                   {% if errors.photo %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.photo | first }} </div> 
                                 {% endif %}
-                            </div>
+                             </div>
                         </div>
                     </div>
+            </div>
                     <!--/span-->
-                </div>
+             <!--/row-->
+
+
                 <h3 class="box-title">Contact Information</h3>
                 <hr class="m-t-0 m-b-40">
                 <!--/row-->
@@ -200,7 +328,7 @@
                             </label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control {{ errors.student_phone ? 'is-invalid' :'' }}"
-                                 name="student_phone" value="{{ old.student_phone}}">
+                                 name="student_phone" value="{{ old.student_phone}}" placeholder="07777777777">
 
                                  {% if errors.student_phone %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.student_phone | first }} </div> 
@@ -226,7 +354,7 @@
                    <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">1st Parent Name
+                            <label class="control-label text-right col-md-3">Next of Kin Name
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
@@ -242,12 +370,12 @@
                     <!--/span-->
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">1st Parent Phone No.
+                            <label class="control-label text-right col-md-3">Next of Kin Phone No.
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control  {{ errors.parent1_phone ? 'is-invalid':''}}"
-                                 name="parent1_phone" value="{{ old.parent1_phone }}">
+                                 name="parent1_phone" value="{{old.parent1_phone}} " placeholder="0777777777">
 
                                   {% if errors.parent1_phone  %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.parent1_phone | first }} </div> 
@@ -261,7 +389,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">2nd Parent Name</label>
+                            <label class="control-label text-right col-md-3">2nd Next of Kin</label>
                             <div class="col-md-9">
                                 <input type="text" name="parent2_name" class="form-control {{ errors.parent2_name ? 'is-invalid':''}}" 
                                 value="{{ old.parent2_name}}">
@@ -275,10 +403,10 @@
                     <!--/span-->
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">2nd Parent Phone No.</label>
+                            <label class="control-label text-right col-md-3">2nd Next of Kin Phone No.</label>
                             <div class="col-md-9">
                                 <input type="text" name="parent2_phone"  value="{{ old.parent2_phone}}"
-                                class="form-control {{ errors.parent2_phone ? 'is-invalid':''}}">
+                                class="form-control {{ errors.parent2_phone ? 'is-invalid':''}}" placeholder="07777777777">
 
                                   {% if errors.parent2_phone  %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.parent2_phone | first }} </div> 
@@ -334,16 +462,41 @@
             </div>
             <hr>
             <h3 class="box-title m-t-15">Other Information</h3>
-            
-               <div class="row">
+
+              <div class="row">
                     <div class="col-md-12">
                         <div class="form-group row">
                             <label class="control-label text-right col-md-3">Reason for dropout</label>
                             <div class="col-md-9">
                                   <div class="form-group">
-                                        <textarea class="textarea_editor form-control" name="dropout_reason"
-                                        rows="8" placeholder="Enter reason for drop out ..." style="height:80px">
-                                        {{ old.dropout_reason}}
+
+                                <select class="form-control custom-select {{ errors.dropout_reason ? 'is-invalid':''}}"
+                                 name="dropout_reason">
+
+                                    <option value="">Choose ..</option>
+                                    {% for dropout in dropouts %}
+                                         <option value="{{ dropout.reason}}">{{ dropout.reason }}</option>
+                                    {% endfor %}
+                                </select> 
+
+                               {% if errors.dropout_reason  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.dropout_reason | first }} </div> 
+                                {% endif %}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Comments or Other reasons</label>
+                            <div class="col-md-9">
+                                  <div class="form-group">
+                                        <textarea class="textarea_editor form-control" name="comments"
+                                        rows="8" placeholder="" style="height:80px">
+                                        {{ old.comments}}
                                         </textarea>
                                     </div>
                             </div>
@@ -383,7 +536,7 @@
                         <div class="row">
                         <div class="col-md-2 offset-md-10">
                             <div class="pull-right">
-                                <button type="submit" class="btn  btn-lg btn-primary btn-block">
+                                <button type="submit" class="btn   btn-primary btn-block">
                                    Continue 
                                         <i class="fa fa-fast-forward" aria-hidden="true"></i>
                                 </button>

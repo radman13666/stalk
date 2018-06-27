@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Models\User\Role;
 use App\Models\Category\Level;
 use App\Models\Category\Form;
+use App\Models\Category\Tribe;
 use App\Models\Category\Funder;
 use App\Models\Category\Bank;
 use App\Models\Category\School;
@@ -55,10 +56,19 @@ class Helper
         $district =  District:: where('province','=','karamoja')
                             ->orderBy('district_name','ASC')
                             ->get();
-        // var_dump($district);
-        // die();
+       
         return $district;
             
+    }
+
+    /**
+     * All tribes
+     *
+     * @return void
+     */
+    public function allTribes()
+    {
+        return  Tribe::orderBy('tribe_name','ASC')->get();
     }
 
     /**

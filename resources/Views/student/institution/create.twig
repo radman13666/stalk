@@ -116,40 +116,7 @@
                     <!--/span-->
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Year of Start 
-                             <span class="text-danger">*</span></label>
-                            <div class="col-md-9">
-                             <input type="date" name="year_start" value="{{ old.year_start}}" class="form-control {{ errors.year_start ? 'is-invalid':''}}">
-
-                             {% if errors.year_start  %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.year_start  | first }} </div> 
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <!--/span-->
-                </div>
-                <!--/row-->
-
-                    <!--/row-->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Year of completion <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-md-9">
-                            <input type="date" name="year_stop" value="{{ old.year_stop}}" class="form-control {{ errors.year_stop ? 'is-invalid':''}}">
-
-                             {% if errors.year_stop  %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.year_stop  | first }} </div> 
-                                {% endif %}
-                             </div>
-                        </div>
-                    </div>
-                    <!--/span-->
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Course Name <span class="text-danger">*</span></label>
+                             <label class="control-label text-right col-md-3">Course Name <span class="text-danger">*</span></label>
                             <div class="col-md-9">
                              <select class="form-control custom-select {{ errors.course_id ? 'is-invalid' :'' }}" 
                                 name="course_id">
@@ -164,11 +131,12 @@
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.course_id | first }} </div> 
                                 {% endif %}
                             </div>
+                            </div>
                         </div>
                     </div>
                     <!--/span-->
                 </div>
-                  <!--/row-->
+                <!--/row-->
            
 
                  <!--/row-->
@@ -273,78 +241,16 @@
             </div>
           
        
-         <h3 class="box-title">Institution Bank Details</h3>
+        
+
+          <h3 class="box-title">Accommodation Bank Details (Optional)</h3>
                 <hr class="m-t-0 m-b-40">
                    
                  <!--/row-->
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Institution Bank Name
-                            <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-md-9">
-                                 <select class="form-control custom-select {{ errors.institution_bank_name ? 'is-invalid' :'' }}" 
-                                name="institution_bank_name">
-                                    <option value="">Choose ..</option>
-                                    {% for bank in helper.banks %}
-                                     <option value="{{ bank.bank_name}}">{{ bank.bank_name | capitalize}}</option>
-                                    {% endfor %}
-                                    
-                                </select>
-
-                                {% if errors.institution_bank_name %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.institution_bank_name | first }} </div> 
-                                {% endif %}
-                             </div>
-                        </div>
-                    </div>
-                    <!--/span-->
-                    <div class="col-md-8">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Institution Bank Account number </label>
-                            <div class="col-md-9">
-                                  <input type="text"  name="institution_bank_account" class="form-control {{ errors.institution_bank_account ? 'is-invalid' :'' }} " 
-                                     placeholder="Institution account number " value="{{ old.institution_bank_account}}">
-                                 {% if errors.institution_bank_account %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.institution_bank_account | first }} </div> 
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <!--/span-->
-                </div>
-                <!--/row-->
-
-                              <!--/row-->
-                <div class="row">
-                   
-                    <div class="col-md-12">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-1">Institution Bank Address </label>
-                            <div class="col-md-11">
-
-                               <input type="text"  name="institution_bank_address" class="form-control {{ errors.institution_bank_address ? 'is-invalid' :'' }} " 
-                                     placeholder="Institution Bank Address " value="{{ old.institution_bank_address}}">
-                                 {% if errors.institution_bank_address %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.institution_bank_address | first }} </div> 
-                                {% endif %}
-                               
-                            </div>
-                        </div>
-                    </div>
-                    <!--/span-->
-                </div>
-                <!--/row-->
-
-          <h3 class="box-title">Other Bank Details (Optional)</h3>
-                <hr class="m-t-0 m-b-40">
-                   
-                 <!--/row-->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">other Bank Name
+                            <label class="control-label text-right col-md-3"> Bank Name
                             <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-9">
@@ -366,7 +272,7 @@
                     <!--/span-->
                     <div class="col-md-8">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Other Bank Account </label>
+                            <label class="control-label text-right col-md-3"> Bank Account </label>
                             <div class="col-md-9">
                                 <input type="text"  name="other_bank_account" class="form-control {{ errors.other_bank_account ? 'is-invalid' :'' }} " 
                                      placeholder="Other account number " value="{{ old.other_bank_account}}">
@@ -385,7 +291,7 @@
                    
                     <div class="col-md-12">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-1">Other Bank Address </label>
+                            <label class="control-label text-right col-md-1"> Bank Address </label>
                             <div class="col-md-11">
 
                                <input type="text"  name="other_bank_address" class="form-control {{ errors.other_bank_address ? 'is-invalid' :'' }} " 

@@ -22,7 +22,7 @@
                             <div class="col-md-9">
                                 <select class="form-control custom-select {{ errors.school_id ? 'is-invalid' :'' }}" 
                                 name="school_id">
-                                    <option value="{{ info.school_id}}">{{school.school_name}}</option>
+                                      <option value="{{ info.school_id}}">{{school.school_name}}</option>
 
                                     {% for item in helper.secondary %}
                                          <option value="{{ item.id}}">{{ item.school_name | capitalize}}</option>
@@ -76,7 +76,7 @@
                     <!--/span-->
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Student Number/Index </label>
+                            <label class="control-label text-right col-md-3">Student Number </label>
                             <div class="col-md-9">
                                <input type="text"  name="student_number" class="form-control {{ errors.student_number ? 'is-invalid' :'' }} " 
                                      placeholder="student ID" value="{{ info.student_number}}">
@@ -94,105 +94,25 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3 ">School UNEB REG/NO.</label>
+                            <label class="control-label text-right col-md-3 ">Student Index No.</label>
                             <div class="col-md-9">
 
-                                 <input type="text"  name="school_code" class="form-control {{ errors.school_code ? 'is-invalid' :'' }} " 
-                                     placeholder="School Reg/No." value="{{ info.school_code}}">
-                                 {% if errors.school_code %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.school_code | first }} </div> 
+                                 <input type="text"  name="student_index" class="form-control {{ errors.student_index ? 'is-invalid' :'' }} " 
+                                     placeholder="Index number for S.4 and S.6" value="{{ info.student_index}}">
+                                 {% if errors.student_index %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.student_index | first }} </div> 
                                 {% endif %}
                                 
                                  </div>
                         </div>
                     </div>
                     <!--/span-->
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Year of Start 
-                             <span class="text-danger">*</span></label>
-                            <div class="col-md-9">
-                             <input type="date" name="year_start" value="{{ info.year_start }}"
-                              class="form-control {{ errors.year_start ? 'is-invalid':''}}">
-
-                             {% if errors.year_start  %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.year_start  | first }} </div> 
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
+                
                     <!--/span-->
                 </div>
                 <!--/row-->
 
-                    <!--/row-->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Year of completion <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-md-9">
-                            <input type="date" name="year_stop" value="{{ info.year_stop}}" class="form-control {{ errors.year_stop ? 'is-invalid':''}}">
-
-                             {% if errors.year_stop  %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.year_stop  | first }} </div> 
-                                {% endif %}
-                             </div>
-                        </div>
-                    </div>
-                    <!--/span-->
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Bank <span class="text-danger">*</span></label>
-                            <div class="col-md-9">
-                             <select class="form-control custom-select {{ errors.bank ? 'is-invalid' :'' }}" 
-                                name="bank">
-                                    <option value="{{ info.bank}}">{{ info.bank}}</option>
-                                    {% for bank in helper.banks %}
-                                     <option value="{{ bank.bank_name}}">{{ bank.bank_name | capitalize}}</option>
-                                    {% endfor %}
-                                    
-                                </select>
-
-                                {% if errors.bank %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.bank | first }} </div> 
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <!--/span-->
-                </div>
-                  <!--/row-->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3"> Bank Address <span class="text-danger">*</span></label>
-                            <div class="col-md-9">
-                               <input type="text" name="bank_address" class="form-control {{ errors.bank_address ? 'is-invalid' :'' }}"
-                                placeholder="..." value="{{ info.bank_address}}">
-
-                                 {% if errors.bank_address %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.bank_address | first }} </div> 
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <!--/span-->
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Bank Account No.<span class="text-danger">*</span></label>
-                            <div class="col-md-9">
-                                <input type="text" value="{{ info.bank_account }}"  name="bank_account" class="form-control {{ errors.bank_account ? 'is-invalid' :'' }}" 
-                                    placeholder="...Account Number...">
-
-                                  {% if errors.bank_account %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.bank_account | first }} </div> 
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <!--/span-->
-                </div>
+               
 
                          <!--/row-->
                 <div class="row">
@@ -202,7 +122,7 @@
                             <div class="col-md-9">
                                 <select class="form-control custom-select {{ errors.fav_subject ? 'is-invalid' :'' }}" 
                                 name="fav_subject">
-                                    <option value="{{ info.fav_subject}}">{{ info.fav_subject }}</option>
+                                    <option value="{{ info.fav_subject}}">{{ info.fav_subject}}</option>
                                     {% for subject in helper.subjects %}
                                     <option value="{{ subject.name }}">{{ subject.name }}</option>
                                     {% endfor %}
@@ -222,12 +142,12 @@
                                 <select class="form-control custom-select {{ errors.fav_sport ? 'is-invalid' :'' }}" 
                                 name="fav_sport">
                                     <option value="{{ info.fav_sport}}">{{ info.fav_sport}}</option>
-                                    <option value="soccer">Soccer</option>
-                                    <option value="rugby">Rugby</option>
-                                    <option value="tennis">Tennis</option>
-                                    <option value="netball">Netball</option>
-                                    <option value="cricket">Cricket</option>
-                                    <option value="swiming">swiming</option>
+                                    <option value="Soccer">Soccer</option>
+                                    <option value="Rugby">Rugby</option>
+                                    <option value="Tennis">Tennis</option>
+                                    <option value="Netball">Netball</option>
+                                    <option value="Cricket">Cricket</option>
+                                    <option value="Swiming">swiming</option>
                                     
                                 </select>
                                   {% if errors.sport %}
@@ -239,107 +159,15 @@
                     <!--/span-->
                 </div>
 
-                {# <h3 class="box-title">Subjects</h3>
-                <hr class="m-t-0 m-b-40">
-                <!--/row-->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                            <div class="col-md-9">
-
-                         <ul class="list-group-flush">
-                            {% for subject in helper.subjects %}
-                                <li class="list-group-item">
-                                    <input type="checkbox" name ="subjects[]" class="{{ errors.subjects ? 'is-invalid' : ''}}"
-                                    value="{{ subject.id}}"> {{ subject.name }}
-                                </li>
-                             {% endfor %}
-                             </ul>
-
-                             {% if errors.subjects %}
-                                <div class="form-control-feedback invalid-feedback">
-                                    {{ errors.subjects | first }}
-                                </div>
-                             {% endif %}
-                            </div>
-                        </div>
-                    </div>
-
+             
                    
                 <!--/row-->
-            </div> #}
+            </div>
             <hr>
-            <h3 class="box-title m-t-15">Examination Results only for S.4 and S.6</h3>
+            {# <h3 class="box-title m-t-15">Examination Results only for S.4 and S.6</h3> #}
             
-               <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">First Term Results</label>
-                            <div class="col-md-9">
-                                  <div class="form-group">
-                                        <textarea class="textarea_editor form-control {{ errors.first_term ? 'is-invalid' : ''}}" name="first_term"
-                                        rows="8" placeholder="Enter reason for drop out ..." style="height:350px">
-                                        {{ info.first_term}}
-                                        </textarea>
-                                    </div>
-
-                                {% if errors.first_term %}
-                                <div class="form-control-feedback invalid-feedback">
-                                    {{ errors.first_term | first }}
-                                </div>
-                             {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--/row-->
-
-                    <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Second Term Results</label>
-                            <div class="col-md-9">
-                                  <div class="form-group">
-                                        <textarea name="second_term" class="textarea_editor form-control {{ errors.second_term ? 'is-invalid' : ''}}" rows="10" placeholder="Enter text ..." style="height:350px">
-                                        {{ info.second_term }}
-                                        </textarea>
-                                    </div>
-
-                             {% if errors.second_term %}
-                                <div class="form-control-feedback invalid-feedback">
-                                    {{ errors.second_term | first }}
-                                </div>
-                             {% endif %}
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--/row-->
-
-
-                    <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Third Term Results</label>
-                            <div class="col-md-9">
-                                  <div class="form-group">
-                                        <textarea name="third_term" class="textarea_editor form-control {{ errors.third_term ? 'is-invalid' : ''}}" rows="10" placeholder="Enter text ..." style="height:350px">
-                                        {{ info.third_term }}
-                                        </textarea>
-                                    </div>
-
-                                    {% if errors.third_term %}
-                                        <div class="form-control-feedback invalid-feedback">
-                                            {{ errors.third_term | first }}
-                                        </div>
-                                    {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--/row-->
-            <input type="hidden" name="_METHOD" value="PUT" />
+      
+         <input type="hidden" name="_METHOD" value="PUT" />
 
             <div class="form-actions ">
                 <div class="row">
@@ -355,8 +183,8 @@
                         <div class="row">
                         <div class="col-md-2 offset-md-10">
                             <div class="pull-right">
-                                <button type="submit" class="btn   btn-primary">
-                               Update
+                                <button type="submit" class="btn   btn-primary btn-block">
+                                  Complete Registration
                                 </button>
                             </div>
                             </div>

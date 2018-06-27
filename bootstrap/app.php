@@ -69,6 +69,7 @@ ini_set('display_errors','On');
         'schools'    => $container->helper->allSchools(),
         'forms'      => $container->helper->allForms(),
         'logo'       => $container->helper->logo(),
+       
     ]);
 
     //Auth

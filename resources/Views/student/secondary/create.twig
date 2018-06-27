@@ -94,104 +94,25 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3 ">School UNEB REG/NO.</label>
+                            <label class="control-label text-right col-md-3 ">Student Index No.</label>
                             <div class="col-md-9">
 
-                                 <input type="text"  name="school_code" class="form-control {{ errors.school_code ? 'is-invalid' :'' }} " 
-                                     placeholder="School Reg/No." value="{{ old.school_code}}">
-                                 {% if errors.school_code %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.school_code | first }} </div> 
+                                 <input type="text"  name="student_index" class="form-control {{ errors.student_index ? 'is-invalid' :'' }} " 
+                                     placeholder="Index number for S.4 and S.6" value="{{ old.student_index}}">
+                                 {% if errors.student_index %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.student_index | first }} </div> 
                                 {% endif %}
                                 
                                  </div>
                         </div>
                     </div>
                     <!--/span-->
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Year of Start 
-                             <span class="text-danger">*</span></label>
-                            <div class="col-md-9">
-                             <input type="date" name="year_start" value="{{ old.year_start}}" class="form-control {{ errors.year_start ? 'is-invalid':''}}">
-
-                             {% if errors.year_start  %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.year_start  | first }} </div> 
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
+                
                     <!--/span-->
                 </div>
                 <!--/row-->
 
-                    <!--/row-->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Year of completion <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-md-9">
-                            <input type="date" name="year_stop" value="{{ old.year_stop}}" class="form-control {{ errors.year_stop ? 'is-invalid':''}}">
-
-                             {% if errors.year_stop  %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.year_stop  | first }} </div> 
-                                {% endif %}
-                             </div>
-                        </div>
-                    </div>
-                    <!--/span-->
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Bank <span class="text-danger">*</span></label>
-                            <div class="col-md-9">
-                             <select class="form-control custom-select {{ errors.bank ? 'is-invalid' :'' }}" 
-                                name="bank">
-                                    <option value="">Choose ..</option>
-                                    {% for bank in helper.banks %}
-                                     <option value="{{ bank.bank_name}}">{{ bank.bank_name | capitalize}}</option>
-                                    {% endfor %}
-                                    
-                                </select>
-
-                                {% if errors.bank %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.bank | first }} </div> 
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <!--/span-->
-                </div>
-                  <!--/row-->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3"> Bank Address <span class="text-danger">*</span></label>
-                            <div class="col-md-9">
-                               <input type="text" name="bank_address" class="form-control {{ errors.bank_address ? 'is-invalid' :'' }}"
-                                placeholder="..." value="{{ old.bank_address}}">
-
-                                 {% if errors.bank_address %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.bank_address | first }} </div> 
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <!--/span-->
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Bank Account No.<span class="text-danger">*</span></label>
-                            <div class="col-md-9">
-                                <input type="text" value="{{ old.bank_account }}"  name="bank_account" class="form-control {{ errors.bank_account ? 'is-invalid' :'' }}" 
-                                    placeholder="...Account Number...">
-
-                                  {% if errors.bank_account %}
-                                      <div class="form-control-feedback invalid-feedback"> {{ errors.bank_account | first }} </div> 
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <!--/span-->
-                </div>
+               
 
                          <!--/row-->
                 <div class="row">
@@ -268,76 +189,9 @@
                 <!--/row-->
             </div>
             <hr>
-            <h3 class="box-title m-t-15">Examination Results only for S.4 and S.6</h3>
+            {# <h3 class="box-title m-t-15">Examination Results only for S.4 and S.6</h3> #}
             
-               <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">First Term Results</label>
-                            <div class="col-md-9">
-                                  <div class="form-group">
-                                        <textarea class="textarea_editor form-control {{ errors.first_term ? 'is-invalid' : ''}}" name="first_term"
-                                        rows="8" placeholder="Enter reason for drop out ..." style="height:350px">
-                                        {{ old.first_term}}
-                                        </textarea>
-                                    </div>
-
-                                {% if errors.first_term %}
-                                <div class="form-control-feedback invalid-feedback">
-                                    {{ errors.first_term | first }}
-                                </div>
-                             {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--/row-->
-
-                    <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Second Term Results</label>
-                            <div class="col-md-9">
-                                  <div class="form-group">
-                                        <textarea name="second_term" class="textarea_editor form-control {{ errors.second_term ? 'is-invalid' : ''}}" rows="10" placeholder="Enter text ..." style="height:350px">
-                                        {{ old.second_term }}
-                                        </textarea>
-                                    </div>
-
-                             {% if errors.second_term %}
-                                <div class="form-control-feedback invalid-feedback">
-                                    {{ errors.second_term | first }}
-                                </div>
-                             {% endif %}
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--/row-->
-
-
-                    <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group row">
-                            <label class="control-label text-right col-md-3">Third Term Results</label>
-                            <div class="col-md-9">
-                                  <div class="form-group">
-                                        <textarea name="third_term" class="textarea_editor form-control {{ errors.third_term ? 'is-invalid' : ''}}" rows="10" placeholder="Enter text ..." style="height:350px">
-                                        {{ old.third_term }}
-                                        </textarea>
-                                    </div>
-
-                                    {% if errors.third_term %}
-                                        <div class="form-control-feedback invalid-feedback">
-                                            {{ errors.third_term | first }}
-                                        </div>
-                                    {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--/row-->
+              
 
 
             <div class="form-actions ">
