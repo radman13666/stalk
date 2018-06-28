@@ -53,10 +53,16 @@ class SchoolController extends Controller
         // validation
         $validate = $this->Validator->validate($request,[
                             'school_name'         => v::notEmpty()->schoolExist(),
-                            // 'school_code'  => v::notEmpty(),
                             'level'        => v::notEmpty(),
                             'district_id'  => v::notEmpty(),
-                            // 'about'        => v::notEmpty(),
+                            // 'school_code'  => v::notEmpty(),
+                            // 'bank_name'    => v::notEmpty(),
+                            // 'bank_account' => v::notEmpty(),
+                            // 'bank_address' => v::notEmpty(),
+                            // 'school_address' => v::notEmpty(),
+                            // 'school_phone' => v::notEmpty(),
+                            // 'school_email' => v::notEmpty(),
+                            // 'school_website' => v::notEmpty(),
                         ]);
 
         // validation falied
@@ -67,12 +73,18 @@ class SchoolController extends Controller
 
         //create a new institution
         $school = School::create([
-                            'school_name'  => $request->getParam('school_name'),
-                            'school_code'  => $request->getParam('school_code'),
-                            'level'        => $request->getParam('level'),
-                            'district_id'  => $request->getParam('district_id'),
-                            'about'        => $request->getParam('about'),
-                            'created_by'   => $this->auth->user()->name
+                            'school_name'    => $request->getParam('school_name'),
+                            'school_code'    => $request->getParam('school_code'),
+                            'level'          => $request->getParam('level'),
+                            'district_id'    => $request->getParam('district_id'),
+                            'bank_name'      => $request->getParam('bank_name'),
+                            'bank_account'   => $request->getParam('bank_account'),
+                            'bank_address'   => $request->getParam('bank_address'),
+                            'school_address' => $request->getParam('school_address'),
+                            'school_phone'   => $request->getParam('school_phone'),
+                            'school_email'   => $request->getParam('school_email'),
+                            'school_website' => $request->getParam('school_website'),
+                            'created_by'     => $this->auth->user()->name
                         ]);
 
         // flash messege
@@ -143,11 +155,17 @@ class SchoolController extends Controller
        
         // validation
         $validate = $this->Validator->validate($request,[
-                'school_name'   => v::notEmpty(),
-                // 'school_code'=> v::notEmpty(),
-                'level'         => v::notEmpty(),
-                'district_id'   => v::notEmpty(),
-                // 'about'      => v::notEmpty(),
+            'school_name'  => v::notEmpty(),
+            'level'        => v::notEmpty(),
+            'district_id'  => v::notEmpty(),
+            // 'school_code'  => v::notEmpty(),
+            // 'bank_name'    => v::notEmpty(),
+            // 'bank_account' => v::notEmpty(),
+            // 'bank_address' => v::notEmpty(),
+            // 'school_address' => v::notEmpty(),
+            // 'school_phone' => v::notEmpty(),
+            // 'school_email' => v::notEmpty(),
+            // 'school_website' => v::notEmpty(),
         ]);
 
         // validation falied
@@ -159,11 +177,17 @@ class SchoolController extends Controller
         $school = School::find($args['id']);
       
         $school->update([
-            'school_name'  => $request->getParam('school_name'),
-            'school_code'  => $request->getParam('school_code'),
-            'level'        => $request->getParam('level'),
-            'district_id'  => $request->getParam('district_id'),
-            'about'        => $request->getParam('about'),
+            'school_name'    => $request->getParam('school_name'),
+            'school_code'    => $request->getParam('school_code'),
+            'level'          => $request->getParam('level'),
+            'district_id'    => $request->getParam('district_id'),
+            'bank_name'      => $request->getParam('bank_name'),
+            'bank_account'   => $request->getParam('bank_account'),
+            'bank_address'   => $request->getParam('bank_address'),
+            'school_address' => $request->getParam('school_address'),
+            'school_phone'   => $request->getParam('school_phone'),
+            'school_email'   => $request->getParam('school_email'),
+            'school_website' => $request->getParam('school_website'),
         ]);
 
         // flash message
@@ -171,6 +195,28 @@ class SchoolController extends Controller
 
         return $response->withRedirect($this->router->pathFor('school.index'));
         
+    }
+
+    /**
+     * Show school details
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function show($request,$response,$args)
+    {
+        $school = School::find($args['id']);
+
+        $district = District::find($school->district_id);
+
+
+        return $this->view->render($response,'category/school/show.twig',[
+            'school'   => $school,
+            'district' => $district,
+        ]);
+
     }
 
 

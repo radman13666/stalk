@@ -1,0 +1,86 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+<div class="card col-md-10">
+    <div class="card-body">
+
+    <h3 class="text-primary">
+    <i class="fa fa-star-half-o"></i> &nbsp;&nbsp;&nbsp;&nbsp;
+
+    {{ school.school_name}}
+
+       <a href="{{ path_for('school.edit',{id:school.id})}}" 
+       class="btn btn-outline-primary float-right">
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                  Edit</a>
+
+    </h3>
+
+      <h4> <span class="text-muted"> Level: &nbsp;&nbsp; </span> 
+        <span class="single_ite"> 
+            {{ school.level | capitalize}}
+        </span>
+    </h4>
+
+    <h4> <span class="text-muted"> Registration Number: &nbsp;&nbsp;</span> 
+        <span class="single_ite"> 
+            {{ school.school_code}}
+        </span>
+    </h4>
+
+     <h4> <span class="text-muted"> District: &nbsp;&nbsp;</span> 
+        <span class="single_ite"> 
+            {{ district.district_name}}
+        </span>
+    </h4>
+
+      <h4> <span class="text-muted"> Phone Contact: &nbsp;&nbsp;</span> 
+        <span class="single_ite"> 
+            {{ school.school_phone}}
+        </span>
+    </h4>
+
+
+    <h4> <span class="text-muted"> Email Address: &nbsp;&nbsp;</span> 
+        <span class="single_ite"> 
+            {{ school.school_email}}
+        </span>
+    </h4>
+
+
+    <h4> <span class="text-muted"> School Address: &nbsp;&nbsp;</span> 
+        <span class="single_ite"> 
+            {{ school.school_address}}
+        </span>
+    </h4>
+
+    <hr>
+
+    <h4> <span class="text-muted"> Bank Name: &nbsp;&nbsp;</span> 
+        <span class="single_ite"> 
+            {{ school.bank_name}}
+        </span>
+    </h4>
+
+
+      <h4> <span class="text-muted"> Bank Account: &nbsp;&nbsp;</span> 
+        <span class="single_ite"> 
+            {{ school.bank_account}}
+        </span>
+    </h4>
+
+
+      <h4> <span class="text-muted"> Bank Address: &nbsp;&nbsp;</span> 
+        <span class="single_ite"> 
+            {{ school.bank_address}}
+        </span>
+    </h4>
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}

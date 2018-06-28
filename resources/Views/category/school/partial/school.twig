@@ -63,7 +63,7 @@
                             <th>District</th>
                             <th>Category</th>
                             <th>Edit</th>
-                            {# <th>Delete</th> #}
+                            <th>View</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -80,24 +80,24 @@
 
                              <td>
                              {% if auth.permission.id in [3,4,5 ]%}
-                              <a href="{{ path_for('school.edit',{id:item.id})}}" onClick="return confirm('Are you sure  you want to edit this institution ?')" class="btn btn-success">
+                              <a href="{{ path_for('school.edit',{id:item.id})}}" 
+                                onClick="return confirm('Are you sure  you want to edit this institution ?')"
+                               class="btn btn-info">
                                <i class="fa fa-pencil-square" aria-hidden="true"></i>
                               </a>
-                               {% endif %}
+                               {% else  %}
 
-                               <button  class="btn btn-success" disabled>
+                               <button  class="btn btn-info" disabled>
                                <i class="fa fa-pencil-square" aria-hidden="true"></i>
                               </button>
+                              {% endif %}
                             </td>
-                            {# <td>
-                            <form method="POST" action="{{ path_for('subject.trash',{id:item.id})}}">
-                                <button class="btn btn-danger" onClick=" return confirm('Are you sure you want to delete this subject?')" type="submit">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                <input type="hidden" name="_METHOD" value="PUT">
-                                {{ csrf.field | raw}}
-                                </button>
-                            </form>
-                            </td> #}
+                            <td>
+                            <a class="btn btn-primary" href="{{ path_for('school.show',{id:item.id})}}">
+                             
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
+                            </td>
                           
                         </tr>
                     {% endfor %}

@@ -95,23 +95,145 @@
                     <!--/span-->
                 </div>
                 <!--/row-->
+                <hr>
            
-                 <div class="row">
+                  <div class="row">
                     <div class="col-md-10">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">About/Contact the Institution </label>
+                            <label class="control-label text-right col-md-3">Phone Contact
+                            </label>
                             <div class="col-md-9">
-                                  <div class="form-group">
-                                  <label class="text-primary"> About us, address, contact e.t.c</label>
-                                        <textarea name="about" class="textarea_editor form-control" rows="10" style="height:350px">
-                                        {{ old.about }}
-                                       
-                                        </textarea>
-                                    </div>
-                            </div>
+                                <input type="text"  name="school_phone" class="form-control {{ errors.school_phone ? 'is-invalid' :'' }} " 
+                                     placeholder="" value="{{ old.school_phone}}">
+                                 {% if errors.school_phone %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.school_phone | first }} </div> 
+                                {% endif %}
+                                </div>
                         </div>
                     </div>
                 </div>
+                
+                <!--/row-->
+
+
+                  <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Email Address
+                            </label>
+                            <div class="col-md-9">
+                                <input type="email"  name="school_email" class="form-control {{ errors.school_email ? 'is-invalid' :'' }} " 
+                                     placeholder="" value="{{ old.school_email}}">
+                                 {% if errors.school_email %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.school_email | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--/row-->
+
+
+                  <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Website
+                            </label>
+                            <div class="col-md-9">
+                                <input type="url"  name="school_website" class="form-control {{ errors.school_website ? 'is-invalid' :'' }} " 
+                                     placeholder="e.g http://example.com" value="{{ old.school_website}}">
+                                 {% if errors.school_website %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.school_website | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--/row-->
+                
+
+                   <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Address
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"  name="school_address" class="form-control {{ errors.school_address ? 'is-invalid' :'' }} " 
+                                     placeholder="" value="{{ old.school_address}}">
+                                 {% if errors.school_address %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.school_address | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--/row-->
+                <hr>
+
+                   <!--/row-->
+                <div class="row">
+                    <!--/span-->
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Bank Name </label>
+                           
+                            <div class="col-md-9">
+                                <select class="form-control custom-select {{ errors.bank_name ? 'is-invalid' :'' }}"
+                                 name="bank_name">
+                                    <option value="">Choose ..</option>
+
+                                    {% for bank in  helper.banks %}
+                                     <option value="{{ bank.bank_name }}">{{ bank.bank_name }}</option>
+                                    {% endfor %}
+                                </select>
+
+                                {% if errors.bank_name %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.bank_name | first }} </div> 
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+                 <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Account Number
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"  name="bank_account" class="form-control {{ errors.bank_account ? 'is-invalid' :'' }} " 
+                                     placeholder="Bank Account Number" value="{{ old.bank_account}}">
+                                 {% if errors.bank_account %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.bank_account | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--/row-->
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Bank Address
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"  name="bank_address" class="form-control {{ errors.bank_address ? 'is-invalid' :'' }} " 
+                                     placeholder="" value="{{ old.bank_address}}">
+                                 {% if errors.bank_address %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.bank_address | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <!--/row-->
 
             <div class="form-actions ">
@@ -124,16 +246,15 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-1">
                         <div class="row">
-                        <div class="col-md-2 offset-md-10">
-                            <div class="pull-right">
-                                <button type="submit" class="btn  btn-lg btn-primary btn-block">
+                      
+                           
+                                <button type="submit" class="btn  btn-primary btn-block">
                                    Submit
                                 </button>
                             </div>
-                            </div>
-                        </div>
+                        
                     </div>
 
                 </div>

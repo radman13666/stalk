@@ -4,13 +4,13 @@
 
     <div class="card-header">
         <h4 class="m-b-0 text-info "><i class="fa fa-plus-edit" aria-hidden="true"></i>
-            update {{ school.school_name | capitalize}}
+            Update {{ school.school_name }}
          </h4>
     </div>
  
     <div class="card-body">
         <form action="{{ path_for('school.edit',{id:school.id})}}"  method ="POST" class="form-horizontal">
-            <div class="form-body">
+             <div class="form-body">
                 <h3 class="box-title m-t-15">School or Institution Information</h3>
                 <hr class="m-t-0 m-b-40">
                 <div class="row">
@@ -20,7 +20,7 @@
                             </label>
                             <div class="col-md-9">
                                 <input type="text"  name="school_name" class="form-control {{ errors.school_name ? 'is-invalid' :'' }} " 
-                                     placehschooler="School or Institution name " value="{{ school.school_name}}">
+                                     placeholder="School or Institution name " value="{{ school.school_name}}">
                                  {% if errors.school_name %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.school_name | first }} </div> 
                                 {% endif %}
@@ -37,7 +37,7 @@
                             </label>
                             <div class="col-md-9">
                                 <input type="text"  name="school_code" class="form-control {{ errors.school_code ? 'is-invalid' :'' }} " 
-                                     placehschooler="School /Institution  Reg No. if any " value="{{ school.school_code}}">
+                                     placeholder="School /Institution  Reg No. if any " value="{{ school.school_code}}">
                                  {% if errors.school_code %}
                                       <div class="form-control-feedback invalid-feedback"> {{ errors.school_code | first }} </div> 
                                 {% endif %}
@@ -53,7 +53,7 @@
                             <label class="control-label text-right col-md-3">Level  <span class="text-danger">*</span></label>
                             <div class="col-md-9">
                                 <select class="form-control custom-select {{ errors.level ? 'is-invalid' :'' }}" name="level">
-                                    <option value="{{school.level}}">{{ school.level | capitalize}}</option>
+                                     <option value="{{school.level}}">{{ school.level | capitalize}}</option>
                                     {% for level in helper.levels %}
                                     <option value="{{ level.name }}">{{ level.name | capitalize }}</option>
                                     {% endfor %}
@@ -78,7 +78,7 @@
                             <label class="control-label text-right col-md-3">District  <span class="text-danger">*</span></label>
                             <div class="col-md-9">
                                 <select class="form-control custom-select {{ errors.district_id ? 'is-invalid' :'' }}" name="district_id">
-                                    <option value="{{ school.district_id}}">{{ school.district_name }}</option>
+                                  <option value="{{ school.district_id}}">{{ school.district_name }}</option>
 
                                     {% for district in  helper.districts %}
                                      <option value="{{ district.id }}">{{ district.district_name }}</option>
@@ -95,25 +95,148 @@
                     <!--/span-->
                 </div>
                 <!--/row-->
+                <hr>
            
-                 <div class="row">
+                  <div class="row">
                     <div class="col-md-10">
                         <div class="form-group row">
-                            <label class="control-label text-right col-md-3">About/Contact the Institution </label>
+                            <label class="control-label text-right col-md-3">Phone Contact
+                            </label>
                             <div class="col-md-9">
-                                  <div class="form-group">
-                                  <label class="text-primary"> About us, address, contact e.t.c</label>
-                                        <textarea name="about" class="textarea_editor form-control" rows="10" style="height:350px">
-                                        {{ school.about }}
-                                       
-                                        </textarea>
-                                    </div>
-                            </div>
+                                <input type="text"  name="school_phone" class="form-control {{ errors.school_phone ? 'is-invalid' :'' }} " 
+                                     placeholder="" value="{{ school.school_phone}}">
+                                 {% if errors.school_phone %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.school_phone | first }} </div> 
+                                {% endif %}
+                                </div>
                         </div>
                     </div>
                 </div>
+                
                 <!--/row-->
-            <input type="hidden" name="_METHOD" value="PUT" />
+
+
+                  <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Email Address
+                            </label>
+                            <div class="col-md-9">
+                                <input type="email"  name="school_email" class="form-control {{ errors.school_email ? 'is-invalid' :'' }} " 
+                                     placeholder="" value="{{ school.school_email}}">
+                                 {% if errors.school_email %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.school_email | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--/row-->
+
+
+                  <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Website
+                            </label>
+                            <div class="col-md-9">
+                                <input type="url"  name="school_website" class="form-control {{ errors.school_website ? 'is-invalid' :'' }} " 
+                                     placeholder="e.g http://example.com" value="{{ school.school_website}}">
+                                 {% if errors.school_website %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.school_website | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--/row-->
+                
+
+                   <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Address
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"  name="school_address" class="form-control {{ errors.school_address ? 'is-invalid' :'' }} " 
+                                     placeholder="" value="{{ school.school_address}}">
+                                 {% if errors.school_address %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.school_address | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--/row-->
+                <hr>
+
+                   <!--/row-->
+                <div class="row">
+                    <!--/span-->
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Bank Name </label>
+                           
+                            <div class="col-md-9">
+                                <select class="form-control custom-select {{ errors.bank_name ? 'is-invalid' :'' }}"
+                                 name="bank_name">
+                                    <option value="{{ school.bank_name}}">{{ school.bank_name}}</option>
+
+                                    {% for bank in  helper.banks %}
+                                     <option value="{{ bank.bank_name }}">{{ bank.bank_name }}</option>
+                                    {% endfor %}
+                                </select>
+
+                                {% if errors.bank_name %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.bank_name | first }} </div> 
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+                 <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Account Number
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"  name="bank_account" class="form-control {{ errors.bank_account ? 'is-invalid' :'' }} " 
+                                     placeholder="Bank Account Number" value="{{ school.bank_account}}">
+                                 {% if errors.bank_account %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.bank_account | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--/row-->
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Bank Address
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"  name="bank_address" class="form-control {{ errors.bank_address ? 'is-invalid' :'' }} " 
+                                     placeholder="" value="{{ school.bank_address}}">
+                                 {% if errors.bank_address %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.bank_address | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--/row-->
+                <input type="hidden" name="_METHOD" value="PUT" >
+
             <div class="form-actions ">
                 <div class="row">
                     <div class="col-md-6">
@@ -124,16 +247,15 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-1">
                         <div class="row">
-                        <div class="col-md-2 offset-md-10">
-                            <div class="pull-right">
-                                <button type="submit" class="btn  btn-lg btn-primary btn-block">
-                                   update
+                      
+                           
+                                <button type="submit" class="btn  btn-primary btn-block">
+                                   Update
                                 </button>
                             </div>
-                            </div>
-                        </div>
+                        
                     </div>
 
                 </div>

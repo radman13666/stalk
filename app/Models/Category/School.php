@@ -10,8 +10,14 @@ class School extends Model
         'school_code',
         'level',
         'district_id',
-        'about',
-        'created_by'
+        'bank_name',
+        'bank_account',
+        'bank_address',
+        'school_address',
+        'school_phone',
+        'school_email',
+        'school_website',
+        'created_by',
     ];
 
 

@@ -12,7 +12,7 @@ use App\Middleware\GuestMiddleware;
 use App\Middleware\Roles\CrMiddleware;
 use App\Middleware\Roles\CruMiddleware;
 use App\Middleware\Roles\CrudMiddleware;
-
+use App\Middleware\Roles\SuperadminMiddleware;
 
 /*********************************************************************** 
 *
@@ -60,6 +60,7 @@ $app->group('', function(){
     // schools
     $this->get('/schools','SchoolController:index')->setName('school.index');
     $this->post('/schools','SchoolController:search');
+    $this->get('/schools/{id}/show','SchoolController:show')->setName('school.show');
 
     // Banks
     $this->get('/banks','BankController:index')->setName('bank.index');
@@ -209,4 +210,18 @@ $app->group('', function(){
 
 
 })->add( new CrMiddleware($container));
-    
+
+
+
+/*********************************************************************** 
+*
+* Superadmin middleware 
+*
+/*********************************************************************** */
+
+$app->group('', function(){
+
+    // Delete
+    $this->get('superadmin/students','StudentTrashController:index')->setName('students.trash');
+
+})->add( new SuperadminMiddleware($container));

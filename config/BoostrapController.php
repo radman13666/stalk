@@ -80,3 +80,13 @@ $container['ReportController'] = function($container){
 $container['SubcountyController'] = function($container){
     return new \App\Controllers\Category\SubcountyController($container);
 };
+
+/***
+ * 
+ * Super Admin  controllers
+ */
+
+ // student controller
+$container['StudentTrashController'] = function($container){
+    return new \App\Controllers\Superadmin\StudentTrashController($container);
+};
