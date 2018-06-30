@@ -60,7 +60,11 @@ class SecondaryController extends Controller
         };
 
   
+       //    check if the student id is already in the databse
+     
+       $isAvailable = Secondary::where('student_id','=',$_SESSION['student_id'])->count();
 
+      if($isAvailable < 1){
         // post info
        $secondary = Secondary::create([
             'school_id'        => $request->getParam('school_id'),
@@ -104,14 +108,29 @@ class SecondaryController extends Controller
           
         }
 
+    }
+
+    else
+    {
+        $Available = Secondary::where('student_id','=',$_SESSION['student_id'])->get();
+        $secondary = $Available[0];
+    }
+
         /**
          * Update student school and level
          * 
          */
 
-        $this->students->schoolForm($secondary->student_id,$secondary);
+           
+        $student =  Student::where('bursary_id','=',$secondary->student_id)->first();
+        
+        $update  = $student->update([
+                'school'   => $secondary->school_id,
+                's_form'   => $secondary->s_form,
+                'draft'    => '0'
+            ]);   
 
-    
+
         // unsetting session
         unset($_SESSION['student_id']);
         

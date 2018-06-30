@@ -79,6 +79,11 @@ $app->group('', function(){
     $this->post('/subcounty','SubcountyController:search');
 
 
+    // Draft Controller
+    $this->get('/students/draft','DraftController:index')->setName('draft.index');
+    $this->post('/students/{id}/draft','DraftController:edit')->setName('draft.edit');
+
+
 })->add( new AuthMiddleware($container));
 
 
@@ -221,7 +226,9 @@ $app->group('', function(){
 
 $app->group('', function(){
 
-    // Delete
-    $this->get('superadmin/students','StudentTrashController:index')->setName('students.trash');
+    // Deleted students
+    $this->get('/superadmin/students','StudentTrashController:index')->setName('students.trash');
+    $this->post('/superadmin/students','StudentTrashController:search');
+    $this->put('/superadmin/{id}/students','StudentTrashController:restore')->setName('students.restore');
 
 })->add( new SuperadminMiddleware($container));

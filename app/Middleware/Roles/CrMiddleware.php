@@ -12,9 +12,10 @@ class CrMiddleware extends Middleware
     public function __invoke($request,$response,$next)
     {
 
-        if($this->container->auth->permission()->id == 3 ||
+        if($this->container->auth->permission()->id == 3 || 
            $this->container->auth->permission()->id == 4 ||
-           $this->container->auth->permission()->id == 2)
+           $this->container->auth->permission()->id == 2 ||
+           $this->container->auth->permission()->id == 5)
         {
           
         }

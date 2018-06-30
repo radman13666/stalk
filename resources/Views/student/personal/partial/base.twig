@@ -16,7 +16,7 @@
  <a href="{{path_for('student.edit',{id:student.id})}}">
     <li class=" btn btn-primary  student-list-item  list-inline-item " >
         <i class="fa fa-user" aria-hidden="true"></i>
-            Personal  Information  {{ category}}
+            Personal  Information 
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
     </li>
  </a>
@@ -33,6 +33,13 @@
 <a href="{{path_for('mysubject.index',{id:student.id})}}">
   <li class=" btn btn-primary  student-list-item  list-inline-item " >
         <i class="fa fa-address-book" aria-hidden="true"></i>   Edit Subjects 
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+  </li>
+</a>
+
+<a href="{{path_for('mysubject.index',{id:student.id})}}">
+  <li class=" btn btn-primary  student-list-item  list-inline-item " >
+        <i class="fa fa-address-book" aria-hidden="true"></i>  Results 
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
   </li>
 </a>

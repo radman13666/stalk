@@ -120,7 +120,7 @@
                             </ul>
                         </li>
 
-                         <li class="nav-label">Reports</li>
+                         <li class="nav-label">Reports </li>
 
                          <li> <a class="has-arrow  " href="#" aria-expanded="false"> 
                        <i class="fa fa-cloud-download" aria-hidden="true"></i>
@@ -130,6 +130,38 @@
                            
                             </ul>
                         </li>
+
+
+                    <li class="nav-label">Draft </li>
+
+                         <li> <a class="has-arrow  " href="#" aria-expanded="false"> 
+                       <i class="fa fa-dropbox" aria-hidden="true"></i>
+                           <span class="hide-menu">Draft
+                                
+                         </span>
+                         &nbsp; <span class="badge badge-pill badge-danger">{{ students.drafts}}</span>
+                        </a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{ path_for('draft.index')}}">All Drafts</a></li>
+                           
+                            </ul>
+                        </li>
+
+               
+                    {% if auth.user.role_id in [5,6] %}
+                     <li class="nav-label">Trash</li>
+
+                      <li> <a class="has-arrow  " href="#" aria-expanded="false"> 
+                       <i class="fa fa-trash" aria-hidden="true"></i>
+                        <span class="hide-menu">Students</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{ path_for('students.trash')}}">Students</a></li>
+                           
+                            </ul>
+                        </li>
+                    {% endif %}
+
+
                      
                     </ul>
                 </nav>

@@ -10,8 +10,8 @@ require_once  __DIR__ .'/../vendor/autoload.php';
 
  use Respect\Validation\Validator as v;
 
- error_reporting(E_ALL);
-ini_set('display_errors','On');
+//  error_reporting(E_ALL);
+// ini_set('display_errors','On');
 
  $app = new \Slim\App([
      'settings' => [
@@ -77,6 +77,11 @@ ini_set('display_errors','On');
         'user'       => $container->auth->user(),
         'check'      =>  $container->auth->check(),
         'permission' => $container->auth->permission(),
+    ]);
+
+    // students
+    $view->getEnvironment()->addGlobal('students',[
+        'drafts' => $container->students->drafts()
     ]);
 
     // flash message

@@ -23,9 +23,16 @@ class StudentController extends Controller
     /**
      * File name
      *
-     * @var [type]
+     * @var string
      */
     protected $photo_name;
+
+    /**
+     * Draft
+     *
+     * @var bool
+     */
+    protected $draft = false;
 
     /**
      * Student category
@@ -52,13 +59,14 @@ class StudentController extends Controller
                                          
         $path = $this->files->fileDir();
 
-       
+     
     
 
         return $this->view->render($response,'student/personal/index.twig',[
             'items'       => $students,
             'path'        => $path,
             'district'    => $district,
+          
             
         ]);
     }
@@ -146,6 +154,7 @@ class StudentController extends Controller
 
 
             $create = Student::create([
+                
                 'name'           => ucwords($request->getParam('name')),
                 'dob'            => $request->getParam('dob'),
                 'level'          => $request->getParam('level'),
@@ -179,9 +188,20 @@ class StudentController extends Controller
 
                 ]);
 
-            
+        // Generating burasry id         
+        $year = Carbon::parse($request->getParam('registration_year'))->format('Y');
+        $bursary_id = trim($year.$create->id);
+        
+        // pull the lastest student information
+       
+
+        $create->update([
+            'bursary_id' => $bursary_id
+        ]);
+
+
         // setting last inserted id into session
-         $_SESSION['student_id'] = $create->id;
+         $_SESSION['student_id'] = $create->bursary_id;
        
     /**
      * check for level
@@ -233,13 +253,13 @@ class StudentController extends Controller
         //check student institution category
         if($student->level == 'university' || $student->level == 'tertiary' )
         {
-             $institute = Institution::where('student_id',$student->id)->get();
+             $institute = Institution::where('student_id',$student->bursary_id)->get();
         }
         
         // pull other student information
         if($student->level == 'secondary' )
         {
-            $institute = Secondary::where('student_id',$student->id)->get();
+            $institute = Secondary::where('student_id',$student->bursary_id)->get();
         }
 
 
@@ -401,7 +421,7 @@ class StudentController extends Controller
                 }
                 else
                 {
-                    $institute = Institution::where('student_id',$student->id)->get();
+                    $institute = Institution::where('student_id',$student->bursary_id)->get();
         
                     $check = Secondary::where('student_id',$args['id'])->get();
         
@@ -451,7 +471,7 @@ class StudentController extends Controller
                 
                 $institution = Secondary::where('student_id',$args['id'])->get();
     
-                $check = Institution::where('student_id',$student->id)->get();
+                $check = Institution::where('student_id',$student->bursary_id)->get();
                 
                 
                             
@@ -551,21 +571,21 @@ class StudentController extends Controller
         // check student level
        if($student->level=='secondary')
        {
-            $institution = Secondary::where('student_id',$student->id)->get();
+            $institution = Secondary::where('student_id',$student->bursary_id)->get();
 
             $subjects = StudentSubject::leftJoin('subjects','subjects.id','subject_id')
-                                        ->where('student_id',$student->id)->get();
+                                        ->where('student_id',$student->bursary_id)->get();
             
             
        }
        else
        {
-             $institution = Institution::where('student_id',$student->id)->get();
+             $institution = Institution::where('student_id',$student->bursary_id)->get();
              $course      = Course::find($institution[0]->course_id);
              $hostel      = Hostel::find($institution[0]->hostel_id);
        }
 
-        // $secondary  = Secondary::where('student_id',$student->id)->get();
+        // $secondary  = Secondary::where('student_id',$student->bursary_id)->get();
         $path = $this->files->fileDir();
 
         return $this->view->render($response,'student/personal/single.twig',[

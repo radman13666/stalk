@@ -75,6 +75,13 @@ class InstitutionController extends Controller
             return $response->withRedirect($this->router->pathFor('institution.create'));
         }
 
+          //    check if the student id is already in the databse
+     
+          $isAvailable = Institution::where('student_id','=',$_SESSION['student_id'])->count();
+        
+       
+         if($isAvailable < 1){
+
         // Save data
 
         $institution = Institution::create([
@@ -94,15 +101,28 @@ class InstitutionController extends Controller
                         'other_bank_address'       => $request->getParam('other_bank_address'),
                         'created_by'               => ucwords($this->auth->user()->name)
                     ]);
+
+
+         }
+         else
+         {
+            $Available = Institution::where('student_id','=',$_SESSION['student_id'])->get();
+            $institution = $Available[0];
+            
+         }
     
         /**
          * Update student school and level
          * 
          */
-
-        $this->students->schoolForm($institution->student_id,$institution);
         
-            
+        $student =  Student::where('bursary_id','=',$institution->student_id)->first();
+        
+        $update  = $student->update([
+                'school'   => $institution->school_id,
+                's_form'   => $institution->s_form,
+                'draft'    => '0'
+            ]);   
         
         // unsetting session
         unset($_SESSION['student_id']);
@@ -222,7 +242,15 @@ class InstitutionController extends Controller
         */
         $new_data = Institution::find($args['id']);
 
-        $this->students->schoolForm($new_data->student_id,$new_data);
+        // $this->students->schoolForm($new_data->student_id,$new_data);
+
+        $latest = Student::find($new_data->student_id);
+
+        $update  = $latest->update([
+            'school'   => $new_data->student_id,
+            's_form'   => $new_data->s_form,
+            'draft'    => '0'
+        ]);  
 
         //   add a flash message
         $this->flash->addMessage('success', 'Information has been updated successfully');

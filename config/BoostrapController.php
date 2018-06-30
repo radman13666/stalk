@@ -41,6 +41,12 @@ $container['StudentController'] = function($container){
     return new \App\Controllers\Student\StudentController($container);
 };
 
+
+// Draft controller
+$container['DraftController'] = function($container){
+    return new \App\Controllers\Student\DraftController($container);
+};
+
 // Secondary controller
 $container['SecondaryController'] = function($container){
     return new \App\Controllers\Student\SecondaryController($container);

@@ -8,7 +8,7 @@ class Student extends Model
 {
 
     protected $fillable = [
-       
+       'bursary_id',
         'name' ,
         'dob',
         'level',

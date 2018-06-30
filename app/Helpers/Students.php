@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\User\Role;
 use App\Models\Student\Student;
 
 class Students 
@@ -24,7 +25,19 @@ class Students
                 's_form'   => $school->s_form,
             ]);
 
-        // return $update;
+        return $update;
+
+    }
+
+    // 
+    public function drafts()
+    {
+        $drafts = Student::where('draft','=','1')
+                        ->where('created_id',$_SESSION['user'])
+                        ->count();
+
+     return $drafts;
+
 
     }
 

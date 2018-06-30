@@ -1,0 +1,82 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+        <h4 class="card-title text-primary"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+          All Drafts 
+            </h4>
+     
+
+
+            <div class="table-responsive m-t-40">
+
+            {% if items.count == 0 %}
+                <div class="alert alert-success" role="alert">
+                 &nbsp; &nbsp;
+                  <i class="fa fa-smile-o" aria-hidden="true"></i>
+                   &nbsp; &nbsp; Ooops!!!! &nbsp;    You have no draft
+                </div>
+            {% endif %}
+
+                <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Photo</th>
+                            <th>Name</th>
+                            <th>District</th>
+                            <th>Gender</th>
+                            <th>Level</th>
+                            <th>Status</th>
+                            <th>Created By</th>
+                            <th>Created At</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        
+                    </tfoot>
+                    <tbody class="">
+                    {% for item in items %}
+                        <tr>
+                            <td>
+                            {% if item.photo %}
+                                 <img src="{{path}}{{item.photo}}" alt="photo" height="40" with="40" class="rounded-circle">
+                            {% else %}
+                                 <img src="{{path}}/profile.png" alt="photo" height="40" with="40" class="rounded-circle">
+                            {% endif %}
+                            </td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.dist_name}}</td>
+                            <td>{{ item.gender | capitalize }}</td>
+                            <td>{{ item.level }}</td>
+                            <td>{{ item.current_state }}</td>
+                            <td>{{ item.created_by}} </td>
+                            <td>{{ item.created_at}} </td>
+                                
+                               
+                            
+                            <td>
+
+                            <form method="POST" action="{{ path_for('draft.edit',{id:item.id})}}">
+                                <button class="btn btn-primary" type="submit">
+                                <i class="fa fa-edit"></i> 
+                                </button>
+                                {{ csrf.field | raw}}
+                            </form>
+                              
+
+                            </td>
+                          
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+      
+               {% include 'student/draft/pagination.twig' %}
+      
+            </div>
+             
+        </div>
+        
+    </div>
+{% endblock %}
