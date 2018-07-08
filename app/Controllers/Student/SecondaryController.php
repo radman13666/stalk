@@ -153,8 +153,10 @@ class SecondaryController extends Controller
         
         $secondary = Secondary::find($args['id']);
 
+       
+
         //get student
-        $student = Student::find($secondary->student_id);
+        $student = Student::where('bursary_id','=',$secondary->student_id)->first();
        
         // get school name
         $school = School::where('id','=',$secondary->school_id)->get();
@@ -183,10 +185,10 @@ class SecondaryController extends Controller
         $old_data = Secondary::find($args['id']);
 
         //  pull student information
-        $student = Student::find($old_data->student_id);
+        $student = Student::where('bursary_id','=',$old_data->student_id)->first();
 
         // check if the student exist in instution table
-        $institution = Institution::find($student->id);
+        $institution = Institution::where('student_id',$student->bursary_id)->first();
 
         if($institution)
         {
@@ -206,8 +208,17 @@ class SecondaryController extends Controller
         
         //  new data
         $new_data = Secondary::find($args['id']);
-       
-         $this->students->schoolForm($new_data->student_id,$new_data);
+        
+        
+        $latest = Student::where('bursary_id','=',$new_data->student_id)->first();
+
+        $update  = $latest->update([
+            'school'   => $new_data->school_id,
+            's_form'   => $new_data->s_form,
+            'draft'    => '0'
+        ]);  
+
+
            //   add a flash message
         $this->flash->addMessage('success', ucwords($student->name).'  Information has been updated successfully');
         

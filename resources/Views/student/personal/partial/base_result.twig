@@ -1,0 +1,30 @@
+{% extends 'student/personal/partial/base.twig' %}
+
+{% block  basecontent %}
+
+ <div class="container">
+    <div class="row">
+      
+      <span class="add_result float-right ">
+         <a href="{{ path_for('result.create',{id:student.bursary_id})}}" class="btn btn-warning text-right">
+         <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          New Result
+         </a>
+     </span>
+
+     {% if results  is empty  %}
+     <div class="card col-md-12">
+        <div class="card-body">
+            <div class=" col-md-offset- alert alert-success" role="alert"> 
+                Ooops !!! &nbsp; No result found.
+            </div>
+        </div>
+       </div>
+     {% endif %}
+
+   
+
+    </div>
+ </div>
+{% endblock %}
+

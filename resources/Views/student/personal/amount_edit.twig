@@ -1,0 +1,186 @@
+{% extends 'student/personal/partial/base.twig' %}
+
+{% block  basecontent %}
+
+<hr>
+
+<div class="row">
+    <div class="col-md-1">
+        <form method="post" action="{{ path_for('amount.index',{id:student.bursary_id })}}">
+            <button class="btn btn-sm btn-success" type="submit">Download</button>
+            {{ csrf.field  | raw}}
+        </form>
+    </div>
+
+<div class="col-md-5">
+    <h3 class="text-warning font-weight-bold">Payment Details</h3>
+     
+     {% for item in items %}
+            <p>Form: <span class="font-weight-bold">{{ item.form }}</span></p>
+            <p>Term: <span class="font-weight-bold">{{ item.term }}</span></p>
+            <p>Amount:&nbsp;<span class="font-weight-bold">UGX &nbsp; {{ item.amount }}</span></p>
+              <p>Bank: <span class="font-weight-bold">{{ item.bank }}</span></p>
+            <p>Date of Payment: <span class="font-weight-bold">{{ item.year }}</span></p>
+            <p>Reason: <span class="font-weight-bold">{{ item.reason }}</span></p>
+          
+            <hr>
+    {% endfor %}
+
+    {% include 'student/personal/partial/pagination_amount.twig' %}
+</div>
+
+
+<div class="col-md-5">
+
+  <button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+   <i class="fa fa-plus"></i> ADD AMOUNT PAID
+  </button>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    <form action="{{ path_for('amount.create',{id:student.bursary_id})}}"  method ="POST">
+            <div class="form-body">
+               
+                <hr class="m-t-0 m-b-40">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Amount <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                  <input type="text" name="amount" class="form-control {{ errors.amount ? 'is-invalid' :'' }}">
+                                 {% if errors.amount %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.amount | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+
+                    <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Reason <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                   <select class="form-control custom-select {{ errors.reason ? 'is-invalid' :'' }}" 
+                                   name="reason">
+                                        <option value="">Choose ..</option>
+                                        <option value="Tuition">Tuition</option>
+                                        <option value="Accomodation">Accomodation</option>
+                                        <option value="Upkeep">Upkeep</option>
+                                        <option value="Internship">Internship</option>
+                                        <option value="Dissertation">Dissertation </option>
+                                        <option value="Transport">Transport </option>
+                                        <option value="NCHE">NCHE </option>
+                                        <option value="Others">Others</option>
+                                </select> 
+                                 {% if errors.reason %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.reason | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Form<span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                   <select class="form-control custom-select {{ errors.form ? 'is-invalid' :'' }}" name="form">
+                                     <option value="{{ student.s_form }}">{{ student.s_form }}</option>
+                                     {% for form in forms %}
+                                    <option value="{{ form}}">{{ form }}</option>
+                                   {% endfor %}
+                                </select>
+                                 {% if errors.form %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.form | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Bank<span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                   <select class="form-control custom-select {{ errors.bank ? 'is-invalid' :'' }}" name="bank">
+                                     <option value="">Choose</option>
+                                     {% for bank in helper.banks %}
+                                    <option value="{{ bank.bank_name }}">{{ bank. bank_name }}</option>
+                                   {% endfor %}
+                                </select>
+                                 {% if errors.bank %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.bank | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Date of Payment <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                   <input type="date" class="form-control custom-select {{ errors.year ? 'is-invalid' :'' }}" 
+                                   value="{{ year}}" name="year">
+                                    
+                                 {% if errors.year %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.year | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+
+                  <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Term/Semester <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control custom-select {{ errors.term ? 'is-invalid' :'' }}" name="term">
+                                    <option value="">Choose</option>
+                                    {% for tm in term %}
+                                        <option value="{{ tm }}">{{ tm }}</option>
+                                    {% endfor %}
+                                    </select>
+                                {% if errors.term %}
+                                <div class="form-control-feedback invalid-feedback"> {{ errors.term | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+
+                <input type="hidden" name="student_id" value="{{student.bursary_id}}">
+                <button class="btn btn-warning"  type="submi">Submit</button>
+                </div>
+            </div>
+
+            {{ csrf.field | raw}}
+
+        </form>
+
+  </div>
+</div>
+
+
+   
+        </div>
+        </div>
+{% endblock %}
+

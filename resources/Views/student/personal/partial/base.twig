@@ -13,13 +13,15 @@
 <img src="{{path}}/profile.png" height="60" width="60" class="rounded-circle" />
 {% endif %}
 
- <a href="{{path_for('student.edit',{id:student.id})}}">
+ <a href="{{path_for('student.edit',{id:student.bursary_id})}}">
     <li class=" btn btn-primary  student-list-item  list-inline-item " >
         <i class="fa fa-user" aria-hidden="true"></i>
             Personal  Information 
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
     </li>
  </a>
+
+
 
 {% if student.level == 'secondary'%}
  <a href="{{path_for('secondary.update',{id:info.id})}}">
@@ -30,14 +32,14 @@
   </li>
 </a>
 
-<a href="{{path_for('mysubject.index',{id:student.id})}}">
+<a href="{{path_for('mysubject.index',{id:student.bursary_id})}}">
   <li class=" btn btn-primary  student-list-item  list-inline-item " >
         <i class="fa fa-address-book" aria-hidden="true"></i>   Edit Subjects 
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
   </li>
 </a>
 
-<a href="{{path_for('mysubject.index',{id:student.id})}}">
+<a href="{{path_for('result.index',{id:student.bursary_id})}}">
   <li class=" btn btn-primary  student-list-item  list-inline-item " >
         <i class="fa fa-address-book" aria-hidden="true"></i>  Results 
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -59,7 +61,15 @@
 
 {% endif %}
 
- <a href="{{ path_for('student.show',{id:student.id})}}" class="btn btn-success dflex-align-right">
+  <a href="{{path_for('amount.index',{id:student.bursary_id})}}">
+    <li class=" btn btn-warning  student-list-item  list-inline-item " >
+        <i class="fa fa-money" aria-hidden="true"></i>
+           Amount Paid
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+    </li>
+ </a>
+
+ <a href="{{ path_for('student.show',{id:student.bursary_id})}}" class="btn btn-success dflex-align-right">
   <li class="student-list-item list-inline-item " >
     <i class="fa fa-eye" aria-hidden="true"></i> View
     </li>

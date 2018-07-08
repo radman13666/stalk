@@ -87,6 +87,19 @@ $container['SubcountyController'] = function($container){
     return new \App\Controllers\Category\SubcountyController($container);
 };
 
+// results controller
+$container['ResultController'] = function($container){
+    return new \App\Controllers\Student\ResultController($container);
+};
+
+// 
+
+// Amount controller
+$container['AmountController'] = function($container){
+    return new \App\Controllers\Student\AmountController($container);
+};
+
+
 /***
  * 
  * Super Admin  controllers

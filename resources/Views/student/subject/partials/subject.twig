@@ -50,7 +50,7 @@
                             <th>Name</th>
                             <th>Category</th>
                             <th>Edit</th>
-                            <th>Delete</th>
+                            {# <th>Delete</th> #}
                         </tr>
                     </thead>
                     <tfoot>
@@ -77,7 +77,7 @@
                             {% endif %}
                                
                             </td>
-                            <td>
+                            {# <td>
                             
                              {% if auth.permission.id in [4,5 ]%}
                             <form method="POST" action="{{ path_for('subject.trash',{id:item.id})}}">
@@ -92,7 +92,7 @@
                                <i class="fa fa-pencil-square" aria-hidden="true"></i>
                               </button>
                             {% endif %}
-                            </td>
+                            </td> #}
                           
                         </tr>
                     {% endfor %}

@@ -21,7 +21,7 @@ class MysubjectController extends  Controller
      */
     public function index($resquest,$response,$args)
     {
-        $student = Student::find($args['id']);
+        $student = Student::where('bursary_id',$args['id'])->first();
 
         //get student
         $secondary = Secondary::where('student_id',$student->id)->get();
@@ -84,7 +84,7 @@ class MysubjectController extends  Controller
 
 
         //student
-        $student = Student::find($student_id);
+        $student = Student::where('bursary_id', '=',$student_id)->first();
 
         // handle validation
         $validate = StudentSubject::where('student_id',$student_id)

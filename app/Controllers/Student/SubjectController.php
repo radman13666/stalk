@@ -89,7 +89,7 @@ class SubjectController extends Controller
 
         $search = Subject::where('name','like',"%$name%")
                           ->where('category','like',"%$category%")
-                          ->where('deleted','=','0')
+                        //   ->where('deleted','=','0')
                           ->limit(12)
                           ->get();
 
@@ -116,6 +116,14 @@ class SubjectController extends Controller
         ]);
     }
 
+    /**
+     * Update subjects
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
     public function update($request,$response,$args)
     {
        

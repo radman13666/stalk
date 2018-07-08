@@ -42,7 +42,7 @@
                                 {{ sub.name }}
                                 <form method="post" action="{{ path_for('mysubject.post',{id: sub.id})}}">
 
-                                <input type="hidden" name="student_id" value="{{student.id}}" />
+                                <input type="hidden" name="student_id" value="{{student.bursary_id}}" />
                             
                                     <button onClick="return confirm('Are you sure you want to do this ?')" class="btn btn-success btn-xs" type="submit">
                                         <i class="fa fa-plus-circle" aria-hidden="true"></i>

@@ -148,7 +148,7 @@ class InstitutionController extends Controller
 
         
         //get student
-        $student = Student::find($institution->student_id);
+        $student = Student::where('bursary_id', '=',$institution->student_id)->first();
                
         // get school name
         $school = School::where('id','=',$institution->school_id)->get();
@@ -244,10 +244,10 @@ class InstitutionController extends Controller
 
         // $this->students->schoolForm($new_data->student_id,$new_data);
 
-        $latest = Student::find($new_data->student_id);
+        $latest = Student::where('bursary_id', '=',$new_data->student_id)->first();
 
         $update  = $latest->update([
-            'school'   => $new_data->student_id,
+            'school'   => $new_data->school_id,
             's_form'   => $new_data->s_form,
             'draft'    => '0'
         ]);  

@@ -248,7 +248,7 @@ class StudentController extends Controller
         $subcounties = Subcounty::orderBy('subcounty_name','ASC')->get();
         $dropout     = Dropout::orderBy('reason','ASC')->get();
 
-        $student = Student::find($args['id']);
+        $student = Student::where('bursary_id', '=',$args['id'])->first();
 
         //check student institution category
         if($student->level == 'university' || $student->level == 'tertiary' )
@@ -287,7 +287,7 @@ class StudentController extends Controller
     public function update($request,$response,$args)
     {
         // 
-        $student = Student::find($args['id']);
+        $student = Student::where('bursary_id','=',$args['id'])->first();
 
         // 
       $old_level = $student->level;
@@ -560,7 +560,7 @@ class StudentController extends Controller
      */
     public function show($request,$response,$args)
     {
-        $student   = Student::find($args['id']);
+        $student   = Student::where('bursary_id','=',$args['id'])->first();
         $school = School::find($student->school);
 
         // calculating student age

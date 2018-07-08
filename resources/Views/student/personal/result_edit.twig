@@ -1,0 +1,169 @@
+{% extends 'student/personal/partial/base.twig' %}
+
+{% block  basecontent %}
+
+
+   <form action="{{ path_for('result.create',{id:student.bursary_id})}}"  method ="POST" class="form-horizontal" enctype="multipart/form-data">
+            <div class="form-body">
+                <h3 class="box-title m-t-15">Registered subjects 
+                       <span class="badge badge-primary">  {{ allsubjects.count}} </span>
+                         
+                         </h3>
+                <hr class="m-t-0 m-b-40">
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Term <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                   <select class="form-control custom-select {{ errors.term ? 'is-invalid' :'' }}" name="term">
+                                     <option value="">Choose ..</option>
+                                    <option value="first_term">First Term</option>
+                                    <option value="second_term">Second Term</option>
+                                    <option value="third_term">Third Term</option>
+                                </select>
+                                 {% if errors.term %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.term | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                     <div class="col-md-3">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Form <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                  <select class="form-control custom-select {{ errors.form ? 'is-invalid' :'' }}"
+                                   name="form">
+                                    <option value="">Choose ..</option>
+                                    <option value="S1">S1</option>
+                                    <option value="S2">S2</option>
+                                    <option value="S3">S3</option>
+                                    <option value="S4">S4</option>
+                                    <option value="S5">S5</option>
+                                    <option value="S6">S6</option>
+                                </select>
+                                 {% if errors.form %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.form | first }} </div> 
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+
+                     <div class="col-md-3">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Year
+                             <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                             <input type="text" name="year" 
+                               value="{{ old.year}}" class="form-control {{ errors.year ? 'is-invalid':''}}"
+                               placeholder="e.g 2017">
+
+                             {% if errors.year  %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.year  | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--/row-->
+
+                <input type="hidden" name="student_id" value="{{student.bursary_id}}">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                           
+                            <th scope="col-md-6">Subjects</th>
+                            <th scope="col-md-3">Mark (%)</th>
+                            <th scope="col-md-3">Grade</th>
+                             <th scope="col-md-3"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for subject in allsubjects %}
+                            <tr>
+                            <td>
+                                {{ subject.name }} 
+                                <input type="hidden" name="subject_id[]" value="{{ subject.id}}">
+                            </td>
+                            <td><input type="text" name="mark[]" class="form-control"></td>
+                            <td>
+                                <select class="form-control" name="grade[]">
+                                     <option value="">Choose</option>
+                                     <option value="D1">D1</option>
+                                     <option value="D2">D2</option>
+                                     <option value="C3">C3</option>
+                                     <option value="C4">C4</option>
+                                     <option value="C5">C5</option>
+                                     <option value="C6">C6</option>
+                                     <option value="P7">P7</option>
+                                     <option value="P8">P8</option>
+                                     <option value="F9">F9</option>
+                                </select>
+                            </td>
+
+                            <td>
+                             <button type="submit" class="btn  btn-sm  btn-primary">
+                                 <i class="fa fa-plus-circle" aria-hidden="true"></i> Add 
+                                </button>
+                            </td>
+                            
+                            </tr>
+
+                            
+                        {% endfor %}
+                           
+                        </tbody>
+                        </table>
+                    </div>
+            </div>
+     <!--/span-->
+             <!--/row-->
+             <br>
+{# 
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label class="control-label text-right col-md-3">Overall performance <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-md-9">
+                       <input type="text" class="form-control" name="performance">
+                        </div>
+                </div>
+            </div>
+        </div> #}
+
+
+
+
+            <div class="form-actions ">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="pull-right">
+                             
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        
+                               
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            {{ csrf.field | raw}}
+
+        </form>
+{% endblock %}
+

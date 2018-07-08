@@ -74,14 +74,17 @@ $app->group('', function(){
     $this->get('/reports','ReportController:index')->setName('report.index');
     $this->post('/reports','ReportController:generate');
 
-    // subcounty controller
+    // subcounty 
     $this->get('/subcounty','SubcountyController:index')->setName('subcounty.index');
     $this->post('/subcounty','SubcountyController:search');
 
 
-    // Draft Controller
+    // Draft
     $this->get('/students/draft','DraftController:index')->setName('draft.index');
     $this->post('/students/{id}/draft','DraftController:edit')->setName('draft.edit');
+
+    // Results
+    $this->get('/student/{id}/results','ResultController:index')->setName('result.index');
 
 
 })->add( new AuthMiddleware($container));
@@ -212,6 +215,21 @@ $app->group('', function(){
     // subcounty
     $this->get('/subcounty/create','SubcountyController:create')->setName('subcounty.create');
     $this->post('/subcounty/create','SubcountyController:store');
+
+
+    // Results
+    $this->get('/student/{id}/results/create','ResultController:create')->setName('result.create');
+    $this->post('/student/{id}/results/create','ResultController:store');
+
+    // Amount
+     
+    $this->get('/student/{id}/amount','AmountController:index')->setName('amount.index');
+    $this->post('/student/{id}/amount/create','AmountController:store')->setName('amount.create');
+    $this->post('/student/{id}/amount','AmountController:export');
+    
+
+    
+    
 
 
 })->add( new CrMiddleware($container));
