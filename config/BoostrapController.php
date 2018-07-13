@@ -92,8 +92,6 @@ $container['ResultController'] = function($container){
     return new \App\Controllers\Student\ResultController($container);
 };
 
-// 
-
 // Amount controller
 $container['AmountController'] = function($container){
     return new \App\Controllers\Student\AmountController($container);
@@ -109,3 +107,14 @@ $container['AmountController'] = function($container){
 $container['StudentTrashController'] = function($container){
     return new \App\Controllers\Superadmin\StudentTrashController($container);
 };
+
+
+/*****************************************************************************
+ * 
+ * Api Controllers
+ * 
+ ******************************************************************************/
+
+ $container['AuthApiController'] = function($container){
+    return new \App\Api\AuthApiController($container);   
+ };

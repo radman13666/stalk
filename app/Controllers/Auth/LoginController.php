@@ -18,8 +18,10 @@ class LoginController extends Controller
     public function index($request,$response,$args)
     {
         $logo = 'http://'.$_SERVER['HTTP_HOST'].'/stalk/storage/images/logo/straighttalk.jpeg';
+        $irish = 'http://'.$_SERVER['HTTP_HOST'].'/stalk/storage/images/logo/irishlogo.jpg';
         return $this->view->render($response,'home.twig',[
-            'logo' => $logo
+            'logo' => $logo,
+            'irish' => $irish
         ]);
     }
 

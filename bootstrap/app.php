@@ -160,11 +160,11 @@ $container['auth'] = function($container){
  * Registering all middleware
  */
 $app->add( new \App\Middleware\InputErrorsMiddleware($container));
-$app->add( new \App\Middleware\CsrfMiddleware($container));
+// $app->add( new \App\Middleware\CsrfMiddleware($container));
 $app->add( new \App\Middleware\OldInputMiddleware($container));
 
 
-$app->add($container->csrf);
+// $app->add($container->csrf);
 
 
 

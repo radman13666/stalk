@@ -90,6 +90,7 @@
                     <thead>
                         <tr>
                             <th>Photo</th>
+                            <th>Student No.</th>
                             <th>Name</th>
                             <th>Institution</th>
                             <th>District</th>
@@ -114,6 +115,7 @@
                                  <img src="{{path}}/profile.png" alt="photo" height="40" with="40" class="rounded-circle">
                             {% endif %}
                             </td>
+                            <td>{{ item.bursary_id }}</td>
                             <td>{{ item.name }}</td>
                             <td>{{ item.school_name }}</td>
                             <td>{{ item.dist_name}}</td>

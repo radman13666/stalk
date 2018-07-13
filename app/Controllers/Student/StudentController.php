@@ -250,13 +250,13 @@ class StudentController extends Controller
 
         $student = Student::where('bursary_id', '=',$args['id'])->first();
 
-        //check student institution category
+        //is student in higher institute of learning 
         if($student->level == 'university' || $student->level == 'tertiary' )
         {
              $institute = Institution::where('student_id',$student->bursary_id)->get();
         }
         
-        // pull other student information
+        // is student at secondary level
         if($student->level == 'secondary' )
         {
             $institute = Secondary::where('student_id',$student->bursary_id)->get();

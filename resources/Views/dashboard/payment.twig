@@ -1,0 +1,55 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-10">
+        <h2 class="text-primary">
+                Payment Details
+
+         <form method="post" action="{{ path_for('amount.index',{id:student.bursary_id })}}">
+            <button class="btn btn-sm btn-outline-success float-right" type="submit">
+            <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                 Download
+            </button>
+            {{ csrf.field  | raw}}
+        </form>
+        </h2>
+        <br>
+        <h3>
+            <span class="text-success font-weight-bold" >
+            <i class="fa fa-user-o" aria-hidden="true"></i> &nbsp;
+            {{ student.name}}</span>
+            <span class="text-warning font-weight-bold float-right" ><i class="fa fa-id-card" aria-hidden="true"></i>
+            &nbsp;{{ student.bursary_id}}</span>
+        </h3>
+       
+    </div>
+</div>
+</br>
+<hr>
+
+<div class="row">
+
+    
+     {% for item in items %}
+      <div class="col-md-5">
+            <p>Form: <span class="font-weight-bold">{{ item.form }}</span></p>
+            <p>Term/Semester: <span class="font-weight-bold">{{ item.term }}</span></p>
+            <p>Amount:&nbsp;<span class="font-weight-bold">UGX &nbsp; {{ item.amount }}</span></p>
+              <p>Bank: <span class="font-weight-bold">{{ item.bank }}</span></p>
+            <p>Date of Payment: <span class="font-weight-bold">{{ item.year }}</span></p>
+            <p>Reason: <span class="font-weight-bold">{{ item.reason }}</span></p>
+          
+            <hr>
+
+    </div>
+    {% endfor %}
+
+
+
+   
+</div>
+ {% include 'dashboard/partials/pagination_payment.twig' %}
+
+{% endblock %}

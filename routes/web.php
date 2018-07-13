@@ -86,6 +86,9 @@ $app->group('', function(){
     // Results
     $this->get('/student/{id}/results','ResultController:index')->setName('result.index');
 
+    // View Payment Details
+    $this->get('/student/{id}/payment','HomeController:payment')->setName('amount.payment');
+
 
 })->add( new AuthMiddleware($container));
 

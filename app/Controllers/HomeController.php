@@ -7,12 +7,14 @@ use App\Models\Student\Course;
 use App\Models\Student\Subject;
 use App\Models\Category\School;
 use App\Models\Category\Hostel;
+use App\Models\Student\Amount;
 use App\Controllers\Controller;
 use App\Models\Student\Student;
 use App\Models\Student\District;
 use App\Models\Student\Secondary;
 use App\Models\Student\Institution;
 use App\Models\Student\StudentSubject;
+
 
 class HomeController  extends Controller
 {
@@ -50,9 +52,22 @@ class HomeController  extends Controller
 
     }
 
-    public function home($request,$response)
+   /**
+    * View all student payment Details
+    */
+
+    public function payment($request,$response,$args)
     {
-        return 'home';
+        $student = Student::where('bursary_id',$args['id'])->first();
+
+        $amount = Amount::where('student_id','=',$args['id'])
+                            ->paginate(12,['*'],'page',$request->getParam('page'));
+        
+        return $this->view->render($response,'dashboard/payment.twig',[
+          
+            'items'      => $amount,
+            'student'     => $student, 
+        ]);
     }
 
 
