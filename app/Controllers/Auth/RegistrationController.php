@@ -41,8 +41,16 @@ class RegistrationController extends Controller
         }
 
         /**
-         * Generating random password
+         * Generating random password and api token
          */
+
+         $token  = openssl_random_pseudo_bytes(16);
+         $api_token = bin2hex($token);
+
+        //  password
+        
+
+
         $password = "password";
         // rand(1000000,100000000);
    
@@ -52,7 +60,8 @@ class RegistrationController extends Controller
             'email'    => $request->getParam('email'),
             'password' => password_hash($password,PASSWORD_DEFAULT),
             'phone'    => $request->getParam('phone'),
-            'role_id'     => $request->getParam('role')
+            'role_id'  => $request->getParam('role'),
+            'api_token' => $api_token,
         ]);
 
         // flash message

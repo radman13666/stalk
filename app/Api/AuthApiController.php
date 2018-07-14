@@ -9,6 +9,7 @@ use App\Controllers\Controller;
 class AuthApiController  extends Controller
 {
 
+    public $response = [];
     /**
      * Authenticate
      *
@@ -27,23 +28,48 @@ class AuthApiController  extends Controller
 
         $user = User::where('email',$email)->first();
        
-        if($user)
+        // User does not exist
+        if(!$user)
         {
+            $this->response = ['message' => 'Invalid credentials','error'=> true];
+            return $response->withJson($this->response);
+        }
 
-            if(password_verify($password,$user->password))
-            {
-                return $response->withStatus(200);
-            }
-            else
-            {
-               return $response->withStatus(400);
-            }
+        if($user->deleted == 1)
+        {
+            $this->response = ['message' => 'Your Account has been deactivated','error'=> true];
+            return $response->withJson($this->response);
 
+        }
+
+        // checking for user permission
+        if(!in_array($user->role_id,[2,3,4,5]))
+        {
+            $this->response = ['message' => 'You do not have enough permission','error' => true];
+            return $response->withJson($this->response);
+        }
+
+
+        // verify password
+        if(password_verify($password,$user->password))
+        {
+            $this->response = [
+                                'id'        => $user->id,
+                                'email'     => $email,
+                                'api_token' => $user->api_token,
+                                'message'   => 'You have successfully signin',
+                                'error'     => false
+                            ];
+            return $response->withJson($this->response);
         }
         else
         {
-            return $response->withStatus(200);
+            $this->response = ['message' => 'Invalid login credentials','error' => true];
+            return $response->withJson($this->response);  
         }
+          
+
+      
 
     }
     

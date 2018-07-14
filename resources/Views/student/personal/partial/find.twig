@@ -1,0 +1,88 @@
+<div class="form-row">
+
+        <div class="col-md-3">
+            <input type="text"  value="{{old.name}}" name="name" class="form-control" 
+            placeholder="Search by name">
+        </div>
+
+         <div class="col-md-3">
+            <input type="text"  value="{{old.bursary_id}}" name="bursary_id" class="form-control" 
+            placeholder="Bursary ID">
+        </div>
+
+            <div class="col-md-2">
+            <select id="inputState" class="form-control text-capitalize" name="school" >
+                <option value="" selected>By Institution</option>
+                {% for school in helper.schools %}
+                <option value="{{ school.id }}">{{ school.school_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="col-md-2 mim" >
+            <select id="inputState" class="form-control text-capitalize" name="district" >
+                <option value="" selected>By District..</option>
+                {% for district in helper.districts %}
+                <option value="{{ district.district_name }}">{{ district.district_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+         <div class="col-md-2 mim" >
+            <select id="inputState" class="form-control text-capitalize" name="tribe" >
+                <option value="" selected>Tribe</option>
+                {% for tribe in helper.tribes %}
+                <option value="{{ tribe.tribe_name }}">{{ tribe.tribe_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="col-md-3">
+            <select id="inputState" class="form-control text-capitalize" name="form" >
+                <option value="" selected>By Form</option>
+                {% for form in helper.forms %}
+                <option value="{{ form.form_name }}">{{ form.form_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <div class="col-md-3">
+            <select id="inputState" class="form-control text-capitalize" name="gender" >
+                <option value="" selected>By Gender</option>
+                <option value="M" >Male</option>
+                    <option value="F">Female</option>
+            </select>
+        </div>
+        
+        <div class="col-md-2 mim">
+            <select id="inputState" class="form-control text-capitalize" name="status" >
+                    <option value="">Status.</option>
+                <option value="continuing">Continuing</option>
+                    <option value="completed">Completed</option>
+                <option value="dropout">Dropout</option>
+            </select>
+        </div>
+
+        <div class="col-md-2 mim" >
+          <select id="inputState" class="form-control text-capitalize" name="subcounty" >
+                <option value="" selected>Subcounty</option>
+                {% for subcounty in helper.subcounties %}
+                <option value="{{ subcounty.subcounty_name }}">{{ subcounty.subcounty_name}}</option>
+                {% endfor %}
+            </select>
+            
+        </div>
+
+        <div class="col-md-2">
+         <button type="submit" class="btn btn-primary">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            Submit
+            </button>
+                 {{ csrf.field | raw}}
+        </div>
+
+    </div>

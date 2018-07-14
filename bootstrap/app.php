@@ -69,6 +69,8 @@ require_once  __DIR__ .'/../vendor/autoload.php';
         'schools'    => $container->helper->allSchools(),
         'forms'      => $container->helper->allForms(),
         'logo'       => $container->helper->logo(),
+        'tribes'     => $container->helper->allTribes(),
+        'subcounties'=> $container->helper->allSubcounties(),
        
     ]);
 

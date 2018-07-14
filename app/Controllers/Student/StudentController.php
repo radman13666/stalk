@@ -59,6 +59,9 @@ class StudentController extends Controller
                                          
         $path = $this->files->fileDir();
 
+        $subcounties =  Subcounty::all();
+        $tribes      =  Tribe::all();
+
      
     
 
@@ -66,6 +69,8 @@ class StudentController extends Controller
             'items'       => $students,
             'path'        => $path,
             'district'    => $district,
+            'subcounties' => $subcounties,
+            'tribes'      => $tribes,
           
             
         ]);
@@ -121,6 +126,7 @@ class StudentController extends Controller
             'year_start'        => v::notEmpty()->date(),
             'year_stop'         => v::notEmpty()->date(), 
             'registration_year' => v::notEmpty()->date(),
+            'bursary_id'        => v::bursaryid()->bursaryStudent(),
 
     
             // 'student_phone'     => v::phone(),
@@ -155,7 +161,7 @@ class StudentController extends Controller
 
             $create = Student::create([
                 
-                'name'           => ucwords($request->getParam('name')),
+                'name'           => trim(ucwords($request->getParam('name'))),
                 'dob'            => $request->getParam('dob'),
                 'level'          => $request->getParam('level'),
                 'gender'         => $request->getParam('gender'), 
@@ -194,6 +200,14 @@ class StudentController extends Controller
         
         // pull the lastest student information
        
+        if(!empty($request->getParam('bursary_id')))
+        {
+            $bursary_id = $request->getParam('bursary_id');
+        }
+        else
+        {
+            $bursary_id = $bursary_id;
+        }
 
         $create->update([
             'bursary_id' => $bursary_id
@@ -362,7 +376,7 @@ class StudentController extends Controller
 
             // update student
             $update = $student->update([
-                'name'           => ucwords($request->getParam('name')),
+                'name'           => trim(ucwords($request->getParam('name'))),
                 'dob'            => $request->getParam('dob'),
                 'level'          => $request->getParam('level'),
                 'gender'         => $request->getParam('gender'), 
@@ -521,12 +535,16 @@ class StudentController extends Controller
     public function search($request,$response,$args)
     {
         // getting all the fields
-        $name      = $request->getParam('name');
-        $district  = $request->getParam('district');
-        $school    = $request->getParam('school');
-        $gender    = $request->getParam('gender');
-        $status    = $request->getParam('status');
-        $form      = $request->getParam('form');
+        $name        = $request->getParam('name');
+        $district    = $request->getParam('district');
+        $school      = $request->getParam('school');
+        $gender      = $request->getParam('gender');
+        $status      = $request->getParam('status');
+        $form        = $request->getParam('form');
+        $bursary_id  = $request->getParam('bursary_id');
+        $tribe       = $request->getParam('tribe');
+        $subcounty   = $request->getParam('subcounty');
+        
 
         $students = School::Join('students', 'schools.id','=','students.school')
                            ->where('students.name','like',"%$name%")
@@ -535,6 +553,9 @@ class StudentController extends Controller
                            ->where('students.gender','like',"%$gender%")
                            ->where('students.current_state','like',"%$status%")
                            ->where('students.s_form','like',"%$form%")
+                           ->where('students.bursary_id','like',"%$bursary_id%")
+                           ->where('students.ethnicity','like',"%$tribe%")
+                           ->where('students.subcounty','like',"%$subcounty%")
                            ->where('deleted','0')
                            ->orderBy('students.name','ASC')
                            ->get();

@@ -16,65 +16,8 @@
             </h4>
         <h6 class="card-subtitle">Manage all users </h6>
 
-            <form method="GET" action="{{ path_for('student.search')}}">
-                <div class="form-row">
-                    <div class="col-md-3">
-                        <input type="text"  value="{{old.name}}" name="name" class="form-control" 
-                        placeholder="Search by name">
-                    </div>
-
-                       <div class="col-md-2">
-                        <select id="inputState" class="form-control text-capitalize" name="school" >
-                            <option value="" selected>By Institution</option>
-                            {% for school in helper.schools %}
-                            <option value="{{ school.id }}">{{ school.school_name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    
-                    <div class="col-md-2">
-                       <select id="inputState" class="form-control text-capitalize" name="district" >
-                            <option value="" selected>By District..</option>
-                            {% for district in helper.karamojadistricts %}
-                            <option value="{{ district.district_name }}">{{ district.district_name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                 
-
-                    <div class="col-md-2">
-                       <select id="inputState" class="form-control text-capitalize" name="form" >
-                            <option value="" selected>By Form</option>
-                            {% for form in helper.forms %}
-                            <option value="{{ form.form_name }}">{{ form.form_name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                     <div class="col-md-1">
-                        <select id="inputState" class="form-control text-capitalize" name="gender" >
-                            <option value="" selected>By Gender</option>
-                            <option value="M" >Male</option>
-                             <option value="F">Female</option>
-                        </select>
-                    </div>
-                  
-
-                    <div class="col-md-1">
-                        <select id="inputState" class="form-control text-capitalize" name="status" >
-                             <option value="">Status.</option>
-                            <option value="continuing">Continuing</option>
-                                <option value="completed">Completed</option>
-                            <option value="dropout">Dropout</option>
-                        </select>
-                    </div>
-
-                    {{ csrf.field | raw}}
-                    <div class="col">
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </div>
-                </div>
+            <form method="POST" action="{{ path_for('student.search')}}">
+               {% include 'student/personal/partial/find.twig' %}
             </form>
 
 

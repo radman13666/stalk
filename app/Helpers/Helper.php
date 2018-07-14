@@ -13,6 +13,7 @@ use App\Models\Category\Hostel;
 use App\Models\Student\Course;
 use App\Models\Student\Subject;
 use App\Models\Student\District;
+use App\Models\Category\Subcounty;
 /**
  * This contains all helper methods
  */
@@ -218,6 +219,11 @@ class Helper
     public function logo()
     {
         return 'http://'.$_SERVER['HTTP_HOST'].'/stalk/storage/images/logo/straighttalk.jpeg';
+    }
+
+    public  function allSubcounties()
+    {
+        return Subcounty::orderBy('subcounty_name','ASC')->get();
     }
 
 }

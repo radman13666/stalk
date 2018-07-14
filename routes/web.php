@@ -49,7 +49,7 @@ $app->group('', function(){
  
     // Students
     $this->get('/students','StudentController:index')->setName('student.index');
-    $this->get('/students/search','StudentController:search')->setName('student.search');
+    $this->post('/students','StudentController:search')->setName('student.search');
    
     // single
     $this->get('/students/{id}/view','StudentController:show')->setName('student.show');

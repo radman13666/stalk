@@ -317,6 +317,33 @@
              <!--/row-->
 
 
+
+                   <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Bursary ID</label>
+                            
+                            <div class="col-md-9">
+                               <input type="text"  name="bursary_id" class="form-control {{ errors.bursary_id ? 'is-invalid' :'' }} " 
+                                     placeholder="201800" value="{{ old.bursary_id}}">
+                                 {% if errors.bursary_id %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.bursary_id | first }} </div> 
+                                {% endif %}
+                                 <span class="text-warning"> * Only for  a student who has completed secondary level under the Bursary Programme</span>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6">
+                        
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+
+
                 <h3 class="box-title">Contact Information</h3>
                 <hr class="m-t-0 m-b-40">
                 <!--/row-->
@@ -459,6 +486,7 @@
                     <!--/span-->
                 </div>
                 <!--/row-->
+
             </div>
             <hr>
             <h3 class="box-title m-t-15">Other Information</h3>
