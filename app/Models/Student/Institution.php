@@ -27,7 +27,9 @@ class Institution extends Model
         'other_bank_name' ,
         'other_bank_account',
         'other_bank_address',
-        'created_by'
+        'created_by',
+        'myear_stop',
+        'myear_start' 
        
     ];
 

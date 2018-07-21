@@ -41,7 +41,16 @@ class LoginController extends Controller
         {
            return $response->withRedirect($this->router->pathFor('dashboard'));
         }
-        $this->flash->addMessage('danger','Invalid email  or password');
+
+        if($this->auth->active == false)
+        {
+            $this->flash->addMessage('danger','Your account has been deactivated. Please contact Admin');
+        }
+        else
+        {
+            $this->flash->addMessage('danger','Invalid credentials');
+        }
+       
         return $response->withRedirect($this->router->pathFor('auth.login'));
 
     }

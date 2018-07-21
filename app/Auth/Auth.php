@@ -7,6 +7,7 @@ use App\Models\User\Role;
 
 class Auth 
 {
+    public $active = true;
    
     /**
      * Return authenticated user info
@@ -33,14 +34,24 @@ class Auth
     {
         $user = User::where('email',$email)->first();
 
+        
+
         if($user)
         {
+            // check if user is active
+          
             if(password_verify($password,$user->password))
             {
+                if($user->deleted == 0){
                 $_SESSION['user'] = $user->id;
                 return true;
+                }
+
+                $this->active =  false;
+                
+                return false;
             }
-            return false;
+           
         }
         return false;
     }

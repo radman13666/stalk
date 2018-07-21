@@ -55,7 +55,7 @@ class DraftController extends Controller
     public function edit($request,$response,$args)
     {
        
-        $level = Student::find($args['id']);
+        $level = Student::where('bursary_id','=',$args['id'])->first();
         
         // flash message
         $this->flash->addMessage('danger',' Please complete '.ucwords($level->name).' registration' );
@@ -65,9 +65,10 @@ class DraftController extends Controller
         if( $level->level == 'secondary')
         {
           $secondary = Secondary::where('student_id',$level->bursary_id)->get();
+          $count = Secondary::where('student_id',$level->bursary_id)->count();
 
             // delete the record in secondary table
-              $secondary[0]->exists ? $secondary[0]->delete() :'';
+             ($secondary[0]->exists && $count > 1) ? $secondary[0]->delete() :'';
       
          return $response->withRedirect($this->router->pathFor('secondary.create'));
 

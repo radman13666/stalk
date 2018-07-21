@@ -57,7 +57,7 @@ class StudentTrashController extends Controller
      */
     public function restore($request,$response,$args)
     {
-        $student = Student::find($args['id']);
+        $student = Student::where('bursary_id',$args['id'])->first();
 
         $student->update([
             'deleted' => '0'

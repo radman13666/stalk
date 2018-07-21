@@ -90,6 +90,33 @@ class ResultController extends Controller
        $marks    =  $request->getParam('mark');
        $grades    =  $request->getParam('grade');
 
+      
+
+    //    var_dump($subjects);
+    //    die();
+    $arrays = [$subjects,$marks,$grades];
+    explode('|',$arrays);
+
+      foreach($subjects as $subject)
+      {
+          
+            // create a new
+            $result = Result::create([
+                'student_id'   => trim($request->getParam('student_id')),
+                'subject_id'   => $value,
+                'mark'        => $request->getParam('mark'),
+                'academic_year'=> $request->getParam('year'),
+                'grade'        => $request->getParam('grade'),
+                'term'         => $request->getParam('term'),
+                's_form'       => trim($request->getParam('form')),
+                'performance'  => $request->getParam('performance'),
+                'created_id'   => $this->auth->user()->id,
+                'created_by'   => $this->auth->user()->name,
+            ]);
+                
+        
+      }
+  
 
 
         // validation
@@ -108,21 +135,7 @@ class ResultController extends Controller
         }
 
    
-     
-            // create a new
-        $result = Result::create([
-            'student_id'   => trim($request->getParam('student_id')),
-            'subject_id'   => $value,
-            'mark'        => $request->getParam('mark'),
-            'academic_year'=> $request->getParam('year'),
-            'grade'        => $request->getParam('grade'),
-            'term'         => $request->getParam('term'),
-            's_form'       => trim($request->getParam('form')),
-            'performance'  => $request->getParam('performance'),
-            'created_id'   => $this->auth->user()->id,
-            'created_by'   => $this->auth->user()->name,
-        ]);
-            
+   
      
            
        

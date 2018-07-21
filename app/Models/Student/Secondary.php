@@ -22,7 +22,9 @@ class Secondary extends Model
         'deleted_at',
         'deleted_by',
         'deleted',
-        'created_by'
+        'created_by',
+        'myear_start',
+        'myear_stop' 
     ];
 
 }

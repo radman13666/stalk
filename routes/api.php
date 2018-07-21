@@ -7,3 +7,5 @@ use App\Middleware\CsrfMiddelware;
 
 // })->add( new CsrfMiddelware($container));
 $app->post('/user/auth/api','AuthApiController:index');
+
+$app->post('/student/auth/api/create','StudentApiController:create');

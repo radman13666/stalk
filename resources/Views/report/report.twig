@@ -7,12 +7,17 @@
 <form method="post" action="{{ path_for('report.index')}}">
     <div class="form-row">
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <input type="text"  value="{{old.name}}" name="name" class="form-control" 
             placeholder="Search by name">
         </div>
 
-            <div class="col-md-4">
+         <div class="col-md-3">
+            <input type="text"  value="{{old.bursary_id}}" name="bursary_id" class="form-control" 
+            placeholder="Bursary ID">
+        </div>
+
+            <div class="col-md-2">
             <select id="inputState" class="form-control text-capitalize" name="school" >
                 <option value="" selected>By Institution</option>
                 {% for school in helper.schools %}
@@ -21,7 +26,7 @@
             </select>
         </div>
         
-        <div class="col-md-4 mim" >
+        <div class="col-md-2 mim" >
             <select id="inputState" class="form-control text-capitalize" name="district" >
                 <option value="" selected>By District..</option>
                 {% for district in helper.districts %}
@@ -30,10 +35,19 @@
             </select>
         </div>
 
+         <div class="col-md-2 mim" >
+            <select id="inputState" class="form-control text-capitalize" name="tribe" >
+                <option value="" selected>Tribe</option>
+                {% for tribe in helper.tribes %}
+                <option value="{{ tribe.tribe_name }}">{{ tribe.tribe_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
         <br>
         <br>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <select id="inputState" class="form-control text-capitalize" name="form" >
                 <option value="" selected>By Form</option>
                 {% for form in helper.forms %}
@@ -42,7 +56,8 @@
             </select>
         </div>
 
-            <div class="col-md-4">
+
+        <div class="col-md-3">
             <select id="inputState" class="form-control text-capitalize" name="gender" >
                 <option value="" selected>By Gender</option>
                 <option value="M" >Male</option>
@@ -50,8 +65,7 @@
             </select>
         </div>
         
-
-        <div class="col-md-4 mim">
+        <div class="col-md-2 mim">
             <select id="inputState" class="form-control text-capitalize" name="status" >
                     <option value="">Status.</option>
                 <option value="continuing">Continuing</option>
@@ -60,15 +74,23 @@
             </select>
         </div>
 
-        {{ csrf.field | raw}}
-        <div class="col">
-            <button type="submit" class="btn btn-primary">
-            <i class="fa fa-download" aria-hidden="true"></i>
-            Export
+        <div class="col-md-2 mim" >
+          <select id="inputState" class="form-control text-capitalize" name="subcounty" >
+                <option value="" selected>Subcounty</option>
+                {% for subcounty in helper.subcounties %}
+                <option value="{{ subcounty.subcounty_name }}">{{ subcounty.subcounty_name}}</option>
+                {% endfor %}
+            </select>
             
-            </button>
         </div>
 
+        <div class="col-md-2">
+         <button type="submit" class="btn btn-primary">
+            <i class="fa fa-cloud-download" aria-hidden="true"></i>
+            Export
+            </button>
+                 {{ csrf.field | raw}}
+        </div>
 
     </div>
 </form>

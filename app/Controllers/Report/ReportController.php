@@ -49,6 +49,11 @@ class ReportController extends Controller
         $status    = $request->getParam('status');
         $form      = $request->getParam('form');
 
+        $subcounty = $request->getParam('subcounty');
+        $tribe     = $request->getParam('tribe');
+        $bursary_id     = $request->getParam('bursary_id');
+       
+
         $students = School::Join('students', 'schools.id','=','students.school')
                            ->where('students.name','like',"%$name%")
                            ->where('students.dist_name','like',"%$district%")
@@ -56,6 +61,9 @@ class ReportController extends Controller
                            ->where('students.gender','like',"%$gender%")
                            ->where('students.current_state','like',"%$status%")
                            ->where('students.s_form','like',"%$form%")
+                           ->where('students.ethnicity','like',"%$tribe%")
+                           ->where('students.subcounty','like',"%$subcounty%")
+                           ->where('students.bursary_id','like',"%$bursary_id%")
                            ->where('deleted','0')
                            ->orderBy('students.name','ASC')
                            ->get();
@@ -92,7 +100,8 @@ class ReportController extends Controller
                     ->setCellValue('P1', '2nd Next of Kin phone')
                     ->setCellValue('Q1', 'Reason for Drop out')
                     ->setCellValue('R1', 'Sub County')
-                    ->setCellValue('S1', 'Village');
+                    ->setCellValue('S1', 'Village')
+                    ->setCellValue('T1', 'Bursary ID');
                    
 
 
@@ -100,7 +109,7 @@ class ReportController extends Controller
         foreach($students as $i => $student)
         {
             // $spreadsheet->setActiveSheetIndex(0)
-           $i =$i+3;
+           $i =$i+2;
             $spreadsheet->getActiveSheet()->setCellValue('A'.$i,$count+=1);
             $spreadsheet->getActiveSheet()->setCellValue('B'.$i,$student->name);
             $spreadsheet->getActiveSheet()->setCellValue('C'.$i,$student->dob);
@@ -120,6 +129,7 @@ class ReportController extends Controller
             $spreadsheet->getActiveSheet()->setCellValue('Q'.$i,strip_tags($student->dropout_reason));
             $spreadsheet->getActiveSheet()->setCellValue('R'.$i,$student->subcounty);
             $spreadsheet->getActiveSheet()->setCellValue('S'.$i,$student->village);
+            $spreadsheet->getActiveSheet()->setCellValue('T'.$i,$student->bursary_id);
         }
       
 
@@ -146,6 +156,61 @@ class ReportController extends Controller
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('php://output');
         exit;
+    }
+
+    /**
+     * Generate Report
+     *
+     * @param [type] $response
+     * @param [type] $request
+     * @param [type] $args
+     * @return void
+     */
+    public function report($response,$request,$args)
+    {
+
+        // Create new Spreadsheet object
+$spreadsheet = new Spreadsheet();
+
+// Set document properties
+$spreadsheet->getProperties()->setCreator('Maarten Balliauw')
+    ->setLastModifiedBy('Maarten Balliauw')
+    ->setTitle('PDF Test Document')
+    ->setSubject('PDF Test Document')
+    ->setDescription('Test document for PDF, generated using PHP classes.')
+    ->setKeywords('pdf php')
+    ->setCategory('Test result file');
+
+// Add some data
+$spreadsheet->setActiveSheetIndex(0)
+    ->setCellValue('A1', 'Hello')
+    ->setCellValue('B2', 'world!')
+    ->setCellValue('C1', 'Hello')
+    ->setCellValue('D2', 'world!');
+
+// Miscellaneous glyphs, UTF-8
+$spreadsheet->setActiveSheetIndex(0)
+    ->setCellValue('A4', 'Miscellaneous glyphs')
+    ->setCellValue('A5', 'éàèùâêîôûëïüÿäöüç');
+
+// Rename worksheet
+$spreadsheet->getActiveSheet()->setTitle('Simple');
+$spreadsheet->getActiveSheet()->setShowGridLines(false);
+
+// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+$spreadsheet->setActiveSheetIndex(0);
+
+IOFactory::registerWriter('Pdf', \PhpOffice\PhpSpreadsheet\Writer\Pdf\Mpdf::class);
+
+// Redirect output to a client’s web browser (PDF)
+header('Content-Type: application/pdf');
+header('Content-Disposition: attachment;filename="01simple.pdf"');
+header('Cache-Control: max-age=0');
+
+$writer = IOFactory::createWriter($spreadsheet, 'Pdf');
+$writer->save('php://output');
+exit;
+
     }
 
 }

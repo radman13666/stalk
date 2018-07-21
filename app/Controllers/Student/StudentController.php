@@ -126,7 +126,7 @@ class StudentController extends Controller
             'year_start'        => v::notEmpty()->date(),
             'year_stop'         => v::notEmpty()->date(), 
             'registration_year' => v::notEmpty()->date(),
-            'bursary_id'        => v::bursaryid()->bursaryStudent(),
+            // 'bursary_id'        => v::bursaryid(),
 
     
             // 'student_phone'     => v::phone(),
@@ -216,6 +216,8 @@ class StudentController extends Controller
 
         // setting last inserted id into session
          $_SESSION['student_id'] = $create->bursary_id;
+         $_SESSION['year_start'] = $create->year_start;
+         $_SESSION['year_stop'] = $create->year_stop;
        
     /**
      * check for level
@@ -581,7 +583,9 @@ class StudentController extends Controller
      */
     public function show($request,$response,$args)
     {
-        $student   = Student::where('bursary_id','=',$args['id'])->first();
+        $student   = Student::where('bursary_id','=',$args['id'])
+                            ->orderBy('id','DESC')
+                            ->first();
         $school = School::find($student->school);
 
         // calculating student age
@@ -592,7 +596,9 @@ class StudentController extends Controller
         // check student level
        if($student->level=='secondary')
        {
-            $institution = Secondary::where('student_id',$student->bursary_id)->get();
+            $institution = Secondary::where('student_id',$student->bursary_id)
+                                    ->orderBy('id','DESC')
+                                    ->get();
 
             $subjects = StudentSubject::leftJoin('subjects','subjects.id','subject_id')
                                         ->where('student_id',$student->bursary_id)->get();
@@ -633,7 +639,7 @@ class StudentController extends Controller
      */
     public function trash($request,$response,$args)
     {
-        $trash = Student::find($args['id']);
+        $trash = Student::where('bursary_id','=',$args['id'])->first();
         
             $trash->update([
                 'deleted_by' => $this->auth->user()->name,

@@ -8,7 +8,7 @@ class BursaryStudentException extends ValidationException
 {
     public static $defaultTemplates = [
         self::MODE_DEFAULT => [
-            self::STANDARD => 'The Bursary ID and Student name must be the same',
+            self::STANDARD => 'Student name does not match the  Bursary ID',
         ]
         ];
 

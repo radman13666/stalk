@@ -12,7 +12,7 @@ class CrudMiddleware extends Middleware
     public function __invoke($request,$response,$next)
     {
 
-        if($this->container->auth->permission()->id != 4)
+        if($this->container->auth->permission()->id !=  in_array($this->container->auth->permission()->id,[4,5]))
         {
             $this->container->flash->addMessage('danger','You do not have permission to perform this action');
 

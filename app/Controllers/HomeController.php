@@ -29,7 +29,9 @@ class HomeController  extends Controller
     public function index($request,$response,$args)
     {
 
-        $students = Student::where('deleted','0')->count();
+        $students = Student::where('deleted','0')
+                            ->where('draft','0')
+                            ->count();
         $courses  = Course::where('deleted','0')->count();
         $schools  = School::count();
         $hostels  = Hostel::where('deleted','0')->count();

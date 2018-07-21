@@ -29,7 +29,7 @@ class Helper
      */
     public function allRoles($request,$response)
     {
-        $roles = Role::all();
+        $roles = Role::where('status','=','1')->get();
 
         return $roles;
 

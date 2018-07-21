@@ -80,7 +80,7 @@ class InstitutionController extends Controller
           $isAvailable = Institution::where('student_id','=',$_SESSION['student_id'])->count();
         
        
-         if($isAvailable < 1){
+         if($isAvailable < 3){
 
         // Save data
 
@@ -99,6 +99,8 @@ class InstitutionController extends Controller
                         'other_bank_name'          => $request->getParam('other_bank_name'),
                         'other_bank_account'       => $request->getParam('other_bank_account'),
                         'other_bank_address'       => $request->getParam('other_bank_address'),
+                        'myear_start'              => $_SESSION['year_start'],
+                        'myear_stop'              => $_SESSION['year_stop'],
                         'created_by'               => ucwords($this->auth->user()->name)
                     ]);
 
@@ -106,8 +108,10 @@ class InstitutionController extends Controller
          }
          else
          {
-            $Available = Institution::where('student_id','=',$_SESSION['student_id'])->get();
-            $institution = $Available[0];
+            $institution = Institution::where('student_id','=',$_SESSION['student_id'])
+                                        ->orderBy('id','DESC')
+                                        ->first();
+            
             
          }
     
@@ -121,11 +125,15 @@ class InstitutionController extends Controller
         $update  = $student->update([
                 'school'   => $institution->school_id,
                 's_form'   => $institution->s_form,
+                'level'    => $_SESSION['level'],
                 'draft'    => '0'
             ]);   
         
         // unsetting session
         unset($_SESSION['student_id']);
+        unset($_SESSION['year_start']);
+        unset($_SESSION['year_stop']);
+        unset($_SESSION['level']);
         
         // flash message
         $this->flash->addMessage('success','Student registration has been successfully completed');

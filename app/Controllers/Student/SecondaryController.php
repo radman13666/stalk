@@ -43,7 +43,7 @@ class SecondaryController extends Controller
     {
 
         // Handling validation
-
+      
         $validate = $this->Validator->validate($request,[
             'school_id'     =>  v::notEmpty(),
             's_form'        =>  v::notEmpty(),
@@ -58,13 +58,17 @@ class SecondaryController extends Controller
         {
             return $response->withRedirect($this->router->pathFor('secondary.create'));
         };
+       
 
   
        //    check if the student id is already in the databse
      
        $isAvailable = Secondary::where('student_id','=',$_SESSION['student_id'])->count();
 
-      if($isAvailable < 1){
+      if($isAvailable < 3){
+
+        // var_dump('reached');
+        // die();
         // post info
        $secondary = Secondary::create([
             'school_id'        => $request->getParam('school_id'),
@@ -75,7 +79,9 @@ class SecondaryController extends Controller
             'student_index'    => $request->getParam('student_index'),
             'fav_subject'      => $request->getParam('fav_subject'),
             'fav_sport'        => $request->getParam('fav_sport'),
-            'created_by'       => $this->auth->user()->name
+            'created_by'       => $this->auth->user()->name,
+            'myear_start'      => $_SESSION['year_start'],
+            'myear_stop'      => $_SESSION['year_stop'],
             ]);
 
         /**
@@ -112,9 +118,13 @@ class SecondaryController extends Controller
 
     else
     {
-        $Available = Secondary::where('student_id','=',$_SESSION['student_id'])->get();
-        $secondary = $Available[0];
+     
+        $secondary = Secondary::where('student_id','=',$_SESSION['student_id'])
+                                ->orderBy('id','DESC')->first();
+       
     }
+
+   
 
         /**
          * Update student school and level
@@ -122,17 +132,23 @@ class SecondaryController extends Controller
          */
 
            
-        $student =  Student::where('bursary_id','=',$secondary->student_id)->first();
+        $student =  Student::where('bursary_id','=',$_SESSION['student_id'])
+                                ->orderBy('id','DESC')->first();
         
+                                
+
         $update  = $student->update([
                 'school'   => $secondary->school_id,
                 's_form'   => $secondary->s_form,
                 'draft'    => '0'
-            ]);   
-
+            ]);  
+    
+          
 
         // unsetting session
         unset($_SESSION['student_id']);
+        unset($_SESSION['year_start']);
+        unset($_SESSION['year_stop']);
         
         // flash message
         $this->flash->addMessage('success','Student registration has been successfully completed');

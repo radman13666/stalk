@@ -20,7 +20,8 @@ class UserController extends Controller
     public function index($request,$response,$args)
     {
         $users = Role::rightJoin('users','roles.id','=','users.role_id')
-                        ->where('users.deleted','=','0')
+                        ->where('users.id','!=',$this->auth->user()->id)
+                        ->where('users.role_id','!=',5)
                         ->paginate(10,['*'],'page',$request->getParam('page'));
      
         return $this->view->render($response,'auth/users.twig',[
@@ -48,7 +49,6 @@ class UserController extends Controller
                         ->where('users.name','like',"%$name%")
                         ->where('users.email','like',"%$email%")
                         ->where('roles.id','like',"%$role%")
-                        ->where('users.deleted','=','0')
                         ->limit(12)->get();
 
         return $this->view->render($response,'auth/search.twig',[
@@ -140,4 +140,30 @@ class UserController extends Controller
 
         return $response->withRedirect($this->router->pathFor('user.index'));
     }
+
+
+     /**
+     * Activate
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function activateUser($request,$response,$args)
+    {
+        $user = User::find($args['id']);
+
+        $user->update([
+            'deleted_by' => $this->auth->user()->name,
+            'deleted'    => '0',
+        ]);
+
+        $this->flash->addMessage('success','You have Activated '.ucwords($user->name));
+
+        return $response->withRedirect($this->router->pathFor('user.index'));
+    }
+
+
+
 }

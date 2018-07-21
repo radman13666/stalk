@@ -158,5 +158,32 @@ class CourseController extends Controller
 
     }
 
+    /**
+     * Search method
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function search($request,$response,$args)
+    {
+        $name      = $request->getParam('name');
+        $category  = $request->getParam('category');
+
+        $courses = Course::where('name','like',"%$name%")
+                         ->where('category','like',"%$category%")
+                         ->orderBy('name','ASC')
+                         ->limit(15)
+                         ->get();
+
+       
+    
+        return $this->view->render($response,'student/course/search.twig',[
+            'items' => $courses
+        ]);
+
+    }
+
 
 }

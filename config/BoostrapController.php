@@ -41,6 +41,13 @@ $container['StudentController'] = function($container){
     return new \App\Controllers\Student\StudentController($container);
 };
 
+// Student exist controller
+$container['StudentExistController'] = function($container){
+    return new \App\Controllers\Student\StudentExistController($container);
+};
+
+
+
 
 // Draft controller
 $container['DraftController'] = function($container){
@@ -117,4 +124,8 @@ $container['StudentTrashController'] = function($container){
 
  $container['AuthApiController'] = function($container){
     return new \App\Api\AuthApiController($container);   
+ };
+
+ $container['StudentApiController'] = function($container){
+    return new \App\Api\StudentApiController($container);   
  };

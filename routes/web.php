@@ -46,6 +46,7 @@ $app->group('', function(){
 
     // courses
     $this->get('/courses','CourseController:index')->setName('course.index');
+    $this->post('/courses','CourseController:search');
  
     // Students
     $this->get('/students','StudentController:index')->setName('student.index');
@@ -73,6 +74,9 @@ $app->group('', function(){
     // Generating reports
     $this->get('/reports','ReportController:index')->setName('report.index');
     $this->post('/reports','ReportController:generate');
+
+    // 
+    $this->post('/reports/r','ReportController:report')->setName('report.report');
 
     // subcounty 
     $this->get('/subcounty','SubcountyController:index')->setName('subcounty.index');
@@ -111,6 +115,7 @@ $app->group('', function(){
     $this->get('/users/{id}/edit','UserController:edit')->setName('user.edit');
     $this->put('/users/{id}/edit','UserController:update'); 
     $this->put('/users/{id}/trash','UserController:trashUser')->setName('user.trash');
+    $this->put('/users/{id}/activate','UserController:activateUser')->setName('user.activate');
 
     // subject
     $this->put('/subject/{id}/trash','SubjectController:trash')->setName('subject.trash');
@@ -195,6 +200,11 @@ $app->group('', function(){
     // students
     $this->get('/students/create','StudentController:create')->setName('student.create');
     $this->post('/students/create','StudentController:store');
+
+    $this->get('/students/exist/create','StudentExistController:create')->setName('student.exist');
+    $this->post('/students/exist/create','StudentExistController:store');
+
+    // Existing student
 
     // secondary
     $this->get('/students/secondary','SecondaryController:create')->setName('secondary.create');
