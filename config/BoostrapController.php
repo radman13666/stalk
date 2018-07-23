@@ -16,6 +16,10 @@ $container['LoginController'] = function($container){
     return new \App\Controllers\Auth\LoginController($container);
 };
 
+$container['StudentAuthController'] = function($container){
+    return new \App\Controllers\Auth\StudentAuthController($container);
+};
+
 $container['UserController'] = function($container){
     return new \App\Controllers\User\UserController($container);
 };
@@ -45,6 +49,12 @@ $container['StudentController'] = function($container){
 $container['StudentExistController'] = function($container){
     return new \App\Controllers\Student\StudentExistController($container);
 };
+
+// Student exist controller
+$container['ComplainController'] = function($container){
+    return new \App\Controllers\Student\ComplainController($container);
+};
+
 
 
 

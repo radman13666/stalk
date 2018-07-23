@@ -3,6 +3,7 @@
 namespace App\Auth;
 
 use App\Models\User\User;
+use App\Models\Student\Student;
 use App\Models\User\Role;
 
 class Auth 
@@ -64,6 +65,7 @@ class Auth
     public function logout()
     {
         unset($_SESSION['user']);
+        unset($_SESSION['student']);
         return true;
     }
 
@@ -80,5 +82,27 @@ class Auth
         return $role[0];
 
     }
+
+
+    /**
+     * Authenticated user is a student
+     *
+     * @return void
+     */
+    public function isStudent()
+    {
+        return isset($_SESSION['student']);
+    }
+
+    /**
+     * Student details
+     * 
+     * 
+     */
+
+     public function studentProfile()
+     {
+         return Student::where('bursary_id',$_SESSION['student'])->first();
+     }
 
 }

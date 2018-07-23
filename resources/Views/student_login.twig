@@ -2,6 +2,7 @@
 
 {% block body %}
 
+
  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
       <h5 class="my-0 mr-md-auto font-weight-normal">Company name</h5>
       <nav class="my-2 my-md-0 mr-md-3">
@@ -19,23 +20,13 @@
                 <div class="row justify-content-center">
 
 
-              <div class="col-md-3">
-                <img src="{{irish}}" height="250" width="350" alt="Logo" />
-
-                    <h2 class="text-success font-weight-bold"> 
-                    Irish Aid  Bursary Database (IABD)
-                    </h2>
-                </div>
-
-
-              <div class="col-md-3">
-                <img src="{{logo}}" height="250" width="350" alt="Logo" />
-                </div>
-
-                    <div class="col-md-5">
+                    <div class="col-md-4">
+                                    <h2  class="stud_title text-info">
+                                     &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+                                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                    &nbsp;&nbsp; &nbsp;&nbsp;Student Login page </h2>
                         <div class="login-content card">
-
-                      
+  
 
                             <div class="login-form">
 
@@ -50,19 +41,21 @@
                                 {% include 'layout/partials/flash.twig' %}
                                 </small>
 
-                                <form method="POST" action="{{ path_for('auth.login')}}">
+                                <form method="POST" action="{{ path_for('auth.student')}}">
                                     <div class="form-group">
-                                        <label class="text-capitalize">Email address</label>
-                                        <input type="email"  name="email" class="form-control" placeholder="Email">
+                                        <label class="text-capitalize">Student Full Name</label>
+                                        <input type="text"  name="name" class="form-control" placeholder="Name">
+                                        <small class="text-success">Use surename last name e.g  Okello James</small>
                                     </div>
                                     <div class="form-group">
                                         <label class="text-capitalize">Password</label>
-                                        <input type="password" name="password" class="form-control" placeholder="Password">
+                                        <input type="text" name="password" class="form-control" placeholder="YYY-MM-DD">
+                                        {# <small class="text-success">Use Date of Birth if you don't have password e.g 2018-01-01</small> #}
                                     </div>
                                     <div class="checkbox">
                                         
                                         <label class="pull-right">
-        										<a href="#">Forgotten Password?</a>
+        										{# <a href="#">Forgotten Password?</a> #}
         								</label>
 
                                     </div>

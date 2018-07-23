@@ -8,6 +8,7 @@
 
 
     <!-- Left Sidebar  -->
+
     {% include 'layout/partials/sidebar.twig' %}
 
     <!-- End Left Sidebar  -->
@@ -31,6 +32,12 @@
                         <div class="card">
                                  <div class="card-body">
 
+                                 {% if auth.isStudent %}
+                                  
+                                 {% else %}
+                                     
+                                 
+
                                      <!-- Return number of drafts  -->
                                         {% if students.drafts  %}
                                         <div class="alert alert-warning">
@@ -44,6 +51,8 @@
                                         </div>
                                         
                                         {% endif %}
+
+                                {% endif %}
 
                                       <!-- End Drafts  -->
 

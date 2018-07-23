@@ -1,0 +1,30 @@
+<!-- Modal -->
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+   
+
+    <form method="POST"  action="{{ path_for('student.complain')}}">
+        <div class="form-group">
+            <label for="exampleInputtitle">Title</label>
+            <input type="text" name="title" class="form-control {{ errors.title ? 'is-invalid' : ''}}"   placeholder="Enter heading of your grieviance">
+            
+            {% if errors.title %}
+            <small id="" class=" invalid-feedback"> 
+            {{ errors.title | first}}
+            </small>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Details</label>
+            <textarea name="body" class="textarea_editor form-control" rows="4" placeholder="Enter text ..." style="height:350px">
+                                    
+                </textarea>
+        </div>
+
+        {{ csrf.field | raw}}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
+  </div>
+</div>

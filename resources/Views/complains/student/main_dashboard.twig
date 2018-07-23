@@ -1,0 +1,56 @@
+{% extends 'layout/app.twig' %}
+
+  {% block  body %}
+{# 
+  {% if auth.check %} #}
+
+    {% include 'layout/partials/header.twig' %}
+
+
+    <!-- Left Sidebar  -->
+{#     
+    {% include 'complains/student/partials/student_sidebar.twig' %} #}
+
+    <!-- End Left Sidebar  -->
+    <!-- Page wrapper  -->
+    <div class="page-wrapper">
+
+        <!-- Bread crumb -->
+        {# {% include 'layout/partials/breadcrumb.twig' %} #}
+        <!-- End Bread crumb -->
+
+            <!-- Flash -->
+        {% include 'layout/partials/flash.twig' %}
+        <!-- End flash -->
+
+        <!-- Container fluid  -->
+        <div class="container-fluid">
+            <!-- Start Page Content -->
+
+              <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                                 <div class="card-body">
+
+                                 {% if auth.isStudent %}
+                                   <h1>Student</h1>
+                                 {% else %}
+                                     <h1>Not Student</h1>
+                                 {% endif %}
+
+                                    
+
+                            {% block content %}
+
+
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+                <!-- End PAge Content -->
+
+            <!-- End PAge Content -->
+        </div>
+        <!-- End Container fluid  -->
+
+{% endblock %}

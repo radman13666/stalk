@@ -86,36 +86,15 @@ class ResultController extends Controller
     public function store($request,$response,$args)
     {
       // looping through all the subjects
-       $subjects = $request->getParam('subject_id');
-       $marks    =  $request->getParam('mark');
-       $grades    =  $request->getParam('grade');
+       $subjects   = $request->getParam('subject_id');
+       $marks      = $request->getParam('mark');
+       $grades     = $request->getParam('grade');
+       $student_id = trim($request->getParam('student_id'));
+       $grade      = $request->getParam('grade');
+       $form       = trim($request->getParam('form'));
+       $term       = trim($request->getParam('term'));
 
-      
-
-    //    var_dump($subjects);
-    //    die();
-    $arrays = [$subjects,$marks,$grades];
-    explode('|',$arrays);
-
-      foreach($subjects as $subject)
-      {
-          
-            // create a new
-            $result = Result::create([
-                'student_id'   => trim($request->getParam('student_id')),
-                'subject_id'   => $value,
-                'mark'        => $request->getParam('mark'),
-                'academic_year'=> $request->getParam('year'),
-                'grade'        => $request->getParam('grade'),
-                'term'         => $request->getParam('term'),
-                's_form'       => trim($request->getParam('form')),
-                'performance'  => $request->getParam('performance'),
-                'created_id'   => $this->auth->user()->id,
-                'created_by'   => $this->auth->user()->name,
-            ]);
-                
-        
-      }
+  
   
 
 
@@ -133,6 +112,96 @@ class ResultController extends Controller
                 'id' => $args['id']
             ]));
         }
+
+        $arrays = [
+           'marks' => $marks,
+           'subjects' =>$subjects,
+           'grades' =>$grades
+        ];
+
+
+        function arrysy()
+        {
+            
+        }
+
+        // var_dump($arrays);
+
+        // // var_dump($all);
+        // die();
+    //  $keys =  array_keys($arrays);
+
+    //  for($i=0; $i<count($keys);$i++){
+         
+    //     foreach($arrays[$keys[$i]] as $key)
+    //     {
+    //        var_dump($key);
+          
+    //     }
+    //     die();
+   
+
+    //  }
+    //    $key = 0;
+    //     foreach( $arrays as  $items)
+    //     {
+    //         var_dump($items[$key]);
+    //         // foreach($items as $key)
+    //         // {
+
+    //         //    var_dump()
+
+                
+
+    //         // }= 
+
+    //         $key = $key+1;
+            
+    //     }
+    //     var_dump($key);
+    //     die();
+
+            
+
+      foreach($subjects as $subject)
+      {
+          
+            // create a new
+            $result = Result::create([
+                'student_id'   => $student_id,
+                'subject_id'   => $subject,
+                // 'mark'        => $request->getParam('mark'),
+                'academic_year'=> $request->getParam('year'),
+                // 'grade'        => $grade,
+                'term'         => $request->getParam('term'),
+                's_form'       => $form,
+                'performance'  => $request->getParam('performance'),
+                'created_id'   => $this->auth->user()->id,
+                'created_by'   => $this->auth->user()->name,
+            ]);
+
+
+
+      foreach($marks as $mark)
+      {
+          $find_subject = Result::where('student_id',$student_id)
+                                    ->where('subject_id',$subject)
+                                    // ->where('grade',$grade)
+                                    ->where('term',$term)
+                                    ->where('s_form',$form)
+                                    ->first();
+        // var_dump($find_subject);
+        // die();
+        $find_subject->update([
+            'mark' => $mark
+            ]);
+
+      };
+
+                
+        
+      }
+
 
    
    

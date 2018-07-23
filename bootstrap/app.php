@@ -76,9 +76,11 @@ require_once  __DIR__ .'/../vendor/autoload.php';
 
     //Auth
     $view->getEnvironment()->addGlobal('auth',[
-        'user'       => $container->auth->user(),
-        'check'      =>  $container->auth->check(),
-        'permission' => $container->auth->permission(),
+        'user'          => $container->auth->user(),
+        'check'         =>  $container->auth->check(),
+        'permission'    => $container->auth->permission(),
+        'isStudent'     => $container->auth->isStudent(),
+        'studentProfile'=> $container->auth->studentProfile()
     ]);
 
     // students

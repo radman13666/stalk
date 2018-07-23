@@ -1,0 +1,117 @@
+{% extends 'complains/student/main_dashboard.twig' %}
+
+{% block content %}
+
+<div class="row align-self-center">
+    <div class="col-md-10 offset-md-1">
+        <div class="card d-flex justify-content-center" >
+            <div class="card-body">
+                <div class="col-md-4 offset-md-3">
+          
+
+                <div class="img " style="padding-left:30px">
+                
+                    {% if student.photo %}
+                    <img src="{{path}}{{student.photo}}" height="120" width="120" class="rounded-circle" />
+                    {% else %}
+                    <img src="{{path}}/profile.png" height="120" width="120" class="rounded-circle" />
+                    {% endif %}
+                
+                </div>
+                 <h2 class="card-title text-info ">{{ student.name }}</h2>
+                 <span class="text-justify">
+                    <ul class="list-inline">
+                    <li class="list-inline-item">{{ school.school_name}} | </li>
+                    <li class="list-inline-item font-weight-bold">{{ student.gender == 'F' ? 'Female':'Male'}}</li>
+                    <li class="list-inline-item text-info text-muted">Age: {{ age }} </li>
+                    </ul> 
+                   
+                    <ul class="list-inline font-weight-bold ">
+                    <li class="list-inline-item text-success">
+                        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                        {{ student.current_state | capitalize }}  
+                    </li>
+                    <li class="list-inline-item text-warning">
+                       <i class="fa fa-check-circle" aria-hidden="true"></i>
+                        {{ student.level | capitalize }}
+                    </li>
+                    <li class="list-inline-item">
+                     <i class="fa fa-bolt" aria-hidden="true"></i>
+                     {{ student.s_form | capitalize }}</li>
+                    </ul> 
+
+                </span>
+                </div>
+
+                <h3 class="text-info font-weight-bold">
+                   <i class="fa fa-product-hunt" aria-hidden="true"></i>  &nbsp;&nbsp; &nbsp;&nbsp;
+                    Financial Details
+                     
+                     <span class="float-right text-success">
+                     <span class="badge badge-pill">Bursary ID:  </span> {{student.bursary_id}}
+                     </span>
+                </h3>
+
+                     <div class="row">
+
+    
+                {% for item in items %}
+                <div class="col-md-5">
+                        <p>Form: <span class="font-weight-bold">{{ item.form }}</span></p>
+                        <p>Term/Semester: <span class="font-weight-bold">{{ item.term }}</span></p>
+                        <p>Amount:&nbsp;<span class="font-weight-bold">UGX &nbsp; {{ item.amount }}</span></p>
+                        <p>Bank: <span class="font-weight-bold">{{ item.bank }}</span></p>
+                        <p>Date of Payment: <span class="font-weight-bold">{{ item.year }}</span></p>
+                        <p>Reason: <span class="font-weight-bold">{{ item.reason }}</span></p>
+                    
+                        <hr>
+
+                </div>
+                {% endfor %}
+            
+            </div>
+
+            {% include 'complains/student/partials/payment_pagination.twig'%}
+        </div>
+
+
+</div>
+       <div class="card d-flex justify-content-center" >
+            <div class="card-body">
+                <h3 class="text-info"><i class="fa fa-frown-o" aria-hidden="true"></i>
+                &nbsp;&nbsp; &nbsp;&nbsp;Grievances /complains
+
+                 <span class="float-right">
+
+                 <!-- Button trigger modal -->
+                    <p>
+                        <a class="btn btn-success" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                             New Grievance
+                        
+                        </a>
+                        
+                    </p>
+                     
+                     </span>
+                </h3>
+               {% include 'complains/student/partials/greviance.twig' %}
+               
+
+                <hr>
+                   <div class="single_p" style="">
+                    
+                    </div>
+            </div>
+        </div> 
+
+
+
+        </div>
+
+
+
+
+
+
+{% endblock %}

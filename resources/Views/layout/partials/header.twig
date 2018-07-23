@@ -25,6 +25,22 @@
 
                         <!-- Search -->
                         
+                        {% if auth.isStudent %}
+                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="" alt="{{ auth.studentProfile.name }}" class="profile-pic" />
+
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right animated zoomIn">
+                                <ul class="dropdown-user">
+                                 
+                                    {# <li><a href="{{ path_for('changepassword')}}"><i class="ti-settings"></i> Setting</a></li> #}
+                                    <li><a href="{{ path_for('student.logout')}}"><i class="fa fa-power-off"></i> Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        {% else %}
                         <!-- Profile -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -41,6 +57,7 @@
                                 </ul>
                             </div>
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
             </nav>

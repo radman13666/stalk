@@ -128,4 +128,9 @@ $(function() {
         $('a[data-action="close"]').on("click", function() {
             $(this).closest(".card").removeClass().slideUp("fast");
         });
+
+
+        $(function () {
+            $('#modal').modal('toggle');
+         });
 });

@@ -22,6 +22,19 @@ use App\Middleware\Roles\SuperadminMiddleware;
 $app->group('',function(){
     $this->get('/','LoginController:index')->setName('auth.login');
     $this->post('/','LoginController:authenticate');
+
+
+    // 
+    $this->get('/auth','StudentAuthController:index')->setName('auth.student');
+    $this->post('/auth','StudentAuthController:authenticate');
+    $this->get('/student/profile','StudentAuthController:profile')->setName('student.profile');
+
+    $this->get('/student/profile/logout','StudentAuthController:logout')->setName('student.logout');
+
+
+    // student complains
+
+    $this->post('/student/complain','ComplainController:store')->setName('student.complain');
 })->add( new GuestMiddleware($container));
 
 

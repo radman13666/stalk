@@ -6,6 +6,17 @@ use Carbon\Carbon as Carbon;
 use App\Controllers\Controller;
 use App\Models\Student\Student;
 
+use App\Models\Student\Course;
+use App\Models\Category\School;
+use App\Models\Category\Tribe;
+use App\Models\Category\Hostel;
+use App\Models\Category\Dropout;
+use App\Models\Student\District;
+use App\Models\Student\Secondary;
+use App\Models\Category\Subcounty;
+use App\Models\Student\Institution;
+use App\Models\Student\StudentSubject;
+
 
 class StudentApiController  extends Controller
 {
@@ -18,9 +29,6 @@ class StudentApiController  extends Controller
          // upload the file
         //  $this->files->uploadFile($request,'photo');
 
-
-        if(!empty($name))
-        {
         
             $create = Student::create([
                 
@@ -70,31 +78,60 @@ class StudentApiController  extends Controller
                 
                 // pull the lastest student information
             
-                if(!empty($request->getParam('bursary_id')))
-                {
-                    $bursary_id = $request->getParam('bursary_id');
-                }
-                else
-                {
-                    $bursary_id = $bursary_id;
-                }
+                // if(!empty($request->getParam('bursary_id')))
+                // {
+                //     $bursary_id = $request->getParam('bursary_id');
+                // }
+                // else
+                // {
+                //     $bursary_id = $bursary_id;
+                // }
 
-                $create->update([
-                    'bursary_id' => $bursary_id
-                ]);
+                // $this->response= ['message'=>'Success','error'=>false,'code'=>'OK'];
+                // return $response->withJson($this->response);
 
-                $this->response= ['message'=>'Succcess','error'=>false,'code'=>'OK'];
-                return $response->withJson($this->response);
-            
+                // $_SESSION['student_id'] = $bursary_id;
+
+                $school_name = $request->getParam('school_name');
+                
+                $school   = School::where('school_name',$school_name)->first();
+                
           
 
-           
-        }
-        else
-        {
-            $this->response= ['message'=>'Field name must not be empty','error'=>true,'code'=>'FAILED'];
-            return $response->withJson($this->response);
-        }
+                $create->update([
+                    'bursary_id' => $bursary_id,
+                    'school'     => $school->id,
+                    'draft'      =>'0',
+                    's_form'     => $request->getParam('form')  
+                ]);
+                
 
+              
+
+                
+
+
+                  $secondary = Secondary::create([
+                    'school_id'        => $school->id,
+                    's_form'           => $request->getParam('form'),
+                    'stream'           => $request->getParam('stream'),
+                    'student_id'       => $bursary_id,
+                    'student_index'    => $request->getParam('student_index'),
+                    ]);
+
+
+
+            //  unset($_SESSION['student_id']);
+
+             $this->response= ['message'=>'Success','error'=>false,'code'=>'OK','school'=>$school->id];
+             return $response->withJson($this->response);
+
+       
+
+    }
+
+    public function createSecondary($request,$response)
+    {
+        
     }
 }
