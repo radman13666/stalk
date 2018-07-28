@@ -72,66 +72,92 @@ class StudentApiController  extends Controller
                 ]);
 
 
-                 // Generating burasry id         
+                //  Generating burasry id         
                 $year = Carbon::parse($request->getParam('registration_year'))->format('Y');
                 $bursary_id = trim($year.$create->id);
-                
-                // pull the lastest student information
-            
-                // if(!empty($request->getParam('bursary_id')))
-                // {
-                //     $bursary_id = $request->getParam('bursary_id');
-                // }
-                // else
-                // {
-                //     $bursary_id = $bursary_id;
-                // }
-
-                // $this->response= ['message'=>'Success','error'=>false,'code'=>'OK'];
-                // return $response->withJson($this->response);
-
-                // $_SESSION['student_id'] = $bursary_id;
-
-                $school_name = $request->getParam('school_name');
-                
-                $school   = School::where('school_name',$school_name)->first();
-                
-          
 
                 $create->update([
-                    'bursary_id' => $bursary_id,
-                    'school'     => $school->id,
-                    'draft'      =>'0',
-                    's_form'     => $request->getParam('form')  
+                    'bursary_id' => $bursary_id
                 ]);
+        
+        
+                // setting last inserted id into session
+                 $_SESSION['student_id'] = $bursary_id;
+
+            //     $school_name = $request->getParam('school_name');
+        
+            //     $school   = School::where('school_name',$school_name)->first();
+
+
+            //     $secondary = Secondary::create([
+            //         'school_id'        => $school->id,
+            //         's_form'           => $request->getParam('s_form'),
+            //         'stream'           => $request->getParam('stream'),
+            //         'student_id'       => $_SESSION['student_id'],
+            //         'student_index'    => $request->getParam('student_index'),
+            //         ]);
+        
+            // // update school, bursary id
+
+            //     $student = Student::where('bursary_id',$_SESSION['student_id'])->first();
+          
+            //     $student->update([
+            //         'bursary_id' => $_SESSION['student_id'],
+            //         'school'     => $secondary->id,
+            //         'draft'      =>'0',
+            //         's_form'     => $secondary->s_form,  
+            //     ]);
                 
-
-              
-
                 
+            
 
-
-                  $secondary = Secondary::create([
-                    'school_id'        => $school->id,
-                    's_form'           => $request->getParam('form'),
-                    'stream'           => $request->getParam('stream'),
-                    'student_id'       => $bursary_id,
-                    'student_index'    => $request->getParam('student_index'),
-                    ]);
-
-
-
-            //  unset($_SESSION['student_id']);
-
-             $this->response= ['message'=>'Success','error'=>false,'code'=>'OK','school'=>$school->id];
+             $this->response= ['message'=>'Success','error'=>false,'code'=>'OK'];
              return $response->withJson($this->response);
 
        
 
     }
 
+    /**
+     * Add additional information for secondary
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @return void
+     */
     public function createSecondary($request,$response)
     {
+
+
+        $school_name = $request->getParam('school_name');
+        
+        $school   = School::where('school_name',$school_name)->first();
+
+
+        $secondary = Secondary::create([
+            'school_id'        => $school->id,
+            's_form'           => $request->getParam('s_form'),
+            'stream'           => $request->getParam('stream'),
+            'student_id'       => $_SESSION['student_id'],
+            'student_index'    => $request->getParam('student_index'),
+            ]);
+        
+            // update school, bursary id
+
+        $student = Student::where('bursary_id',$_SESSION['student_id'])->first();
+          
+        $student->update([
+                    'bursary_id' => $_SESSION['student_id'],
+                    'school'     => $school->id,
+                    'draft'      =>'0',
+                    's_form'     => $secondary->s_form, 
+                ]);
+    
+
+    // unset($_SESSION['student_id']);
+
+    $this->response= ['message'=>'Success','error'=>false,'session'=>$_SESSION['student_id']];
+    return $response->withJson($this->response);
         
     }
 }

@@ -1,0 +1,97 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+        <h4 class="card-title text-primary"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+            Mentors
+             
+
+            {% if auth.permission.id in [2,3,4,5] %}
+  
+            
+                <a href="{{ path_for('mentor.create') }}" class="btn  btn-primary pull-right">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                New Record 
+                </a>
+         
+            {% endif %}
+
+         
+            </h4>
+        <h6 class="card-subtitle">All Records </h6>
+
+            <form method="POST" action="{{ path_for('student.search')}}">
+               {% include 'student/personal/partial/find.twig' %}
+            </form>
+
+
+            <div class="table-responsive m-t-40">
+
+
+            
+
+                <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Bursary ID.</th>
+                            <th>Student Name</th>
+                            <th>Institution</th>
+                            <th>District</th>
+                             <th>Disability Status</th>
+                            <th>Gender</th>
+                            <th>Mentor</th>
+                            <th>Edit</th>
+                            <th>View</th>
+                    
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        
+                    </tfoot>
+                    <tbody class="">
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.bursary_id }}</td>
+                            <td>{{ item.student_name }}</td>
+                            <td>{{ item.school_name }}</td>
+                            <td>{{ item.district}}</td>
+                             <td>{{ item.disability_status}}</td>
+                            <td>{{ item.gender | capitalize }}</td>
+                            <td>{{ item.mentor_name }}</td>
+                           
+                             <td>
+                             {% if auth.permission.id in [3,4,5] %}
+                              <a href="{{ path_for('mentor.edit',{id:item.id})}}" 
+                              onClick="return confirm('Are you sure  you want to edit {{ item.student_name }}?')" class="btn btn-info">
+                               <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                              </a>
+                              {% else %}
+                              <button   class="btn btn-" disabled>
+                               <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                              </button>
+
+                              {% endif %}
+                               
+                            </td>
+
+                                 <td>
+                              <a href="{{ path_for('mentor.single',{id:item.id})}}" class="btn btn-primary">
+                               <i class="fa fa-eye" aria-hidden="true"></i>
+                              </a>
+                               
+                            </td>
+                       
+                          
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+              {% block base_index %}
+               {% include 'student/personal/partial/pagination.twig' %}
+               {% endblock %}
+            </div>
+             
+        </div>
+        
+    </div>
+{% endblock %}

@@ -14,7 +14,7 @@ class BursaryStudent extends AbstractRule
         {
             $student = Student::where('bursary_id','=',trim($input))->first();
 
-            if($student->name  != ucwords($_POST['name']))
+            if(ucwords($student->name)  != ucwords($_POST['name']))
             {
                 return false;
             }

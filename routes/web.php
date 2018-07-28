@@ -12,6 +12,8 @@ use App\Middleware\GuestMiddleware;
 use App\Middleware\Roles\CrMiddleware;
 use App\Middleware\Roles\CruMiddleware;
 use App\Middleware\Roles\CrudMiddleware;
+
+use App\Middleware\StudentAuthMiddleware;
 use App\Middleware\Roles\SuperadminMiddleware;
 
 /*********************************************************************** 
@@ -27,17 +29,29 @@ $app->group('',function(){
     // 
     $this->get('/auth','StudentAuthController:index')->setName('auth.student');
     $this->post('/auth','StudentAuthController:authenticate');
+  
+
+
+})->add( new GuestMiddleware($container));
+
+
+
+/*********************************************************************** 
+*
+*Auth Middleware
+*
+/*********************************************************************** */
+
+$app->group('', function(){
     $this->get('/student/profile','StudentAuthController:profile')->setName('student.profile');
-
+    
     $this->get('/student/profile/logout','StudentAuthController:logout')->setName('student.logout');
-
 
     // student complains
 
     $this->post('/student/complain','ComplainController:store')->setName('student.complain');
-})->add( new GuestMiddleware($container));
 
-
+})->add( new StudentAuthMiddleware($container));
 
 /*********************************************************************** 
 *
@@ -105,6 +119,10 @@ $app->group('', function(){
 
     // View Payment Details
     $this->get('/student/{id}/payment','HomeController:payment')->setName('amount.payment');
+
+    // Mentors
+    $this->get('/mentors','MentorController:index')->setName('mentor.index');
+    $this->get('/mentor/{id}/single','MentorController:single')->setName('mentor.single');
 
 
 })->add( new AuthMiddleware($container));
@@ -192,6 +210,12 @@ $app->group('', function(){
     $this->get('/subcounty/{id}/edit','SubcountyController:edit')->setName('subcounty.edit');
     $this->put('/subcounty/{id}/edit','SubcountyController:update');
 
+
+    // 
+    $this->get('/mentor/{id}/edit','MentorController:edit')->setName('mentor.edit');
+    $this->put('/mentor/{id}/edit','MentorController:update');
+
+
 })->add( new CruMiddleware($container));
 
 /*********************************************************************** 
@@ -252,6 +276,10 @@ $app->group('', function(){
     $this->get('/student/{id}/amount','AmountController:index')->setName('amount.index');
     $this->post('/student/{id}/amount/create','AmountController:store')->setName('amount.create');
     $this->post('/student/{id}/amount','AmountController:export');
+
+    // Mentor
+    $this->get('/mentor/create','MentorController:create')->setName('mentor.create');
+    $this->post('/mentor/create','MentorController:store');
     
 
     

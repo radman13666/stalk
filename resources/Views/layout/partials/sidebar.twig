@@ -6,12 +6,11 @@
                     <ul id="sidebarnav">
                         <li class="nav-devider"></li>
                         <li class="nav-label">Home</li>
-                        <li>
+                         <li>
                          <a class="has-arrow " href="{{ path_for('dashboard')}}" aria-expanded="false"><i class="fa fa-tachometer"></i>
                          <span class="hide-menu">Dashboard
                           </a>
                         </li>
-                        <li class="nav-label">App</li>
 
                         <li> <a class="has-arrow  " href="#" aria-expanded="false">
                           <i class="fa fa-suitcase"></i>
@@ -62,6 +61,17 @@
 
                                  {% if auth.permission.id in [2,3,4,5]  %}
                                 <li><a href="{{ path_for('course.create')}}">New Course</a></li> 
+                                {% endif %}
+                            </ul>
+                        </li>
+
+                    <li> <a class="has-arrow" href="#" aria-expanded="false">
+                       <i class="fa fa-book" aria-hidden="true"></i>
+                         <span class="hide-menu">Mentorship</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{ path_for('mentor.index')}}">All Mentors</a></li>
+                                 {% if auth.permission.id in [2,3,4,5]  %}
+                                <li><a href="{{ path_for('mentor.create')}}">New Record</a></li> 
                                 {% endif %}
                             </ul>
                         </li>

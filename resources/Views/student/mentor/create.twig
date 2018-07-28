@@ -1,0 +1,346 @@
+
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+    <div class="card-header">
+        <h4 class="m-b-0 text-info "><i class="fa fa-plus-circle" aria-hidden="true"></i>
+            New Mentor Record
+         </h4>
+    </div>
+ 
+    <div class="card-body">
+        <form action="{{ path_for('mentor.create')}}"  method ="POST" class="form-horizontal">
+            <div class="form-body">
+                <h3 class="box-title m-t-15">Student Information</h3>
+                <hr class="m-t-0 m-b-40">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Full Name <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"  name="name" class="form-control {{ errors.name ? 'is-invalid' :'' }} " 
+                                     placeholder="John doe" value="{{ old.name}}">
+                                 {% if errors.name %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.name | first }} </div> 
+                                {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                     <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Bursary ID <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <input type="text"  name="bursary_id" class="form-control {{ errors.bursary_id ? 'is-invalid' :'' }}"
+                                 value="{{old.bursary_id}}"  placeholder="Student Bursary">
+
+                                {% if errors.bursary_id %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.bursary_id | first }} </div> 
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Gender <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <select class="form-control custom-select {{ errors.gender ? 'is-invalid' :'' }}" name="gender">
+                                    <option value="">Choose ..</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                </select>
+                                 {% if errors.gender %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.gender | first }} </div> 
+                                {% endif %}
+                                 </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Form  <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <select class="form-control custom-select {{ errors.form ? 'is-invalid' :'' }}" name="form">
+                                    <option value="">Choose ..</option>
+                                    <option value="S1">S1</option>
+                                    <option value="S2">S2</option>
+                                    <option value="S3">S3</option>
+                                    <option value="S4">S4</option>
+                                    <option value="S5">S5</option>
+                                    <option value="S6">S6</option>
+
+                                    <option value="Year One">Year One</option>
+                                    <option value="Year Two">Year Two</option>
+                                    <option value="Year Three">Year Three</option>
+                                    <option value="Year Four">Year Four</option>
+                                    <option value="Year Five">Year Five</option>
+                                    
+                                </select>
+
+                                {% if errors.form %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.form | first }} </div> 
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+                   <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3 ">Institution <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <select class="form-control custom-select {{ errors.school_name ? 'is-invalid' :'' }}" name="school_name">
+                                    <option value="">Choose ..</option>
+                                    {% for school in helper.schools %}
+                                    <option value="{{school.school_name}}">{{ school.school_name | capitalize }}</option>
+                                    {% endfor %}
+                                </select>
+
+                                {% if errors.school_name %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.school_name | first }} </div> 
+                                {% endif %}
+                                
+                                 </div>
+                        </div>
+                    </div>
+                    
+                 
+                    <!--/span-->
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">District
+                             <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                            <select class="form-control custom-select {{ errors.district ? 'is-invalid' :'' }}" name="district">
+                                    <option value="">Choose ..</option>
+                                    {% for district in helper.districts %}
+                                    <option value="{{district.district_name}}">{{ district.district_name | capitalize }}</option>
+                                    {% endfor %}
+                                </select>
+
+                                {% if errors.district %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.district | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+               <!--row-->
+                <!--/span-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Disability Status
+                             <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                            <select class="form-control custom-select {{ errors.disability_status ? 'is-invalid' :'' }}" name="disability_status">
+                                    <option value="">Choose ..</option>
+                                    {% for item in  disability %}
+                                    <option value="{{item}}">{{ item | capitalize }}</option>
+                                    {% endfor %}
+                                </select>
+
+                                {% if errors.disability_status %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.disability_status | first }} </div> 
+                                {% endif %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+             
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Date <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                            <input type="date" class="form-control custom-select {{ errors.m_date ? 'is-invalid' :'' }}" name="m_date">
+                                 
+
+                                {% if errors.m_date %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.m_date | first }} </div> 
+                                {% endif %}
+                             </div>
+                        </div>
+                    </div>
+            </div>
+                    <!--/span-->
+             <!--/row-->
+
+
+
+                <!--row-->
+                <!--/span-->
+                <div class="row">
+             
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Services <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                            <select class="form-control custom-select {{ errors.topics ? 'is-invalid' :'' }}" name="topics">
+                                    <option value="">Choose ..</option>
+                                    {% for item in  services %}
+                                    <option value="{{item}}">{{ item}}</option>
+                                    {% endfor %}
+                                </select>
+
+                                {% if errors.topics %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.topics | first }} </div> 
+                                {% endif %}
+                             </div>
+                        </div>
+                    </div>
+
+                     <!--/span-->
+
+              
+             
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Age <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                            <input type="number" name="age" class="form-control {{ errors.age ? 'is-invalid' :'' }}" min="9" max="70">
+                              {% if errors.age %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.age | first }} </div> 
+                                {% endif %}
+                             </div>
+                        </div>
+                    </div>
+            </div>
+                   
+             <!--/row-->
+
+
+             
+                   <!--row-->
+          
+            <div class="row">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label class="control-label text-right col-md-3">Comments  <small>(Describe service offered)</small></label>
+                   
+                    <div class="col-md-9">
+                            <div class="form-group">
+                                <textarea name="comments" class="textarea_editor form-control" rows="10" 
+                                placeholder="Enter text ..." style="height:250px">
+                                {{ old.comments }}
+                                </textarea>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<br>
+
+
+
+
+        <h3 class="box-title">Mentor  Information</h3>
+                <hr class="m-t-0 m-b-40">
+                <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Mentor's  Name
+                               
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control {{ errors.mentor_name ? 'is-invalid' :'' }}"
+                                 name="mentor_name" value="{{ old.mentor_name}}" placeholder="Mentor name">
+
+                                 {% if errors.mentor_name %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.mentor_name | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Mentor's  Phone</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control {{ errors.mentor_phone ? 'is-invalid':''}}" name="mentor_phone" 
+                                value="{{ old.mentor_phone }}">
+
+                                   {% if errors.mentor_phone %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.mentor_phone | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--/row-->
+
+                   <!--/row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Mentor's  Gender
+                               
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control custom-select {{ errors.mentor_gender ? 'is-invalid' :'' }}" name="mentor_gender">
+                                    <option value="">Choose ..</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                </select>
+                                 {% if errors.mentor_gender %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.mentor_gender | first }} </div> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            <div class="form-actions ">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="pull-right">
+                             
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                        <div class="col-md-2 offset-md-10">
+                            <div class="pull-right">
+                                <button type="submit" class="btn   btn-primary btn-block">
+                                   Submit
+                                        
+                                </button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            {{ csrf.field | raw}}
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

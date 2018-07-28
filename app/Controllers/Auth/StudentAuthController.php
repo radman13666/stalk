@@ -13,7 +13,7 @@ use App\Models\Category\School;
 use App\Models\Student\District;
 use App\Models\Student\Amount;
 // use App\Models\Category\Subcounty;
-// use App\Models\Student\Institution;
+use App\Models\Student\Complain;
 use App\Models\Student\StudentSubject;
 
 use Respect\Validation\Validator as v;
@@ -99,6 +99,11 @@ class StudentAuthController extends Controller
     $amount = Amount::where('student_id', '=', $_SESSION['student'])
        ->paginate(4,['*'],'page',$request->getParam('page'));
 
+   $complains = Complain::where('student_id',$_SESSION['student'])
+                            ->orderBy('id','DESC')
+                            ->get();
+
+
 
     return $this->view->render($response,'complains/student/student_profile.twig',[
         'student'     => $student,
@@ -107,6 +112,7 @@ class StudentAuthController extends Controller
         'items'       => $amount,
         'subjects'    => $subjects,
         'course'      => $course,
+        'complains'   => $complains,
         'age'         => $dob->diffInYears($now)
     ]);
 

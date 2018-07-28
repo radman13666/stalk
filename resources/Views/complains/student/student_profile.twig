@@ -99,12 +99,26 @@
                
 
                 <hr>
-                   <div class="single_p" style="">
+                   {# <div class="single_p" style="">
+                    #}
+                    {% for complain in  complains %}
                     
-                    </div>
+                        <a href="" class="single_p">{{ complain.title }}</a>
+                        <p>
+                       <span class="text-danger"> {{ complain.status }}</span>
+                        &nbsp; &nbsp;&nbsp;
+
+                        <span class="text-success text-muted">{{ complain.created_at }}</span>
+                        </p>
+                        
+                        <br>
+                    {% endfor %}
+
+
+                    {# </div> #}
             </div>
         </div> 
-
+</div>
 
 
         </div>

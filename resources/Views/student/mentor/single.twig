@@ -1,0 +1,81 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+<div class="row align-self-center">
+    <div class="col-md-10 offset-md-1">
+        <div class="card d-flex justify-content-center" >
+            <div class="card-body">
+
+              <blockquote class="blockquote">
+                <h2 class="card-title text-info" >{{ mentor.student_name}}</h2>
+
+              </blockquote>
+
+                 <ul class="list-inline font-weight-bold ">
+                 <li class="list-inline-item font-weight-bold text-success">
+                     <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                     {{ student.gender == 'F' ? 'Female':'Male'}}
+                </li> 
+                    
+                    <li class="list-inline-item text-warning">
+                       <i class="fa fa-check-circle" aria-hidden="true"></i>
+                        {{ mentor.form | capitalize }}
+                    </li>
+                    <li class="list-inline-item">
+                     <i class="fa fa-bolt" aria-hidden="true"></i>
+                     {{ mentor.age | capitalize }} Years</li>
+                </ul> 
+                <hr>
+            
+                 <p> <span class="text-mute"> Institution :</span>
+                          <span class="single_item"> 
+                                {{ mentor.school_name }}
+                           </span>
+                 </p>
+
+                  <p> <span class="text-mute"> Disability Status :</span>
+                          <span class="single_item"> 
+                                {{ mentor.disability_status }}
+                           </span>
+                 </p>
+
+                  <p> <span class="text-mute"> Service :</span>
+                          <span class="single_item"> 
+                                {{ mentor.topics }}
+                           </span>
+                 </p>
+
+                       <p> <span class="single_item"> Comment :</span>
+                          <span class=""> 
+                                {{ mentor.comments | raw}}
+                           </span>
+                 </p>
+
+                 <hr>
+
+                     <p> <span class="text-mute"> Mentor's Name :</span>
+                          <span class="single_item"> 
+                                {{ mentor.mentor_name }}
+                           </span>
+                 </p>
+
+                     <p> <span class="text-mute"> Phone Number :</span>
+                          <span class="single_item"> 
+                                {{ mentor.mentor_phone }}
+                           </span>
+                 </p>
+
+                     <p> <span class="text-mute"> Gender :</span>
+                          <span class="single_item"> 
+                                {{ mentor.mentor_gender }}
+                           </span>
+                 </p>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

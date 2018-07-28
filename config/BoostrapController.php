@@ -56,6 +56,11 @@ $container['ComplainController'] = function($container){
 };
 
 
+// Mentor  controller
+$container['MentorController'] = function($container){
+    return new \App\Controllers\Student\MentorController($container);
+};
+
 
 
 
