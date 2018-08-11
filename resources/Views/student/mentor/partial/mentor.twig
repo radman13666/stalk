@@ -3,7 +3,7 @@
 {% block content %}
 
         <h4 class="card-title text-primary"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
-            Mentors
+            Mentorship Record
              
 
             {% if auth.permission.id in [2,3,4,5] %}
@@ -20,8 +20,8 @@
             </h4>
         <h6 class="card-subtitle">All Records </h6>
 
-            <form method="POST" action="{{ path_for('student.search')}}">
-               {% include 'student/personal/partial/find.twig' %}
+            <form method="POST" action="{{ path_for('mentor.search')}}">
+               {% include 'student/mentor/partial/mentor_searchbar.twig' %}
             </form>
 
 
@@ -36,8 +36,9 @@
                             <th>Bursary ID.</th>
                             <th>Student Name</th>
                             <th>Institution</th>
+                            <th>Semester</th>
                             <th>District</th>
-                             <th>Disability Status</th>
+                            <th>Date</th>
                             <th>Gender</th>
                             <th>Mentor</th>
                             <th>Edit</th>
@@ -54,8 +55,9 @@
                             <td>{{ item.bursary_id }}</td>
                             <td>{{ item.student_name }}</td>
                             <td>{{ item.school_name }}</td>
+                             <td>{{ item.semester}}</td>
                             <td>{{ item.district}}</td>
-                             <td>{{ item.disability_status}}</td>
+                             <td>{{ item.m_date}}</td>
                             <td>{{ item.gender | capitalize }}</td>
                             <td>{{ item.mentor_name }}</td>
                            

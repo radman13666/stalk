@@ -124,3 +124,25 @@ Reasons for Dropout as a drop down menu
 /* Edision  ----- 26 June 2018
 
 /* **************************** */
+
+
+/* sql queries */
+
+       // SELECT COUNT(*) AS total, students.dist_name FROM students GROUP BY students.dist_name;
+        // SELECT students.dist_name,COUNT(*) AS total FROM students WHERE students.current_state = 'continuing' GROUP BY students.dist_name
+        // SELECT students.dist_name, students.current_state, COUNT(*) AS total FROM students GROUP BY students.dist_name,students.current_state
+        // SELECT students.dist_name, students.level, COUNT(*) AS total FROM students GROUP BY students.dist_name,students.level
+        // SELECT students.dist_name, students.level,students.current_state, COUNT(*) AS total FROM students GROUP BY students.dist_name,students.level,students.current_state
+        // $schools = Student::selectRaw('students.dist_name, students.level, students.current_state, count(*)  Total')
+        //                     ->groupBy('students.dist_name,students.level,students.current_state')
+        //                     ->get()
+        //                     ->toArray();
+
+        // SELECT schools.school_name, COUNT(*) FROM schools LEFT JOIN students ON schools.id = students.school GROUP BY schools.school_name;
+        // SELECT schools.school_name,schools.level, COUNT(*) FROM schools LEFT JOIN students ON schools.id = students.school GROUP BY schools.school_name,schools.level
+
+        // SELECT schools.school_name,schools.level, students.s_form, students.gender, COUNT(*) FROM schools LEFT JOIN students ON schools.id = students.school GROUP BY schools.school_name,schools.level, students.s_form, students.gender;
+        
+        // SELECT schools.school_name,schools.level, students.s_form, students.gender, COUNT(*) FROM schools
+        //  LEFT JOIN students ON schools.id = students.school WHERE students.school <> ''
+        //   GROUP BY schools.school_name,schools.level, students.s_form, students.gender

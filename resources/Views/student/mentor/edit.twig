@@ -5,7 +5,7 @@
 
     <div class="card-header">
         <h4 class="m-b-0 text-info "><i class="fa fa-plus-circle" aria-hidden="true"></i>
-            New Mentor Record
+            Update Mentorship Record
          </h4>
     </div>
  
@@ -234,6 +234,38 @@
                    
              <!--/row-->
 
+                        <!--row-->
+                <!--/span-->
+                <div class="row">
+             
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="control-label text-right col-md-3">Semester/Form<span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-9">
+                            <select class="form-control custom-select {{ errors.semester ? 'is-invalid' :'' }}" 
+                            name="semester">
+                                    <option value="{{ mentor.semester}}">{{ mentor.semester}}</option>
+                                    <option value="First Term">First Term</option>
+                                    <option value="Second Term">Second Term</option>
+                                    <option value="Third Term">Third Term</option>
+                                    <option value="First Semester">First Semester</option>
+                                     <option value="Second Semester">Second Semester</option>    
+                                 
+                                </select>
+
+                                {% if errors.semester %}
+                                      <div class="form-control-feedback invalid-feedback"> {{ errors.semester | first }} </div> 
+                                {% endif %}
+                             </div>
+                        </div>
+                    </div>
+
+                     <!--/span-->
+            </div>
+
+              
+
 
              
                    <!--row-->
@@ -247,7 +279,7 @@
                             <div class="form-group">
                                 <textarea name="comments" class="textarea_editor form-control" rows="10" 
                                 placeholder="Enter text ..." style="height:250px">
-                                {{ mentor.comments }}
+                                {{ mentor.comments | striptags }}
                                 </textarea>
                             </div>
                     </div>

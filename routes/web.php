@@ -102,6 +102,10 @@ $app->group('', function(){
     $this->get('/reports','ReportController:index')->setName('report.index');
     $this->post('/reports','ReportController:generate');
 
+    $this->post('/report/generate','ReportController:studentSummary')->setName('summary.student');
+    $this->post('/report/mentorship','ReportController:mentorship')->setName('summary.mentorship');
+    $this->post('/report/fullmentorship','ReportController:fullMentorship')->setName('summary.fullmentorship');
+
     // 
     $this->post('/reports/r','ReportController:report')->setName('report.report');
 
@@ -123,6 +127,7 @@ $app->group('', function(){
     // Mentors
     $this->get('/mentors','MentorController:index')->setName('mentor.index');
     $this->get('/mentor/{id}/single','MentorController:single')->setName('mentor.single');
+    $this->post('/mentors','MentorController:search')->setName('mentor.search');
 
 
 })->add( new AuthMiddleware($container));

@@ -11,9 +11,12 @@ use App\Models\Student\District;
 use App\Models\Student\Secondary;
 use App\Models\Student\Institution;
 use App\Models\Student\StudentSubject;
+use App\Models\Student\Mentor;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
+
+use Respect\Validation\Validator as v;
 
 class ReportController extends Controller 
 {
@@ -65,6 +68,7 @@ class ReportController extends Controller
                            ->where('students.subcounty','like',"%$subcounty%")
                            ->where('students.bursary_id','like',"%$bursary_id%")
                            ->where('deleted','0')
+                           ->where('students.draft','0')
                            ->orderBy('students.name','ASC')
                            ->get();
       
@@ -133,16 +137,244 @@ class ReportController extends Controller
         }
       
 
-       
+            
+                // Rename worksheet
+                $spreadsheet->getActiveSheet()->setTitle('Simple oc');
+
+                // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+                $spreadsheet->setActiveSheetIndex(0);
+
+                // Redirect output to a client’s web browser (Xlsx)
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment;filename="01simple.xlsx"');
+                header('Cache-Control: max-age=0');
+                // If you're serving to IE 9, then the following may be needed
+                header('Cache-Control: max-age=1');
+
+                // If you're serving to IE over SSL, then the following may be needed
+                header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+                header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+                header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+                header('Pragma: public'); // HTTP/1.0
+
+                $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+                $writer->save('php://output');
+                exit;
+     }
+
+    /**
+     * Generate student summary report
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @return void
+     */
+    public function studentSummary($request,$response)
+    {
+
+        $districts = Student::selectRaw('students.dist_name, students.level,students.current_state,students.gender, count(*)  Total')
+                                    ->where('students.school','!=','')
+                                    ->where('students.draft','=','0')
+                                    ->where('students.deleted','=','0')
+                                     ->groupBy('students.dist_name','students.current_state', 'students.level','students.gender')
+                                     ->orderBy('students.level','ASC')
+                                     ->get();
+        
+        $schools = School::selectRaw('schools.school_name, students.current_state, schools.level, students.s_form,students.gender, count(*) Total')
+                            ->leftJoin('students','schools.id','=','students.school')
+                            ->where('students.school','!=','')
+                            // ->where('students.current_state','=','continuing')
+                            ->where('students.draft','=','0')
+                            ->where('students.deleted','=','0')
+                            ->groupBy('schools.school_name','students.current_state','schools.level','students.s_form','students.gender')
+                            ->orderBy('schools.level','ASC')
+                            ->get();
+                            
+        /**
+         * Generate EXcel
+         */
+
+        $spreadsheet = new SpreadSheet();
+         $spreadsheet->getProperties()
+                ->setCreator('Alfred')
+                ->setTitle('Summary Report')
+                ->setSubject('')
+                ->setDescription('');
+        
+                $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValue('A1','ID')
+                ->setCellValue('B1','School Name')
+                ->setCellValue('C1','Current State')
+                ->setCellValue('D1','Level')
+                ->setCellValue('E1','Form')
+                ->setCellValue('F1','Gender')
+                ->setCellValue('G1','Total')
+                ->setCellValue('H1','')
+                ->setCellValue('I1','District')
+                ->setCellValue('J1','Current Status')
+                ->setCellValue('K1','Level')
+                ->setCellValue('L1','Gender')
+                ->setCellValue('M1','Total');
+
+
+        
+                $count =0;
+
+                // looping through all schools
+                foreach($schools as $i => $school)
+                {
+                    // $spreadsheet->setActiveSheetIndex(0)
+                   $i =$i+2;
+                    $spreadsheet->getActiveSheet()->setCellValue('A'.$i,$count+=1);
+                    $spreadsheet->getActiveSheet()->setCellValue('B'.$i,$school->school_name);
+                    $spreadsheet->getActiveSheet()->setCellValue('C'.$i,$school->current_state);
+                    $spreadsheet->getActiveSheet()->setCellValue('D'.$i,ucfirst($school->level));
+                    $spreadsheet->getActiveSheet()->setCellValue('E'.$i,$school->s_form);
+                    $spreadsheet->getActiveSheet()->setCellValue('F'.$i,$school->gender);
+                    $spreadsheet->getActiveSheet()->setCellValue('G'.$i,$school->Total);
+                  
+                }
+
+                // looping through all Districts
+                foreach($districts as $i => $district)
+                {
+
+                    $i = $i+3;
+                    $spreadsheet->getActiveSheet()->setCellValue('H'.$i, '');
+                    $spreadsheet->getActiveSheet()->setCellValue('I'.$i, ucfirst($district->dist_name));
+                    $spreadsheet->getActiveSheet()->setCellValue('J'.$i, $district->current_state);
+                    $spreadsheet->getActiveSheet()->setCellValue('K'.$i, $district->level);
+                    $spreadsheet->getActiveSheet()->setCellValue('L'.$i, $district->gender);
+                    $spreadsheet->getActiveSheet()->setCellValue('M'.$i, $district->Total);
+                   
+
+                }
+
+              
+
+            
+                // Rename worksheet
+                $spreadsheet->getActiveSheet()->setTitle('Report');
+
+                // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+                $spreadsheet->setActiveSheetIndex(0);
+
+                // Redirect output to a client’s web browser (Xlsx)
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment;filename="'.Date('Y-M-D').'.xlsx"');
+                header('Cache-Control: max-age=0');
+                // If you're serving to IE 9, then the following may be needed
+                header('Cache-Control: max-age=1');
+
+                // If you're serving to IE over SSL, then the following may be needed
+                header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+                header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+                header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+                header('Pragma: public'); // HTTP/1.0
+
+                $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+                $writer->save('php://output');
+                exit;
+
+     
+    }
+
+    /**
+     * Mentorship SUMMARY report
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function mentorship($request,$response,$args)
+    {
+        // validation
+        $validator = $this->Validator->validate($request,[
+            'academic_year' =>  v::notEmpty()->numeric(),
+            'semester'      => v::notEmpty()
+        ]);
+
+        if($validator->failed())
+        {
+            return $response->withRedirect($this->router->pathFor('report.index'));
+        }
+
+
+        /**
+         * Generating the spreadsheet
+         */
+
+         $year     = trim($request->getParam('academic_year'));
+         $semester = $request->getParam('semester');
+
+         $mentors  = Mentor::selectRaw('mentors.school_name, mentors.form,mentors.gender, count(*) Total ')
+                            ->where('m_date','like',"%$year%")
+                            ->where('semester','like',"%$semester%")
+                            ->groupBy('mentors.school_name','mentors.form','mentors.gender')
+                            ->get();
+
+        $topics  = Mentor::selectRaw('mentors.topics, mentors.gender, count(*) Total ')
+                        ->where('m_date','like',"%$year%")
+                        ->where('semester','like',"%$semester%")
+                        ->groupBy('mentors.topics','mentors.gender')
+                        ->get();
+
+         $spreadsheet = new SpreadSheet();
+         $spreadsheet->getProperties()
+                      ->setTitle('Mentorship Report')
+                      ->setSubject('')
+                      ->setDescription('');
+
+
+       $spreadsheet->setActiveSheetIndex(0)
+                    ->setCellValue('A1','ID')
+                    ->setCellValue('B1','Institution')
+                    ->setCellValue('C1','Form')
+                    ->setCellValue('D1','Gender')
+                    ->setCellValue('E1','Total')
+                    ->setCellValue('F1','')
+                    ->setCellValue('G1','Topics')
+                    ->setCellValue('H1','Gender')
+                    ->setCellValue('I1','Total');
+                    
+
+
+        $count = 0;
+
+        foreach( $mentors as $i => $mentor)
+        {
+            $i = $i+2;
+            $spreadsheet->getActiveSheet()->setCellValue('A'.$i, $count+=1);
+            $spreadsheet->getActiveSheet()->setCellValue('B'.$i, $mentor->school_name);
+            $spreadsheet->getActiveSheet()->setCellValue('C'.$i,$mentor->form);
+            $spreadsheet->getActiveSheet()->setCellValue('D'.$i,$mentor->gender);
+            $spreadsheet->getActiveSheet()->setCellValue('E'.$i,$mentor->Total);
+        }
+
+
+
+        foreach( $topics as $i => $topic)
+        {
+            $i = $i+2;
+            $spreadsheet->getActiveSheet()->setCellValue('F'.$i, '');
+            $spreadsheet->getActiveSheet()->setCellValue('G'.$i, $topic->topics);
+            $spreadsheet->getActiveSheet()->setCellValue('H'.$i,$topic->gender);
+            $spreadsheet->getActiveSheet()->setCellValue('I'.$i,$topic->Total);
+            
+        }
+
+
+    
         // Rename worksheet
-        $spreadsheet->getActiveSheet()->setTitle('Simple oc');
+        $spreadsheet->getActiveSheet()->setTitle('Report');
 
         // Set active sheet index to the first sheet, so Excel opens this as the first sheet
         $spreadsheet->setActiveSheetIndex(0);
 
         // Redirect output to a client’s web browser (Xlsx)
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="01simple.xlsx"');
+        header('Content-Disposition: attachment;filename="'.Date('Y-M-D').'.xlsx"');
         header('Cache-Control: max-age=0');
         // If you're serving to IE 9, then the following may be needed
         header('Cache-Control: max-age=1');
@@ -156,60 +388,117 @@ class ReportController extends Controller
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('php://output');
         exit;
+                
+
     }
 
     /**
-     * Generate Report
+     * Mentorship Full report
      *
-     * @param [type] $response
      * @param [type] $request
+     * @param [type] $response
      * @param [type] $args
      * @return void
      */
-    public function report($response,$request,$args)
+    public function fullMentorship($request,$response,$args)
     {
+        // validation
+        $validator = $this->Validator->validate($request,[
+            'facademic_year' =>  v::notEmpty()->numeric(),
+            // 'fsemester'      => v::notEmpty()
+        ]);
 
-        // Create new Spreadsheet object
-$spreadsheet = new Spreadsheet();
+        if($validator->failed())
+        {
+            return $response->withRedirect($this->router->pathFor('report.index'));
+        }
 
-// Set document properties
-$spreadsheet->getProperties()->setCreator('Maarten Balliauw')
-    ->setLastModifiedBy('Maarten Balliauw')
-    ->setTitle('PDF Test Document')
-    ->setSubject('PDF Test Document')
-    ->setDescription('Test document for PDF, generated using PHP classes.')
-    ->setKeywords('pdf php')
-    ->setCategory('Test result file');
 
-// Add some data
-$spreadsheet->setActiveSheetIndex(0)
-    ->setCellValue('A1', 'Hello')
-    ->setCellValue('B2', 'world!')
-    ->setCellValue('C1', 'Hello')
-    ->setCellValue('D2', 'world!');
+        /**
+         * Generating the spreadsheet
+         */
 
-// Miscellaneous glyphs, UTF-8
-$spreadsheet->setActiveSheetIndex(0)
-    ->setCellValue('A4', 'Miscellaneous glyphs')
-    ->setCellValue('A5', 'éàèùâêîôûëïüÿäöüç');
+         $year     = trim($request->getParam('facademic_year'));
+         $semester = $request->getParam('fsemester');
 
-// Rename worksheet
-$spreadsheet->getActiveSheet()->setTitle('Simple');
-$spreadsheet->getActiveSheet()->setShowGridLines(false);
+         $mentors  = Mentor::where('m_date','like',"%$year%")
+                            ->where('semester','like',"%$semester%")
+                            ->get();
 
-// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$spreadsheet->setActiveSheetIndex(0);
 
-IOFactory::registerWriter('Pdf', \PhpOffice\PhpSpreadsheet\Writer\Pdf\Mpdf::class);
+         $spreadsheet = new SpreadSheet();
+         $spreadsheet->getProperties()
+                      ->setTitle('Mentorship Report')
+                      ->setSubject('')
+                      ->setDescription('');
 
-// Redirect output to a client’s web browser (PDF)
-header('Content-Type: application/pdf');
-header('Content-Disposition: attachment;filename="01simple.pdf"');
-header('Cache-Control: max-age=0');
 
-$writer = IOFactory::createWriter($spreadsheet, 'Pdf');
-$writer->save('php://output');
-exit;
+       $spreadsheet->setActiveSheetIndex(0)
+                    ->setCellValue('A1','ID')
+                    ->setCellValue('B1','Bursary ID')
+                    ->setCellValue('C1','Student Name')
+                    ->setCellValue('D1','Gender')
+                    ->setCellValue('E1','Institution')
+                    ->setCellValue('F1','Form')
+                    ->setCellValue('G1','Semester/Term')
+                    ->setCellValue('H1','District')
+                    ->setCellValue('I1','Date')
+                    ->setCellValue('J1','Disability Status')
+                    ->setCellValue('K1','Topics')
+                    ->setCellValue('L1','Comments')
+                    ->setCellValue('M1','Mentor')
+                    ->setCellValue('N1','Mentor Phone')
+                    ->setCellValue('O1','Mentor Gender');
+                 
+                    
+
+
+        $count = 0;
+
+        foreach( $mentors as $i => $mentor)
+        {
+            $i = $i+2;
+            $spreadsheet->getActiveSheet()->setCellValue('A'.$i,$count+=1);
+            $spreadsheet->getActiveSheet()->setCellValue('B'.$i,$mentor->bursary_id);
+            $spreadsheet->getActiveSheet()->setCellValue('C'.$i,$mentor->student_name);
+            $spreadsheet->getActiveSheet()->setCellValue('D'.$i,$mentor->gender);
+            $spreadsheet->getActiveSheet()->setCellValue('E'.$i,$mentor->school_name);
+            $spreadsheet->getActiveSheet()->setCellValue('F'.$i,$mentor->form);
+            $spreadsheet->getActiveSheet()->setCellValue('G'.$i,$mentor->semester);
+            $spreadsheet->getActiveSheet()->setCellValue('H'.$i,$mentor->district);
+            $spreadsheet->getActiveSheet()->setCellValue('I'.$i,$mentor->m_date);
+            $spreadsheet->getActiveSheet()->setCellValue('J'.$i,$mentor->disability_status);
+            $spreadsheet->getActiveSheet()->setCellValue('K'.$i,$mentor->topics);
+            $spreadsheet->getActiveSheet()->setCellValue('L'.$i,$mentor->comments);
+            $spreadsheet->getActiveSheet()->setCellValue('M'.$i,$mentor->mentor_name);
+            $spreadsheet->getActiveSheet()->setCellValue('N'.$i,$mentor->mentor_phone);
+            $spreadsheet->getActiveSheet()->setCellValue('O'.$i,$mentor->mentor_gender);
+        }
+
+    
+        // Rename worksheet
+        $spreadsheet->getActiveSheet()->setTitle('Report');
+
+        // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+        $spreadsheet->setActiveSheetIndex(0);
+
+        // Redirect output to a client’s web browser (Xlsx)
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.Date('Y-M-D').'.xlsx"');
+        header('Cache-Control: max-age=0');
+        // If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
+
+        // If you're serving to IE over SSL, then the following may be needed
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+        header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+        header('Pragma: public'); // HTTP/1.0
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+        exit;
+                
 
     }
 

@@ -1,97 +1,233 @@
 {% extends 'layout/master.twig' %}
 
 {% block content %}
+<div class="card">
+    <div class="card-body">
+
+<div>
+ <h4 class="text-primar">Student Detailed Report</h4>
+
+        <form method="post" action="{{ path_for('report.index')}}">
+        <div class="form-row">
+
+            <div class="col-md-3">
+                <input type="text"  value="{{old.name}}" name="name" class="form-control" 
+                placeholder="Search by name">
+            </div>
+
+                <div class="col-md-3">
+                <input type="text"  value="{{old.bursary_id}}" name="bursary_id" class="form-control" 
+                placeholder="Bursary ID">
+            </div>
+
+                <div class="col-md-2">
+                <select id="inputState" class="form-control text-capitalize" name="school" >
+                    <option value="" selected>By Institution</option>
+                    {% for school in helper.schools %}
+                    <option value="{{ school.id }}">{{ school.school_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="col-md-2 mim" >
+                <select id="inputState" class="form-control text-capitalize" name="district" >
+                    <option value="" selected>By District..</option>
+                    {% for district in helper.districts %}
+                    <option value="{{ district.district_name }}">{{ district.district_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+                <div class="col-md-2 mim" >
+                <select id="inputState" class="form-control text-capitalize" name="tribe" >
+                    <option value="" selected>Tribe</option>
+                    {% for tribe in helper.tribes %}
+                    <option value="{{ tribe.tribe_name }}">{{ tribe.tribe_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="col-md-3">
+                <select id="inputState" class="form-control text-capitalize" name="form" >
+                    <option value="" selected>By Form</option>
+                    {% for form in helper.forms %}
+                    <option value="{{ form.form_name }}">{{ form.form_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
 
+            <div class="col-md-3">
+                <select id="inputState" class="form-control text-capitalize" name="gender" >
+                    <option value="" selected>By Gender</option>
+                    <option value="M" >Male</option>
+                        <option value="F">Female</option>
+                </select>
+            </div>
+            
+            <div class="col-md-2 mim">
+                <select id="inputState" class="form-control text-capitalize" name="status" >
+                        <option value="">Status.</option>
+                    <option value="continuing">Continuing</option>
+                        <option value="completed">Completed</option>
+                    <option value="dropout">Dropout</option>
+                </select>
+            </div>
 
-<form method="post" action="{{ path_for('report.index')}}">
-    <div class="form-row">
-
-        <div class="col-md-3">
-            <input type="text"  value="{{old.name}}" name="name" class="form-control" 
-            placeholder="Search by name">
-        </div>
-
-         <div class="col-md-3">
-            <input type="text"  value="{{old.bursary_id}}" name="bursary_id" class="form-control" 
-            placeholder="Bursary ID">
-        </div>
+            <div class="col-md-2 mim" >
+                <select id="inputState" class="form-control text-capitalize" name="subcounty" >
+                    <option value="" selected>Subcounty</option>
+                    {% for subcounty in helper.subcounties %}
+                    <option value="{{ subcounty.subcounty_name }}">{{ subcounty.subcounty_name}}</option>
+                    {% endfor %}
+                </select>
+                
+            </div>
 
             <div class="col-md-2">
-            <select id="inputState" class="form-control text-capitalize" name="school" >
-                <option value="" selected>By Institution</option>
-                {% for school in helper.schools %}
-                <option value="{{ school.id }}">{{ school.school_name}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        
-        <div class="col-md-2 mim" >
-            <select id="inputState" class="form-control text-capitalize" name="district" >
-                <option value="" selected>By District..</option>
-                {% for district in helper.districts %}
-                <option value="{{ district.district_name }}">{{ district.district_name}}</option>
-                {% endfor %}
-            </select>
-        </div>
+                <button type="submit" class="btn btn-primary">
+                <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                Export
+                </button>
+                        {{ csrf.field | raw}}
+            </div>
 
-         <div class="col-md-2 mim" >
-            <select id="inputState" class="form-control text-capitalize" name="tribe" >
-                <option value="" selected>Tribe</option>
-                {% for tribe in helper.tribes %}
-                <option value="{{ tribe.tribe_name }}">{{ tribe.tribe_name}}</option>
-                {% endfor %}
-            </select>
         </div>
+        </form>
 
-        <br>
-        <br>
-
-        <div class="col-md-3">
-            <select id="inputState" class="form-control text-capitalize" name="form" >
-                <option value="" selected>By Form</option>
-                {% for form in helper.forms %}
-                <option value="{{ form.form_name }}">{{ form.form_name}}</option>
-                {% endfor %}
-            </select>
         </div>
+        <hr>
+
+        <div>
+        <h4 class="text-primar">Student Summary Report</h4>
 
 
-        <div class="col-md-3">
-            <select id="inputState" class="form-control text-capitalize" name="gender" >
-                <option value="" selected>By Gender</option>
-                <option value="M" >Male</option>
-                    <option value="F">Female</option>
-            </select>
-        </div>
-        
-        <div class="col-md-2 mim">
-            <select id="inputState" class="form-control text-capitalize" name="status" >
-                    <option value="">Status.</option>
-                <option value="continuing">Continuing</option>
-                    <option value="completed">Completed</option>
-                <option value="dropout">Dropout</option>
-            </select>
-        </div>
+        <form method="post" action="{{ path_for('summary.student')}}">
+            <div class="form-row">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-circle-o-notch" aria-hidden="true"></i>
+                     Generate Summary
+                </button>
+                        {{ csrf.field | raw}}
+            </div>
 
-        <div class="col-md-2 mim" >
-          <select id="inputState" class="form-control text-capitalize" name="subcounty" >
-                <option value="" selected>Subcounty</option>
-                {% for subcounty in helper.subcounties %}
-                <option value="{{ subcounty.subcounty_name }}">{{ subcounty.subcounty_name}}</option>
-                {% endfor %}
-            </select>
-            
-        </div>
-
-        <div class="col-md-2">
-         <button type="submit" class="btn btn-primary">
-            <i class="fa fa-cloud-download" aria-hidden="true"></i>
-            Export
-            </button>
-                 {{ csrf.field | raw}}
         </div>
 
     </div>
-</form>
+</div>
+
+
+
+
+
+
+<div class="card">
+    <div class="card-body">
+
+    <div>
+
+        <h4 class="text-primar">Full Mentorship Report</h4>
+
+
+        <form method="post" action="{{ path_for('summary.fullmentorship')}}">
+            <div class="form-row">
+
+           <div class="col-md-3">
+                <input type="text"  value="{{old.facademic_year}}" name="facademic_year" class="form-control {{ errors.facademic_year ? 'is-invalid':''}}" 
+                placeholder="Enter Academic year e.g 2018">
+
+                {% if errors.facademic_year %}
+                <div class="invalid-feedback">
+                {{ errors.facademic_year | first }}
+                </div>
+                {% endif %}
+            </div>
+
+                <div class="col-md-2 mim">
+                <select id="inputState" class="form-control {{ errors.fsemester ? 'is-invalid':''}} text-capitalize" name="fsemester" >
+                     <option value="">Choose Term/Semester..</option>
+                    <option value="First Term">First Term</option>
+                    <option value="Second Term">Second Term</option>
+                    <option value="Third Term">Third Term</option>
+                    <option value="First Semester">First Semester</option>
+                    <option value="Second Semester">Second Semester</option>  
+                </select>
+
+                {% if errors.fsemester %}
+
+                <div class="invalid-feedback">
+                    {{ errors.fsemester | first }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-success">
+                    
+                <i class="fa fa-download" aria-hidden="true"></i>
+                     Export
+                </button>
+                        {{ csrf.field | raw}}
+            </div>
+        </form>
+
+    </div>
+
+
+
+        <hr>
+
+
+        <h4 class="text-primar">Summary Report</h4>
+
+
+        <form method="post" action="{{ path_for('summary.mentorship')}}">
+            <div class="form-row">
+
+           <div class="col-md-3">
+                <input type="text"  value="{{old.academic_year}}" name="academic_year" class="form-control {{ errors.academic_year ? 'is-invalid':''}}" 
+                placeholder="Enter Academic year e.g 2018">
+
+                {% if errors.academic_year %}
+                <div class="invalid-feedback">
+                {{ errors.academic_year | first }}
+                </div>
+                {% endif %}
+            </div>
+
+                <div class="col-md-2 mim">
+                <select id="inputState" class="form-control {{ errors.semester ? 'is-invalid':''}} text-capitalize" name="semester" >
+                     <option value="">Choose Term/Semester..</option>
+                    <option value="First Term">First Term</option>
+                    <option value="Second Term">Second Term</option>
+                    <option value="Third Term">Third Term</option>
+                    <option value="First Semester">First Semester</option>
+                    <option value="Second Semester">Second Semester</option>  
+                </select>
+
+                {% if errors.semester %}
+
+                <div class="invalid-feedback">
+                    {{ errors.semester | first }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-success">
+                    
+                <i class="fa fa-download" aria-hidden="true"></i>
+                     Generate Summary
+                </button>
+                        {{ csrf.field | raw}}
+            </div>
+        </form>
+
+
+
+    </div>
+</div>
 {% endblock %}

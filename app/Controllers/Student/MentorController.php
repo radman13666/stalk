@@ -63,13 +63,14 @@ class MentorController extends Controller
     public function store($request,$response,$args)
     {
         
+        
 
         $validate  = $this->Validator->validate($request,[
             'mentor_name'      => v::notEmpty(),
             'mentor_phone'     => v::notEmpty()->phone(),
             'gender'           => v::notEmpty(),
             'district'         => v::notEmpty(),
-            // 'subcounty_name'   => v::notEmpty(),
+            'semester'         => v::notEmpty(),
             // 'school_id'        => v::notEmpty(),
             'school_name'      => v::notEmpty(),
             'bursary_id'       => v::notEmpty()->bursaryStudent(),
@@ -99,6 +100,7 @@ class MentorController extends Controller
             'district'         => $request->getParam('district'),
             'mentor_gender'    => $request->getParam('mentor_gender'),
             'm_date'           => $request->getParam('m_date'),
+            'semester'         => $request->getParam('semester'),
             'school_name'      => $request->getParam('school_name'),
             'bursary_id'       => trim($request->getParam('bursary_id')),
             'student_name'     => trim($request->getParam('name')),
@@ -163,6 +165,7 @@ class MentorController extends Controller
             'mentor_phone'     => v::notEmpty()->phone(),
             'gender'           => v::notEmpty(),
             'district'         => v::notEmpty(),
+            'semester'         => v::notEmpty(),
             // 'subcounty_name'   => v::notEmpty(),
             // 'school_id'        => v::notEmpty(),
             'school_name'      => v::notEmpty(),
@@ -198,6 +201,7 @@ class MentorController extends Controller
             'mentor_gender'    => $request->getParam('mentor_gender'),
             'm_date'           => $request->getParam('m_date'),
             'school_name'      => $request->getParam('school_name'),
+            'semester'         => $request->getParam('semester'),
             'bursary_id'       => trim($request->getParam('bursary_id')),
             'student_name'     => trim($request->getParam('name')),
             'age'              => trim($request->getParam('age')),
@@ -228,6 +232,47 @@ class MentorController extends Controller
             'mentor'=> $mentor
         ]);
 
+    }
+
+
+    /**
+     * Search mentorship information
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function search($request,$response,$args)
+    {
+
+               // getting all the fields
+               $name        = ltrim($request->getParam('name'));
+               $district    = $request->getParam('district');
+               $school      = $request->getParam('school');
+               $gender      = $request->getParam('gender');
+               $form        = $request->getParam('form');
+               $bursary_id  = $request->getParam('bursary_id');
+               $m_date      = trim($request->getParam('m_date'));
+               $mentor_name = ltrim($request->getParam('mentor_name'));
+               $semester    = $request->getParam('semester');
+               
+       
+               $mentors = Mentor::where('student_name','like',"%$name%")
+                                  ->where('district','like',"%$district%")
+                                  ->where('school_name','like',"%$school%")
+                                  ->where('gender','like',"%$gender%")
+                                  ->where('form','like',"%$form%")
+                                  ->where('m_date','like',"%$m_date%")
+                                  ->where('semester','like',"%$semester%")
+                                  ->where('bursary_id','like',"%$bursary_id%")
+                                  ->where('mentor_name','like',"%$mentor_name%")
+                                  ->orderBy('created_at','DESC')
+                                  ->limit(15)
+                                  ->get();
+        return $this->view->render($response,'student/mentor/mentor_search.twig',[
+            'items' => $mentors
+        ]);
     }
 
 }
