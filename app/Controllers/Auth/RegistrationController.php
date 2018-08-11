@@ -43,21 +43,31 @@ class RegistrationController extends Controller
         /**
          * Generating random password and api token
          */
+        $name = $request->getParam('name');
+        $email = $request->getParam('email');
 
-         $token  = openssl_random_pseudo_bytes(16);
-         $api_token = bin2hex($token);
-
-        //  password
-        
-
+        $token  = openssl_random_pseudo_bytes(16);
+        $api_token = bin2hex($token);
 
         $password = "password";
-        // rand(1000000,100000000);
+
+        //  password
+        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+        $message = "Dear  <strong>".ucfirst($name)."</strong> <br><br>,
+                    Your password for the Irish Aid Bursary Database is <strong>".$password."</strong> .<br><br>
+                    Regards,<br><br>
+                    Admin";
+
+
+    
+       @mail($email,"Irish Aid Bursary Scheme Password",$message,$header);
    
        
         User::create([
-            'name'     => $request->getParam('name'),
-            'email'    => $request->getParam('email'),
+            'name'     => $name,
+            'email'    => $email,
             'password' => password_hash($password,PASSWORD_DEFAULT),
             'phone'    => $request->getParam('phone'),
             'role_id'  => $request->getParam('role'),

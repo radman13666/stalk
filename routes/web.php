@@ -25,6 +25,13 @@ $app->group('',function(){
     $this->get('/','LoginController:index')->setName('auth.login');
     $this->post('/','LoginController:authenticate');
 
+    $this->get('/password_reset','LoginController:resetPassword')->setName('auth.password');
+    $this->post('/password_reset','LoginController:password');
+
+    $this->get('/change_password/{code}/{email}','LoginController:confirmReset')->setName('auth.confirm');
+    $this->post('/change_password/{code}/{email}','LoginController:saveConfirm')->setName('auth.postconfirm');
+
+
 
     // 
     $this->get('/auth','StudentAuthController:index')->setName('auth.student');

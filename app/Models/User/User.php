@@ -15,6 +15,7 @@ class User extends Model
         'role_id',
         'api_token',
         'status',
+        'reset_code',
         'deleted',
         'deleted_at',
         'deleted_by'
