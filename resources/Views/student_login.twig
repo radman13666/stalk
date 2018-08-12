@@ -21,7 +21,7 @@
 
 
                     <div class="col-md-4">
-                                    <h2  class="stud_title text-info">
+                                    <h2  class="stud_title text-success">
                                      &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
                                     <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                     &nbsp;&nbsp; &nbsp;&nbsp;Student Login page </h2>
@@ -43,13 +43,13 @@
 
                                 <form method="POST" action="{{ path_for('auth.student')}}">
                                     <div class="form-group">
-                                        <label class="text-capitalize">Student Full Name</label>
-                                        <input type="text"  name="name" class="form-control" placeholder="Name">
-                                        <small class="text-success">Use surename last name e.g  Okello James</small>
+                                        <label class="text-capitalize">Bursary ID</label>
+                                        <input type="text" value="{{ old.bursary_id}}" name="bursary_id" class="form-control" placeholder="Name">
+                                        <small class="text-success">Student Bursary ID</small>
                                     </div>
                                     <div class="form-group">
-                                        <label class="text-capitalize">Password</label>
-                                        <input type="text" name="password" class="form-control" placeholder="YYY-MM-DD">
+                                        <label class="text-capitalize">Date of Birth</label>
+                                        <input type="date" name="password" value="{{ old.password}}" class="form-control" placeholder="YYY-MM-DD">
                                         {# <small class="text-success">Use Date of Birth if you don't have password e.g 2018-01-01</small> #}
                                     </div>
                                     <div class="checkbox">

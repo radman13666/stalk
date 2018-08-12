@@ -15,6 +15,7 @@ use App\Middleware\Roles\CrudMiddleware;
 
 use App\Middleware\StudentAuthMiddleware;
 use App\Middleware\Roles\SuperadminMiddleware;
+use App\Middleware\Roles\ComplainMiddleware;
 
 /*********************************************************************** 
 *
@@ -34,8 +35,8 @@ $app->group('',function(){
 
 
     // 
-    $this->get('/auth','StudentAuthController:index')->setName('auth.student');
-    $this->post('/auth','StudentAuthController:authenticate');
+    $this->get('/student/login','StudentAuthController:index')->setName('auth.student');
+    $this->post('/student/login','StudentAuthController:authenticate');
   
 
 
@@ -57,6 +58,9 @@ $app->group('', function(){
     // student complains
 
     $this->post('/student/complain','ComplainController:store')->setName('student.complain');
+    $this->get('/student/{id}/complain','ComplainController:show')->setName('complain.show');
+    $this->post('/student/{id}/complain','ComplainController:saveReply');
+
 
 })->add( new StudentAuthMiddleware($container));
 
@@ -316,3 +320,18 @@ $app->group('', function(){
     $this->put('/superadmin/{id}/students','StudentTrashController:restore')->setName('students.restore');
 
 })->add( new SuperadminMiddleware($container));
+
+
+
+/*********************************************************************** 
+*
+*Comlain Manager middleware 
+*
+/*********************************************************************** */
+
+$app->group('',function(){
+
+    $this->get('/complains','ComplainController:index')->setName('complain.index');
+    $this->post('/complains','ComplainController:search')->setName('complain.search');
+
+})->add( new ComplainMiddleware($container));

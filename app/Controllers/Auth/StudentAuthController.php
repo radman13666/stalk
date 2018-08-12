@@ -44,15 +44,11 @@ class StudentAuthController extends Controller
      */
     public function authenticate($request,$response,$args)
     {
-        $name      = trim(ucwords($request->getParam('name')));
+        $name      = trim(ucwords($request->getParam('bursary_id')));
         $password       =  trim($request->getParam('password'));
 
 
-        // $password = Carbon::createFromFormat('Y-mm-dd',$dob);
-        // echo $password;
-        // die();
-
-        $student = Student::where('name',$name)
+        $student = Student::where('bursary_id',$name)
                             ->where('dob',$password)
                             ->first();
         
@@ -130,5 +126,7 @@ class StudentAuthController extends Controller
 
         return $response->withRedirect($this->router->pathFor('auth.student'));
     }
+
+ 
 
 }

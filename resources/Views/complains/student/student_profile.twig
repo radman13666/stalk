@@ -103,7 +103,7 @@
                     #}
                     {% for complain in  complains %}
                     
-                        <a href="" class="single_p">{{ complain.title }}</a>
+                        <a href="{{ path_for('complain.show',{id:complain.id})}}" class="single_p">{{ complain.title }}</a>
                         <p>
                        <span class="text-danger"> {{ complain.status }}</span>
                         &nbsp; &nbsp;&nbsp;

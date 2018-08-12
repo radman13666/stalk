@@ -1,0 +1,86 @@
+{% extends 'complains/student/main_dashboard.twig' %}
+
+{% block content %}
+
+<div class="row align-self-center">
+    <div class="col-md-10 offset-md-1">
+        <div class="card d-flex justify-content-center" >
+            <div class="card-body">
+             
+
+                <h3 class="text-info font-weight-bold">
+                   <i class="fa fa-product-hunt" aria-hidden="true"></i>  &nbsp;&nbsp; &nbsp;&nbsp;
+                   {{ complain.title}} 
+              
+                     {% if complain.status == 'pending'%}
+                     <span class="float-right text-success">
+                     <span class="badge badge-danger">Pending </span>
+                     </span>
+                     {% endif %}
+                </h3>
+                    <h6>Posted on <strong>{{ complain.created_at | date('j F, Y') }}</strong> at
+                    <strong>{{ complain.created_at | date("H:i:s")}}</strong></h6>
+                     <p></p>
+                    <p>{{ complain.body}}</p>
+                
+                    <hr>
+
+                    <h5 class="text-info">All Comments</h5>
+                   
+                   {% for reply in replies %}
+                   <div class="media-single">
+                   <div class="media">
+
+                    {% if auth.studentProfile.photo %}
+                        <img class="mr-3" src="{{path}}{{auth.studentProfile.photo}}" height="60" width="60"
+                         class="rounded-circle" />
+                        {% else %}
+                        <img class="mr-3" src="{{path}}profile.jpeg" height="60" width="60" class="rounded-circle" />
+                        {% endif %}
+                      <div class="media-single-body">
+                        <div class="media-body">
+                            <h5 class="mt-0 ">{{ auth.studentProfile.name }}</h5>
+                            {{ reply.message | raw }}
+                            <br>
+                            <small> <strong>{{ complain.created_at | date('j F, Y') }}</strong> at
+                    <strong>{{ reply.created_at | date("H:i:s")}}</strong> </small>
+                        </div>
+                      </div>
+
+
+                     </div>
+                     </div>
+                     {% endfor %}
+                                            
+                
+
+                   <form method="post" action="{{ path_for('complain.show',{id:complain.id})}}">
+                    <div class="form-group">
+                            <label for="exampleFormControlTextarea1"></label>
+                            <textarea class="textarea_editor form-control {{ errors.reply ? 'is-invalid':''}}" name="reply"
+                                        rows="8" placeholder="" style="height:130px" maxlength="2500">
+                            </textarea>
+                        </div>
+
+                        <div>
+                        <button type="submit" class="btn btn-primary btn-info">
+                         &nbsp; &nbsp;<i class="fa fa-reply" aria-hidden="true"></i>
+                          Reply</button>
+                        </div>
+                        
+                        {{ csrf.field | raw}}
+                   </form>
+            
+            </div>
+        </div>
+
+   </div>
+ </div>
+ </div>
+
+
+
+
+
+
+{% endblock %}

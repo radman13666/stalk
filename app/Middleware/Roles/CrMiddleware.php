@@ -15,7 +15,8 @@ class CrMiddleware extends Middleware
         if($this->container->auth->permission()->id == 3 || 
            $this->container->auth->permission()->id == 4 ||
            $this->container->auth->permission()->id == 2 ||
-           $this->container->auth->permission()->id == 5)
+           $this->container->auth->permission()->id == 5 ||
+           $this->container->auth->permission()->id == 6)
         {
           
         }

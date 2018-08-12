@@ -1,0 +1,104 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+        <h4 class="card-title text-primary"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+           Student Grievances
+            
+            </h4>
+        <h6 class="card-subtitle">Manage all users </h6>
+            <form method="POST" action="{{ path_for('complain.search')}}">
+                <div class="form-row">
+
+                    <div class="col-md-3">
+                        <input type="text"  value="{{old.name}}" name="name" class="form-control" 
+                        placeholder="Student name">
+                    </div>
+
+                    <div class="col-md-3">
+                        <input type="text"  value="{{old.bursary_id}}" name="bursary_id" class="form-control" 
+                        placeholder="Bursary ID">
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <input type="text"  value="{{old.year}}" name="year" class="form-control" 
+                        placeholder="Year e.g 2017">
+                    </div>
+                
+                    <div class="col-md-2">
+                        <select id="inputState" class="form-control text-capitalize" name="status" >
+                            <option value="" selected>Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        Submit
+                        </button>
+                            {{ csrf.field | raw}}
+                    </div>
+
+                </div>
+            </form>
+
+
+            <div class="table-responsive m-t-40">
+
+                <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Student No.</th>
+                            <th>Name</th>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>View</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        
+                    </tfoot>
+                    <tbody class="">
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.student_id }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.title}}</td>
+                            <td>{{ item.created_at | date('j F, Y') }}
+                            
+                            
+                            </td>
+                            <td class="text-capitalize">
+                            {% if item.status == 'pending'%}
+                                    <span class="text-danger">{{ item.status }}</span>
+                            {% else %}
+                                    <span class="text-success">{{ item.status }}</span>
+                            {% endif %}
+                                 
+                            </td>
+
+                             <td>
+                              <a href="{{ path_for('student.show',{id:item.id})}}" class="btn btn-primary">
+                               <i class="fa fa-eye" aria-hidden="true"></i>
+                              </a>
+                               
+                            </td>
+                            
+                          
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+              {% block base_index %}
+               
+               {% endblock %}
+            </div>
+             
+        </div>
+        
+    </div>
+{% endblock %}

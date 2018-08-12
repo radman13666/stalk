@@ -70,3 +70,16 @@
     margin-top: 50px;
     margin-bottom: -40px;
 }
+
+/* Reply */
+.media-single {
+    padding: 4px;
+    margin: 10px
+}
+/* m */
+.media-single-body
+{
+    background: #eee;
+    padding: 10px;
+    border-radius: 10px;
+}
