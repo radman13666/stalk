@@ -1,14 +1,14 @@
-{% extends 'complains/student/main_dashboard.twig' %}
+{% extends 'layout/master.twig' %}
 
 {% block content %}
 
-<div class="row align-self-center">
+    <div class="row align-self-center">
     <div class="col-md-10 offset-md-1">
         <div class="card d-flex justify-content-center" >
             <div class="card-body">
              
 
-             <h3 class="text-info font-weight-bold">
+                <h3 class="text-info font-weight-bold">
                    <i class="fa fa-product-hunt" aria-hidden="true"></i>  &nbsp;&nbsp; &nbsp;&nbsp;
                    {{ complain.title}}  
 
@@ -19,7 +19,7 @@
 
                      {% else %}
 
-                     <span class="float-right ">
+                      <span class="float-right ">
                      <span class="badge badge-primary">&nbsp; Closed </span>
                      </span>
                      {% endif %}
@@ -30,14 +30,7 @@
                     <p>{{ complain.body | raw }}</p>
                   
 
-                
-                    <h6>Posted on <strong>{{ complain.created_at | date('j F, Y') }}</strong> at
-                    <strong>{{ complain.created_at | date("H:i:s")}}</strong></h6>
-                     <p></p>
-                    <p>{{ complain.body}}</p>
-
-
-                       {# {% if complain.status == 'pending' %}
+                  {% if complain.status == 'pending' %}
                     
                     <form method="POST" action="{{ path_for('complain.closed',{id:complain.id}) }}">
                         <button class="btn btn-warning float-right" 
@@ -48,24 +41,21 @@
                     </form>
 
                   {% else %}
-
-                             <form method="POST" action="{{ path_for('complain.reopen',{id:complain.id}) }}">
+                
+                        <form method="POST" action="{{ path_for('complain.reopen',{id:complain.id}) }}">
                         <button class="btn btn-success float-right" 
                         onClick="return confirm ('Are you sure you want to reopen this ticket?')"
                             type="submit"><i class="fa fa-folder-open-o" aria-hidden="true"></i>
                             Reopen this Ticket</button>
                             {{ csrf.field | raw}}
                     </form>
-                  {% endif %} #}
+                  {% endif %}
                 
                     <hr>
 
-
-
-
                     <h5 class="text-info">All Comments</h5>
-                   
-                   {% for reply in replies %}
+
+                    {% for reply in replies %}
                    <div class="media-single">
                    <div class="media"> 
                     
@@ -97,14 +87,11 @@
                      </div>
                      </div>
                      {% endfor %}
-                                            
-                
-
 
                     {% if complain.status == 'pending' %}                    
                 
 
-                   <form method="post" action="{{ path_for('complain.show',{id:complain.id})}}">
+                   <form method="post" action="{{ path_for('complain.single',{id:complain.id})}}">
                     <div class="form-group">
                             <label for="exampleFormControlTextarea1"></label>
                             <textarea class="textarea_editor form-control {{ errors.reply ? 'is-invalid':''}}" name="reply"
@@ -127,8 +114,6 @@
                    </div>
 
                    {% endif %}
-
-                  
             
             </div>
         </div>
@@ -136,5 +121,6 @@
    </div>
  </div>
  </div>
+
 
 {% endblock %}

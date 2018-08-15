@@ -13,5 +13,7 @@ class ComplainReply extends Model
         'user_id',
         'student_id',
         'message',
+        'user_name',
+        'role'
     ];
 }

@@ -3,6 +3,7 @@ namespace App\Controllers\Student;
 
 
 use App\Controllers\Controller;
+use App\Models\User\User;
 use App\Models\Student\Complain;
 use App\Models\Student\Student;
 use Illuminate\Pagination\Paginator;
@@ -105,7 +106,9 @@ class ComplainController extends Controller
         // new reply
         $reply = ComplainReply::create([
             'message'        => $reply,
-            'complain_id'  => $args['id'],
+            'complain_id'    => $args['id'],
+            'user_name'       => ucwords($this->auth->studentProfile()->name) ,
+            'role'            => '0',
             'student_id'      => $this->auth->studentProfile()->bursary_id
 
         ]);
@@ -165,7 +168,121 @@ class ComplainController extends Controller
         return $this->view->render($response,'complains/admin/complain_index.twig',[
             'items' => $replies
         ]);
+    }
 
+    /**
+     * Display single on a single page
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function single($request,$response,$args)
+    {
+        $complain = Complain::find($args['id']);
+
+        $replies = ComplainReply::where('complain_id',$complain->id)
+                                    ->orderBy('id','DESC')
+                                    ->get();
+
+        $path = $this->files->fileDir();
+
+        $student  = Student::leftJoin('complains','students.bursary_id','=','complains.student_id')
+                            ->where('bursary_id',$complain->student_id)
+                            ->where('user_id','')
+                            ->first();
+
+        $admin = User::leftJoin('complains','complains.user_id','=','users.id')
+                      ->where('complains.user_id',$this->auth->user()->id)
+                      ->where('complains.student_id','')
+                      ->first();
+
+
+        return $this->view->render($response,'complains/admin/single.twig',[
+            'complain' => $complain,
+            'replies'  => $replies,
+            'path'     => $path,
+            'student'  => $student,
+            'admin'    => $admin,
+        ]);
+
+    }
+
+    /**
+     * Post Complain-complain Manager and Admin
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function postComplain($request,$response,$args)
+    {
+        $reply = ltrim(nl2br($request->getParam('reply')));
+
+        $complain = Complain::find($args['id']);
+
+        
+        // new reply
+        $reply = ComplainReply::create([
+            'message'        => $reply,
+            'complain_id'    => $args['id'],
+            'user_name'      => ucwords($this->auth->user()->name),
+            'role'           => '1',
+            'student_id'     => $complain->student_id,
+            'user_id'        => $this->auth->user()->id
+
+        ]);
+
+        $this->flash->addMessage('success','Message sent');
+
+        return $response->withRedirect($this->router->pathFor('complain.single',[
+            'id' => $args['id']
+        ]));
+
+    }
+
+    /**
+     * Close the ticket
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function closed($request,$response,$args)
+    {
+        $complain = Complain::find($args['id']);
+
+        $complain->update(['status' => 'closed']);
+
+        $this->flash->addMessage('success','You have successfully closed this ticket');
+
+        return $response->withRedirect($this->router->pathFor('complain.index',[
+            'id' => $args['id']
+        ]));
+    }
+
+    /**
+     * Open the ticket
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function reopen($request,$response,$args)
+    {
+        $complain = Complain::find($args['id']);
+
+        $complain->update(['status' => 'pending']);
+
+        $this->flash->addMessage('success',' Operation successful');
+
+        return $response->withRedirect($this->router->pathFor('complain.index',[
+            'id' => $args['id']
+        ]));
     }
 
 

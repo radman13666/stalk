@@ -333,5 +333,10 @@ $app->group('',function(){
 
     $this->get('/complains','ComplainController:index')->setName('complain.index');
     $this->post('/complains','ComplainController:search')->setName('complain.search');
+    $this->get('/complains/{id}/view','ComplainController:single')->setName('complain.single');
+    $this->post('/complains/{id}/view','ComplainController:postComplain');
+    $this->post('/complains/{id}/closed','ComplainController:closed')->setName('complain.closed');
+    $this->post('/complains/{id}/reopen','ComplainController:reopen')->setName('complain.reopen');
+
 
 })->add( new ComplainMiddleware($container));
