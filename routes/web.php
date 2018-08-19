@@ -337,6 +337,7 @@ $app->group('',function(){
     $this->post('/complains/{id}/view','ComplainController:postComplain');
     $this->post('/complains/{id}/closed','ComplainController:closed')->setName('complain.closed');
     $this->post('/complains/{id}/reopen','ComplainController:reopen')->setName('complain.reopen');
+    $this->post('/complains/export','ReportController:exportComplain')->setName('complain.export');
 
 
 })->add( new ComplainMiddleware($container));

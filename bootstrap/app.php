@@ -161,11 +161,19 @@ $container['auth'] = function($container){
 };
 
 /**
+ * LOg
+ */
+$container['log'] = function($container){
+    return new \App\Log\Log;
+};
+
+/**
  * Registering all middleware
  */
 $app->add( new \App\Middleware\InputErrorsMiddleware($container));
 // $app->add( new \App\Middleware\CsrfMiddleware($container));
 $app->add( new \App\Middleware\OldInputMiddleware($container));
+// $app->add( new \App\Middleware\LogMiddleware($container));
 
 
 // $app->add($container->csrf);

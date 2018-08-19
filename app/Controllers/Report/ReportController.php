@@ -8,6 +8,7 @@ use App\Models\Student\Course;
 use App\Models\Category\School;
 use App\Models\Category\Hostel;
 use App\Models\Student\District;
+use App\Models\Student\Complain;
 use App\Models\Student\Secondary;
 use App\Models\Student\Institution;
 use App\Models\Student\StudentSubject;
@@ -499,6 +500,85 @@ class ReportController extends Controller
         $writer->save('php://output');
         exit;
                 
+
+    }
+
+    /**
+     * Export all complains
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function exportComplain($request,$response,$args)
+    {
+          /**
+         * Generating the spreadsheet
+         */
+
+        $year     = trim($request->getParam('year'));
+        $status = $request->getParam('status');
+
+        $complains  = Complain::where('created_at','like',"%$year%")
+                           ->where('status','like',"%$status%")
+                           ->get();
+
+
+        $spreadsheet = new SpreadSheet();
+        $spreadsheet->getProperties()
+                     ->setTitle('Complain Report')
+                     ->setSubject('')
+                     ->setDescription('');
+
+
+      $spreadsheet->setActiveSheetIndex(0)
+                   ->setCellValue('A1','ID')
+                   ->setCellValue('B1','Bursary ID')
+                   ->setCellValue('C1','Student Name')
+                   ->setCellValue('D1','Status')
+                   ->setCellValue('E1','Title')
+                   ->setCellValue('F1','Body')
+                   ->setCellValue('G1','Date');
+
+       $count = 0;
+
+       foreach( $complains as $i => $complain)
+       {
+           $i = $i+2;
+           $spreadsheet->getActiveSheet()->setCellValue('A'.$i,$count+=1);
+           $spreadsheet->getActiveSheet()->setCellValue('B'.$i,$complain->student_id);
+           $spreadsheet->getActiveSheet()->setCellValue('C'.$i,$complain->student_name);
+           $spreadsheet->getActiveSheet()->setCellValue('D'.$i,$complain->status);
+           $spreadsheet->getActiveSheet()->setCellValue('E'.$i,$complain->title);
+           $spreadsheet->getActiveSheet()->setCellValue('F'.$i,$complain->body);
+           $spreadsheet->getActiveSheet()->setCellValue('G'.$i,$complain->created_at);
+       }
+
+   
+       // Rename worksheet
+       $spreadsheet->getActiveSheet()->setTitle('Report');
+
+       // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+       $spreadsheet->setActiveSheetIndex(0);
+
+       // Redirect output to a client’s web browser (Xlsx)
+       header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+       header('Content-Disposition: attachment;filename="'.Date('Y-M-D').'.xlsx"');
+       header('Cache-Control: max-age=0');
+       // If you're serving to IE 9, then the following may be needed
+       header('Cache-Control: max-age=1');
+
+       // If you're serving to IE over SSL, then the following may be needed
+       header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+       header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+       header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+       header('Pragma: public'); // HTTP/1.0
+
+       $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+       $writer->save('php://output');
+       exit;
+               
 
     }
 

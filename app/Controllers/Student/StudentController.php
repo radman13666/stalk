@@ -3,8 +3,11 @@
 namespace App\Controllers\Student;
 
 use Carbon\Carbon as Carbon;
+use App\Log\Log;
+
 use App\Controllers\Controller;
 use App\Models\Student\Student;
+use App\Models\Student\Reason;
 use App\Models\Student\Course;
 use App\Models\Category\School;
 use App\Models\Category\Tribe;
@@ -13,6 +16,7 @@ use App\Models\Category\Dropout;
 use App\Models\Student\District;
 use App\Models\Student\Secondary;
 use App\Models\Category\Subcounty;
+
 use App\Models\Student\Institution;
 use App\Models\Student\StudentSubject;
 
@@ -61,6 +65,8 @@ class StudentController extends Controller
 
         $subcounties =  Subcounty::all();
         $tribes      =  Tribe::all();
+
+        // $log = $this->log->updateLog();
 
      
     
@@ -303,7 +309,9 @@ class StudentController extends Controller
     public function update($request,$response,$args)
     {
         // 
-        $student = Student::where('bursary_id','=',$args['id'])->first();
+      $student = Student::where('bursary_id','=',$args['id'])->first();
+
+     
 
         // 
       $old_level = $student->level;
@@ -328,6 +336,7 @@ class StudentController extends Controller
             'year_start'        => v::notEmpty()->date(),
             'year_stop'         => v::notEmpty()->date(), 
             'registration_year' => v::notEmpty()->date(),
+            'reasons'           => v::notEmpty(),
 
             // 'ethnicity'         => v::notEmpty(),
             // 'student_phone'     => v::phone(),
@@ -343,7 +352,9 @@ class StudentController extends Controller
 
         //    Validation failed
             if($validator->failed()){
-                return $response->withRedirect($this->router->pathFor('student.create'));
+                return $response->withRedirect($this->router->pathFor('student.edit',[
+                    'id' =>$args['id']
+                ]));
             }
 
             //  handling file upload
@@ -411,8 +422,28 @@ class StudentController extends Controller
                 // 'created_id'     => $this->auth->user()->id,
 
                 ]);
-
             
+            
+               
+        /**
+         * 
+         * Create Reason for update
+         * 
+         */
+
+         Reason::create([
+             'reason'       => nl2br(ltrim(rtrim($request->getParam('reasons')))),
+             'student_name' => $student->name,
+             'bursary_id'   => $student->bursary_id,
+             'user_name'    => $this->auth->user()->name,
+             'user_id'      => $this->auth->user()->id,
+         ]);
+        /**
+         * 
+         * Log update information
+         */
+        $this->log->updateLog('UPDATE',$student->name,$student->bursary_id,nl2br(ltrim(rtrim($request->getParam('reasons')))));
+        
 
           /**
           * Fixing school information update bug
@@ -646,6 +677,12 @@ class StudentController extends Controller
                 'deleted'    => '1',
                 'deleted_at' => date('Y-m-d H:i:s')
             ]);
+
+       /**
+         * 
+         * Log update information
+         */
+        $this->log->updateLog('DELETE',$trash->name,$trash->bursary_id);
     
             // flash message
         $this->flash->addMessage('danger', ucwords($trash->name).'  has been  deleted');

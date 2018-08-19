@@ -11,7 +11,7 @@
     <div class="card-body text-capitalize">
         <form action="{{ path_for('student.edit',{id:student.bursary_id})}}"  method ="POST" class="form-horizontal" enctype="multipart/form-data">
             <div class="form-body">
-                <h3 class="box-title m-t-15">Person Information</h3>
+                <h3 class="box-title m-t-15">Person Information </h3>
                 <hr class="m-t-0 m-b-40">
                 <div class="row">
                     <div class="col-md-6">
@@ -527,6 +527,33 @@
                                         {{ student.notes | raw  | striptags}}
                                         </textarea>
                                     </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <!--/row-->
+               <hr>
+                       <!--/row-->
+
+                    <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="control-label text-right text-danger text-capitalize  text-bold text col-md-3">
+                            <i class="fa fa-question-circle" aria-hidden="true"></i>
+                            Reason(s) for Updating  Student details</label>
+                            <div class="col-md-9">
+                                  <div class="form-group">
+                                        <textarea name="reasons" class="textarea_editor form-control {{errors.reasons ? 'is-invalid':'' }}" rows="10" 
+                                        placeholder="Enter text ..." style="height:100px">
+                            
+                                        </textarea>
+                                    </div>
+                                    
+                                    {% if errors.reasons %}
+                                    <div class="invalid-feedback">
+                                    {{ errors.reason | first }}
+                                    </div>
+                                    {% endif %}
                             </div>
                         </div> 
                     </div>

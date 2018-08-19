@@ -4,6 +4,7 @@ namespace App\Controllers\Student;
 use App\Controllers\Controller;
 use App\Models\Student\Student;
 use App\Models\Category\School;
+use App\Models\Student\Reason;
 use App\Models\Student\Secondary;
 use App\Models\Student\Institution;
 use App\Models\Student\StudentSubject;
@@ -169,8 +170,7 @@ class SecondaryController extends Controller
         
         $secondary = Secondary::find($args['id']);
 
-       
-
+    
         //get student
         $student = Student::where('bursary_id','=',$secondary->student_id)->first();
        
@@ -212,6 +212,23 @@ class SecondaryController extends Controller
         }
        
 
+         
+         /**
+         * 
+         * Handling validation
+         */
+        $validator  = $this->Validator->validate($request,[
+            'reasons'              => v::notEmpty(),            
+            ]);
+
+        //    Validation failed
+            if($validator->failed()){
+                return $response->withRedirect($this->router->pathFor('secondary.edit',[
+                    'id' =>$args['id']
+                ]));
+            }
+
+
          $update = $old_data->update([
             'school_id'        => $request->getParam('school_id'),
             's_form'           => $request->getParam('s_form'),
@@ -233,6 +250,30 @@ class SecondaryController extends Controller
             's_form'   => $new_data->s_form,
             'draft'    => '0'
         ]);  
+
+
+         /**
+         * 
+         * Create Reason for update
+         * 
+         */
+
+        Reason::create([
+            'reason'       => nl2br(ltrim(rtrim($request->getParam('reasons')))),
+            'student_name' => $student->name,
+            'bursary_id'   => $student->bursary_id,
+            'user_name'    => $this->auth->user()->name,
+            'user_id'      => $this->auth->user()->id,
+        ]);
+       /**
+        * 
+        * Log update information
+        */
+       $this->log->updateLog('UPDATE',$student->name,$student->bursary_id,nl2br(ltrim(rtrim($request->getParam('reasons')))));
+       
+
+
+        
 
 
            //   add a flash message

@@ -5,7 +5,8 @@
     <div class="card-body">
 
 <div>
- <h4 class="text-primar">Student Detailed Report</h4>
+ <h3 class="text-primary"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
+ &nbsp;&nbsp;Students Report</h3>
 
         <form method="post" action="{{ path_for('report.index')}}">
         <div class="form-row">
@@ -102,7 +103,7 @@
         <hr>
 
         <div>
-        <h4 class="text-primar">Student Summary Report</h4>
+        <h4 class="text-primary">Student Summary Report</h4>
 
 
         <form method="post" action="{{ path_for('summary.student')}}">
@@ -129,7 +130,8 @@
 
     <div>
 
-        <h4 class="text-primar">Full Mentorship Report</h4>
+        <h3 class="text-success"> <i class="fa fa-flag-checkered" aria-hidden="true"></i>
+        &nbsp; Full Mentorship Report</h3>
 
 
         <form method="post" action="{{ path_for('summary.fullmentorship')}}">
@@ -181,7 +183,7 @@
         <hr>
 
 
-        <h4 class="text-primar">Summary Report</h4>
+        <h4 class="text-success">Summary Report</h4>
 
 
         <form method="post" action="{{ path_for('summary.mentorship')}}">
@@ -220,7 +222,7 @@
                 <button type="submit" class="btn btn-success">
                     
                 <i class="fa fa-download" aria-hidden="true"></i>
-                     Generate Summary
+                     Generate 
                 </button>
                         {{ csrf.field | raw}}
             </div>
@@ -230,4 +232,46 @@
 
     </div>
 </div>
+</div>
+
+<hr>
+
+
+
+{% if auth.permission.id  in [4,6] %}
+ <h3 class="text-warning">
+<i class="fa fa-frown-o" aria-hidden="true"></i> &nbsp; &nbsp; Complains and Grievances</h3>
+
+      <form method="POST" action="{{ path_for('complain.export')}}">
+                <div class="form-row">
+
+                    <div class="col-md-2">
+                        <input type="text"  value="{{old.year}}" name="year" class="form-control" 
+                        placeholder="Year e.g 2017">
+                    </div>
+                
+                    <div class="col-md-2">
+                        <select id="inputState" class="form-control text-capitalize" name="status" >
+                            <option value="" selected>Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="completed">Closed</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                    <button type="submit" class="btn btn-warning">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        Download
+                        </button>
+                            {{ csrf.field | raw}}
+                    </div>
+
+            </div>
+            </div>
+    </form>
+{% endif %}
+
+
+       
+
 {% endblock %}

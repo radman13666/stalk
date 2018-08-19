@@ -5,6 +5,7 @@ namespace App\Controllers\Student;
 use App\Controllers\Controller;
 use App\Models\Category\Hostel;
 use App\Models\Student\Student;
+use App\Models\Student\Reason;
 use App\Models\Student\Course;
 use App\Models\Category\School;
 use App\Models\Student\Institution;
@@ -209,7 +210,7 @@ class InstitutionController extends Controller
             'student_bank_account'      => v::notEmpty(),
             'student_bank_address'      => v::notEmpty(),
       
-            // 'student_number'            => v::notEmpty(),
+            'reasons'                   => v::notEmpty(),
             // 'other_bank_name'           => v::notEmpty(),
             // 'other_bank_account'        => v::notEmpty(),
             // 'other_bank_address'        => v::notEmpty(),
@@ -218,6 +219,7 @@ class InstitutionController extends Controller
         // validation failed
         if($validator->failed())
         {
+
             return $response->withRedirect($this->router->pathFor('institution.edit',[
                 'id' => $args['id']
             ]));
@@ -258,7 +260,29 @@ class InstitutionController extends Controller
             'school'   => $new_data->school_id,
             's_form'   => $new_data->s_form,
             'draft'    => '0'
-        ]);  
+        ]); 
+        
+        
+         /**
+         * 
+         * Create Reason for update
+         * 
+         */
+
+        Reason::create([
+            'reason'       => nl2br(ltrim(rtrim($request->getParam('reasons')))),
+            'student_name' => $latest->name,
+            'bursary_id'   => $latest->bursary_id,
+            'user_name'    => $this->auth->user()->name,
+            'user_id'      => $this->auth->user()->id,
+        ]);
+       /**
+        * 
+        * Log update information
+        */
+       $this->log->updateLog('UPDATE',$latest->name,$latest->bursary_id,nl2br(ltrim(rtrim($request->getParam('reasons')))));
+       
+
 
         //   add a flash message
         $this->flash->addMessage('success', 'Information has been updated successfully');

@@ -304,6 +304,36 @@
                   </div>
                   </div>
                 <!--/row-->
+
+                <hr>
+
+
+                              <!--/row-->
+
+                    <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="control-label text-right text-danger text-capitalize  text-bold text col-md-3">
+                            <i class="fa fa-question-circle" aria-hidden="true"></i>
+                            Reason(s) for Updating  Student details</label>
+                            <div class="col-md-9">
+                                  <div class="form-group">
+                                        <textarea name="reasons" class="textarea_editor form-control {{errors.reasons ? 'is-invalid':'' }}" rows="10" 
+                                        placeholder="Enter text ..." style="height:100px">
+                            
+                                        </textarea>
+                                    </div>
+                                    
+                                    {% if errors.reasons %}
+                                    <div class="invalid-feedback">
+                                    {{ errors.reason | first }}
+                                    </div>
+                                    {% endif %}
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <!--/row-->
        
        
             <input type="hidden" name="_METHOD" value="PUT" />
@@ -322,7 +352,7 @@
                         <div class="col-md-2 offset-md-10">
                             <div class="pull-right">
                                 <button type="submit" class="btn   btn-primary btn-block">
-                                  Complete Registration
+                                  Update
                                 </button>
                             </div>
                             </div>
