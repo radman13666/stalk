@@ -132,6 +132,9 @@ $app->group('', function(){
     // Results
     $this->get('/student/{id}/results','ResultController:index')->setName('result.index');
 
+    $this->get('/student/results','ResultController:allResult')->setName('allresult.index');
+    $this->post('/student/results','ResultController:searchResult');
+
     // View Payment Details
     $this->get('/student/{id}/payment','HomeController:payment')->setName('amount.payment');
 
@@ -338,6 +341,6 @@ $app->group('',function(){
     $this->post('/complains/{id}/closed','ComplainController:closed')->setName('complain.closed');
     $this->post('/complains/{id}/reopen','ComplainController:reopen')->setName('complain.reopen');
     $this->post('/complains/export','ReportController:exportComplain')->setName('complain.export');
-
+    
 
 })->add( new ComplainMiddleware($container));

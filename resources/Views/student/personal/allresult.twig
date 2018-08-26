@@ -1,0 +1,74 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+        <h4 class="card-title text-primary"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+            </h4>
+   
+ <form method="POST" action="{{ path_for('allresult.index')}}">
+
+        <div class="form-row">
+
+        <div class="col-md-3">
+            <input type="text"  value="{{old.student_id}}" name="student_id" class="form-control {{errors.student_id ? 'is-invalid':''}}" 
+            placeholder="Bursary ID">
+
+              {% if errors.student_id %}
+                    <div class="form-control-feedback invalid-feedback"> {{ errors.student_id | first }} </div> 
+            {% endif %}
+        </div>
+
+        <div class="col-md-2 mim" >
+            <input type="number"  value="{{old.year}}" name="year" class="form-control {{errors.year ? 'is-invalid':''}}" 
+            placeholder="Year"> 
+
+             {% if errors.year %}
+                    <div class="form-control-feedback invalid-feedback"> {{ errors.year | first }} </div> 
+            {% endif %}
+        </div>
+
+         <div class="col-md-3">
+            <select class="form-control custom-select {{ errors.term ? 'is-invalid' :'' }}" name="term">
+                <option value="{{ old.term ? old.term:'' }}"> {{ old.term ? old.term:'Term' }}</option>
+                <option value="first_term">First Term</option>
+                <option value="second_term">Second Term</option>
+                <option value="third_term">Third Term</option>
+            </select>
+                {% if errors.term %}
+                    <div class="form-control-feedback invalid-feedback"> {{ errors.term | first }} </div> 
+            {% endif %}
+        </div>
+
+        <div class="col-md-2">
+             <select class="form-control custom-select {{ errors.form ? 'is-invalid' :'' }}"
+                                   name="form">
+                <option value="{{ old.form ? old.form:''}}">{{ old.form ? old.form:'Form'}}</option>
+                <option value="S1">S1</option>
+                <option value="S2">S2</option>
+                <option value="S3">S3</option>
+                <option value="S4">S4</option>
+                <option value="S5">S5</option>
+                <option value="S6">S6</option>
+            </select>
+                {% if errors.form %}
+                    <div class="form-control-feedback invalid-feedback"> {{ errors.form | first }} </div> 
+            {% endif %}
+        </div>
+        
+      
+
+        <div class="col-md-2">
+         <button type="submit" class="btn btn-primary">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            Submit
+            </button>
+                 {{ csrf.field | raw}}
+        </div>
+
+    </div>
+              
+</form>
+
+
+            
+{% endblock %}

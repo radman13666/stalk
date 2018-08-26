@@ -1,0 +1,140 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+
+        <h4 class="card-title text-primary"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+            </h4>
+   
+
+        <form method="POST" action="{{ path_for('allresult.index')}}">
+
+        <div class="form-row">
+
+        <div class="col-md-3">
+            <input type="text"  value="{{old.student_id}}" name="student_id" class="form-control" 
+            placeholder="Bursary ID">
+        </div>
+
+        <div class="col-md-2 mim" >
+            <input type="number"  value="{{old.year}}" name="year" class="form-control" 
+            placeholder="Year"> 
+        </div>
+
+         <div class="col-md-3">
+            <select class="form-control custom-select {{ errors.term ? 'is-invalid' :'' }}" name="term">
+                <option value="{{ old.term ? old.term:'' }}"> {{ old.term ? old.term:'Term' }}</option>
+                <option value="first_term">First Term</option>
+                <option value="second_term">Second Term</option>
+                <option value="third_term">Third Term</option>
+            </select>
+                {% if errors.term %}
+                    <div class="form-control-feedback invalid-feedback"> {{ errors.term | first }} </div> 
+            {% endif %}
+        </div>
+
+        <div class="col-md-2">
+             <select class="form-control custom-select {{ errors.form ? 'is-invalid' :'' }}"
+                                   name="form">
+                <option value="{{ old.form ? old.form:''}}">{{ old.form ? old.form:'Form'}}</option>
+                <option value="S1">S1</option>
+                <option value="S2">S2</option>
+                <option value="S3">S3</option>
+                <option value="S4">S4</option>
+                <option value="S5">S5</option>
+                <option value="S6">S6</option>
+            </select>
+                {% if errors.form %}
+                    <div class="form-control-feedback invalid-feedback"> {{ errors.form | first }} </div> 
+            {% endif %}
+        </div>
+        
+      
+
+        <div class="col-md-2">
+         <button type="submit" class="btn btn-primary">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            Submit
+            </button>
+                 {{ csrf.field | raw}}
+        </div>
+
+    </div>
+              
+</form>
+
+{% if results is empty %}
+ 
+ <div class="alert alert-danger">
+
+ Oops! No Result found   {{student.name }} for the year {{ year}} , {{form }}
+ </div>
+
+{% else %}
+ <div class="col-md-10 ">
+        <div class="card d-flex justify-content-center" >
+            <div class="card-body">
+
+                <div class="media">
+                {% if student.photo %}
+                    <img src="{{path}}{{student.photo}}" height="120" width="120" class="rounded-circle" />
+                    {% else %}
+                    <img src="{{path}}profile.jpeg" height="120" width="120" class="rounded-circle" />
+                    {% endif %}
+                <div class="media-body">
+                    <h2 class="mt-0 text-primary">  &nbsp; &nbsp; &nbsp; &nbsp;{{ student.name }}</h2>
+
+                    <h4 class="text-success text-bold"> &nbsp; &nbsp; &nbsp; &nbsp; Results  for   academic year {{ year}} &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;<i class="fa fa-grav" aria-hidden="true"></i>  {{ form }}</h4>
+
+                    
+                   
+                </div>
+                </div>
+
+
+            <div class="col-md-6">
+
+             <h3> Average Mark : {{ average}} % </h3>
+
+            <div class="table-responsive m-t-40">
+
+                    <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Mark(%)</th>
+                                <th>Grade</th>
+                                
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            
+                        </tfoot>
+                        <tbody class="">
+                            {% for result in results %}
+                            <tr>
+                            
+                                <td>{{ result.subject_id }}</td>
+                                <td>{{ result.mark }}</td>
+                                <td>{{ result.grade }}</td>
+
+                                </tr>
+                                {% endfor %}
+                    
+                            
+                        </tbody>
+
+                    </table>
+
+                    </div>
+                </div>
+                        
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div> 
+
+{% endif %}
+{% endblock %}

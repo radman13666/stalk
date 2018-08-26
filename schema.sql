@@ -12,3 +12,10 @@ CREATE TABLE IF NOT EXISTS `student_subject` (
     ON DELETE CASCADE ON UPDATE CASCADE
     
     );
+
+    SELECT DISTINCT(results.academic_year),results.term, results.subject_id, results.mark FROM results GROUP BY results.academic_year,results.term,results.subject_id,results.mark
+
+/* SEARCH AND WHERE  */
+    SELECT results.subject_id, results.mark FROM results WHERE term ='first_term' AND results.academic_year='2017' AND results.s_form='S2' GROUP BY results.subject_id,results.mark 
+/* AVERAGE */
+    SELECT AVG(mark) AS TOTAL FROM results WHERE results.academic_year='2017' AND results.term='first_term' AND results.s_form='S2'

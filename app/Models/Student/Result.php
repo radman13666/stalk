@@ -13,6 +13,7 @@ class Result extends Model
         'term',
         'academic_year',
         's_form',
+        'body',
         'performance',
         'created_id',
         'created_by',
