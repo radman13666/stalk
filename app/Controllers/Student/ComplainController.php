@@ -42,6 +42,28 @@ class ComplainController extends Controller
             
         ]);
 
+
+
+         /**
+         * Send email
+         */
+
+             $user = User::where('role_id','=','6')->first();
+        
+                $headers  = 'MIME-Version: 1.0' . "\r\n";
+                $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        
+                $message = "Dear  <strong>".ucfirst($user->name)."</strong> <br><br>,
+                            You have received a grievance from a student! <br><br>
+                            <h2>".$request->getParam('title')."</h2> <br><br>
+                            Please login the databse to view more details<br>
+
+                            Regards,<br> Admin";
+        
+                @mail($user->email,$request->getParam('title').'- Student Grievance',$message,$header);
+
+
+
         $this->flash->addMessage('success',ucfirst($request->getParam('title')).' has been submitted');
 
         return $response->withRedirect($this->router->pathFor('student.profile'));

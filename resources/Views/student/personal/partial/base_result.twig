@@ -12,39 +12,6 @@
          </a>
      </span>
 
-     {% if results  is empty  %}
-     <div class="card col-md-12">
-        <div class="card-body">
-            <div class=" col-md-offset- alert alert-success" role="alert"> 
-                Ooops !!! &nbsp; No result found.
-            </div>
-        </div>
-       </div>
-     {% endif %}
-
-
-     
-    
- <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Subject</th>
-      <th scope="col">Mark(%)</th>
-      <th scope="col">Grade</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for result in results %}
-
-    <tr>
-      <td>{{ result.subject_id}}</td>
-      <td>{{ result.mark }}</td>
-      <td>{{ result.grade }}</td>
-    </tr>
-{% endfor %}
-    
-  </tbody>
-</table>
 
 
    

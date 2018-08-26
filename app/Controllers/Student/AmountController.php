@@ -81,9 +81,9 @@ class AmountController extends Controller
         // validation
         $validate = $this->Validator->validate($request,[
             'amount' => v::notEmpty(),
-            'reason'=> v::notEmpty(),
+            // 'reason'=> v::notEmpty(),
             'form'  => v::notEmpty(),
-            'bank'  => v::notEmpty(),
+            // 'bank'  => v::notEmpty(),
             'year'  => v::notEmpty(),
             'term'  => v::notEmpty(),
            
