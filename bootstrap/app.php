@@ -19,9 +19,9 @@ require_once  __DIR__ .'/../vendor/autoload.php';
          'db' => [
                     'driver'    => 'mysql',
                     'host'      => 'localhost',
-                    'database'  => 'straight_talk',
+                    'database'  => 'bursary',
                     'username'  => 'root',
-                    'password'  => 'toor',
+                    'password'  => 'HJy2]>kWN@474B+!+PsKg3',
                     'charset'   => 'utf8',
                     'collation' => 'utf8_unicode_ci',
                     'prefix'    => ''
