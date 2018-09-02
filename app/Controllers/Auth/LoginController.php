@@ -126,6 +126,9 @@ class LoginController extends Controller
         $headers  = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
+        $headers .= 'From: <admin@irishaiddatabase.com>' . "\r\n" .
+        'Reply-To: <admin@irishaiddatabase.com>';
+
         $message = "Dear  <strong>".ucfirst($user->name)."</strong> <br><br>,
                     We heard that you lost your Database password. Sorry about that! <br><br>
         
@@ -134,7 +137,9 @@ class LoginController extends Controller
                     
                     Regards,<br> Admin";
 
-        @mail($email,"Irish Aid Bursary Database Password Reset",$message,$header);
+        @mail($email,"Irish Aid Bursary Database Password Reset",$message,$headers);
+
+        $this->phpMailer->sendEmail($email,"Irish Aid Bursary Database Password Reset",$message);
 
         /**
          * Update user
