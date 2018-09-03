@@ -11,7 +11,7 @@
 
         <div class="col-md-3">
             <input type="text"  value="{{old.student_id}}" name="student_id" class="form-control {{errors.student_id ? 'is-invalid':''}}" 
-            placeholder="Bursary ID">
+            placeholder="Student ID">
 
               {% if errors.student_id %}
                     <div class="form-control-feedback invalid-feedback"> {{ errors.student_id | first }} </div> 

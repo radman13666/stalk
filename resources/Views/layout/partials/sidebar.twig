@@ -63,7 +63,10 @@
                        
                             </ul>
                         </li>
+                     
+                     {% if auth.permission.id in [5] %}
 
+                     {% else %}
                    
                         <li> <a class="has-arrow" href="#" aria-expanded="false">
                         <i class="fa fa-address-book" aria-hidden="true"></i>
@@ -89,6 +92,8 @@
                             </ul>
                         </li>
 
+                       
+
                     <li> <a class="has-arrow" href="#" aria-expanded="false">
                        <i class="fa fa-book" aria-hidden="true"></i>
                          <span class="hide-menu">Mentorship</span></a>
@@ -99,6 +104,8 @@
                                 {% endif %}
                             </ul>
                         </li>
+
+                         {% endif %}
 
 
 
@@ -180,13 +187,22 @@
 
                
                     {% if auth.user.role_id in [5] %}
-                     <li class="nav-label">Trash</li>
+                     <li class="nav-label">Trash and Logs</li>
 
                       <li> <a class="has-arrow  " href="#" aria-expanded="false"> 
                        <i class="fa fa-trash" aria-hidden="true"></i>
                         <span class="hide-menu">Students</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{ path_for('students.trash')}}">Students</a></li>
+                           
+                            </ul>
+                        </li>
+
+                      <li> <a class="has-arrow  " href="#" aria-expanded="false"> 
+                       <i class="fa fa-server" aria-hidden="true"></i>
+                        <span class="hide-menu">Update Logs</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{ path_for('log.index')}}">Logs</a></li>
                            
                             </ul>
                         </li>

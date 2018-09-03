@@ -123,6 +123,21 @@ class StudentTrashController extends Controller
     {
 
     }
+
+    /**
+     * Get log view
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function getLog($request,$response,$args)
+    {
+
+        return $this->view->render($response,'superadmin/student/log.twig');
+
+    }
     
 
 }

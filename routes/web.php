@@ -176,6 +176,11 @@ $app->group('', function(){
     // middleware
      $this->put('/students/{id}/trash','StudentController:trash')->setName('student.trash');
 
+    //  upload student email
+    $this->get('/student/upload/secondary','StudentController:uploadSecondary')->setName('upload.secondary');
+    $this->post('/student/upload/secondary','StudentController:postuploadSecondary');
+
+
     
 
 })->add( new CrudMiddleware($container));
@@ -321,6 +326,10 @@ $app->group('', function(){
     $this->get('/superadmin/students','StudentTrashController:index')->setName('students.trash');
     $this->post('/superadmin/students','StudentTrashController:search');
     $this->put('/superadmin/{id}/students','StudentTrashController:restore')->setName('students.restore');
+
+    // logs
+    $this->get('/superadmin/logs','StudentTrashController:getLog')->setName('log.index');
+    $this->post('/superadmin/logs','ReportController:exportLog');
 
 })->add( new SuperadminMiddleware($container));
 

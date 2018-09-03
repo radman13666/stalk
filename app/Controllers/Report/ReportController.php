@@ -11,6 +11,7 @@ use App\Models\Student\District;
 use App\Models\Student\Complain;
 use App\Models\Student\Secondary;
 use App\Models\Student\Institution;
+use App\Models\Student\Reason;
 use App\Models\Student\StudentSubject;
 use App\Models\Student\Mentor;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -553,6 +554,81 @@ class ReportController extends Controller
            $spreadsheet->getActiveSheet()->setCellValue('E'.$i,$complain->title);
            $spreadsheet->getActiveSheet()->setCellValue('F'.$i,$complain->body);
            $spreadsheet->getActiveSheet()->setCellValue('G'.$i,$complain->created_at);
+       }
+
+   
+       // Rename worksheet
+       $spreadsheet->getActiveSheet()->setTitle('Report');
+
+       // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+       $spreadsheet->setActiveSheetIndex(0);
+
+       // Redirect output to a client’s web browser (Xlsx)
+       header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+       header('Content-Disposition: attachment;filename="'.Date('Y-M-D').'.xlsx"');
+       header('Cache-Control: max-age=0');
+       // If you're serving to IE 9, then the following may be needed
+       header('Cache-Control: max-age=1');
+
+       // If you're serving to IE over SSL, then the following may be needed
+       header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+       header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+       header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+       header('Pragma: public'); // HTTP/1.0
+
+       $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+       $writer->save('php://output');
+       exit;
+               
+
+    }
+    
+    /**
+     * Export logs
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function exportLog($request,$response,$args)
+    {
+
+         /**
+         * Generating the spreadsheet
+         */
+
+        $reasons  = Reason::orderBy('created_at','DESC')->get();
+      
+
+        $spreadsheet = new SpreadSheet();
+        $spreadsheet->getProperties()
+                     ->setTitle('Update Logs')
+                     ->setSubject('')
+                     ->setDescription('');
+
+
+      $spreadsheet->setActiveSheetIndex(0)
+                   ->setCellValue('A1','ID')
+                   ->setCellValue('B1','Reason for update')
+                   ->setCellValue('C1','Student ID')
+                   ->setCellValue('D1','Student Name')
+                   ->setCellValue('E1','Updated By')
+                   ->setCellValue('F1','Updated at');
+                  
+
+       $count = 0;
+
+       foreach( $reasons as $i => $reason)
+       {
+           $i = $i+2;
+           $spreadsheet->getActiveSheet()->setCellValue('A'.$i,$count+=1);
+           $spreadsheet->getActiveSheet()->setCellValue('B'.$i,$reason->reason);
+           $spreadsheet->getActiveSheet()->setCellValue('C'.$i,$reason->bursary_id);
+           $spreadsheet->getActiveSheet()->setCellValue('D'.$i,$reason->student_name);
+           $spreadsheet->getActiveSheet()->setCellValue('E'.$i,$reason->user_name);
+           $spreadsheet->getActiveSheet()->setCellValue('F'.$i,$reason->created_at);
+          
        }
 
    
