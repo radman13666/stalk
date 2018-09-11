@@ -18,6 +18,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 
+
 use Respect\Validation\Validator as v;
 
 class ReportController extends Controller 
@@ -656,6 +657,380 @@ class ReportController extends Controller
        exit;
                
 
+    }
+
+    /**
+     * get upload view
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function uploadSecondary($request,$response,$args)
+    {
+        return $this->view->render($response,'student/upload/secondary.twig');
+
+    }
+
+    /**
+     * upload student information
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function postuploadSecondary($request,$response,$args)
+    {
+
+      $inputFileName  = $_SERVER['DOCUMENT_ROOT'].'/stalk/storage/images/students/secondary.xlsx';
+
+        
+        $inputFileType = IOFactory::identify($inputFileName);
+        $reader = IOFactory::createReader($inputFileType);
+        $spreadsheet = $reader->load($inputFileName);
+        
+        // $sheetData = $spreadsheet->getActiveSheet();
+
+
+        $worksheet = $spreadsheet->getActiveSheet();
+
+              
+        // Get the highest row and column numbers referenced in the worksheet
+        $highestRow = $worksheet->getHighestRow(); // e.g. 10
+        $highestColumn = $worksheet->getHighestColumn(); // e.g 'F'
+        $highestColumnIndex = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highestColumn); // e.g. 5
+
+        echo '<table>' . "\n";
+        for ($row = 2; $row <= $highestRow; ++$row) {
+            $val = array();
+            echo '<tr>' . PHP_EOL;
+            for ($col = 1; $col <= $highestColumnIndex; ++$col) {
+                $value = $worksheet->getCellByColumnAndRow($col, $row);
+                $val[] = $value->getValue();
+                
+                
+            }
+
+            $id           = $val[0];
+            $name         = $val[1];
+            $dob          = $val[2];
+            $gender       = $val[4];
+            $year_start   = $val[5];
+            $entry_garde  = $val[6];
+            $school       = $val[7];
+            $form         = $val[8];
+            $stream       = $val[9];
+            $parent_name  = $val[10];
+            $district     = $val[11];
+
+            $subcounty    = $val[12];
+            $village      = $val[13];
+            $health       = $val[14];
+            $subject      = $val[15];
+            $sport        = $val[16];
+            $contact      = $val[17];
+
+         
+            
+            echo '<td>' .$dob. '</td>' . PHP_EOL;
+            echo '</tr>' . PHP_EOL;
+
+
+            $schol_id = School::where('school_name','like',"%$school%")->first();
+            $district_id = District::where('district_name','like',"%$district%")->first();
+
+             
+
+            $create = Student::create([
+                
+                'name'           => trim(ucwords($name)),
+                'dob'            => $dob,
+                'level'          => 'secondary',
+                'gender'         => trim($gender), 
+                // 'ethnicity'      => $request->getParam('ethnicity'),
+                'entry_grade'    => $entry_garde,
+                // 'student_phone'  => trim($phone),
+                // 'national_id'    => trim($national_id),
+                'registration_year' => $year_start, 
+                'year_start'     => $year_start,
+                // 'year_stop'      => $year_stop,
+                // 'uce_grade'      => $request->getParam('uce_grade'),
+                // 'uace_grade'     => $request->getParam('uace_grade'),
+                // 'student_email'  => strtolower(trim($email)),
+                'parent1_name'   =>  $parent_name,
+                'parent1_phone'  =>  $contact,
+                // 'parent2_name'   => ucwords($request->getParam('parent2_name')),
+                // 'parent2_phone'  => trim($request->getParam('parent2_phone')),
+                'district'       => $district_id->id,
+                'dist_name'      => $district,
+                'subcounty'      => ucwords($subcounty),
+                'village'        => ucwords($village),
+                'current_state'  => 'continuing',
+                'school' =>       $schol_id->id,
+                's_form' =>  $form,
+                'draft' =>        '0',
+                // 'dropout_reason' => $request->getParam('dropout_reason'),
+                // 'comments'       => nl2br($request->getParam('comments')),
+                // 'notes'          => nl2br($request->getParam('notes')),
+                // 'funder'         => $irish,
+                // 'photo'          => $this->files->filename,
+                // 'created_by'     => ucwords($this->auth->user()->name),
+                // 'created_id'     => $this->auth->user()->id,
+
+                ]);
+
+        // Generating burasry id         
+        // $year = Carbon::parse($year_start)->format('Y');
+        $bursary_id = trim($create->id.$year_start);
+        
+        // pull the lastest student information
+       
+        // if(!empty($request->getParam('bursary_id')))
+        // {
+        //     $bursary_id = $request->getParam('bursary_id');
+        // }
+        // else
+        // {
+        //     $bursary_id = $bursary_id;
+        // }
+
+        $create->update([
+            'bursary_id' => $bursary_id
+        ]);
+
+
+        // // setting last inserted id into session
+        //  $_SESSION['student_id'] = $create->bursary_id;
+        //  $_SESSION['year_start'] = $create->year_start;
+        //  $_SESSION['year_stop'] = $create->year_stop;
+
+
+        $secondary = Secondary::create([
+            'school_id'        => $schol_id->id,
+            's_form'           => $form,
+            'stream'           => $stream,
+            'student_id'       => $bursary_id,
+            // 'student_number'   => $request->getParam('student_number'),
+            // 'student_index'    => $request->getParam('student_index'),
+            'fav_subject'      => $request->getParam('fav_subject'),
+            'fav_sport'        => $request->getParam('fav_sport'),
+            // 'created_by'       => $this->auth->user()->name,
+            'myear_start'      => $year_start,
+            // 'myear_stop'      => $_SESSION['year_stop'],
+            ]);
+
+           /**
+         * Update student school and level
+         * 
+         */
+
+           
+        //   $update  = $student->update([
+        // 'school'   => $secondary->school_id,
+        // 's_form'   => $secondary->s_form,
+        // 'draft'    => '0'
+        // ]);  
+
+        //    $student =  Student::where('bursary_id','=',$bursary_id)
+        // ->orderBy('id','DESC')->first();
+
+        
+
+     
+
+
+          
+        }
+        echo '</table>' . PHP_EOL;
+
+
+
+    }
+
+
+    public function university()
+    {
+        $inputFileName  = $_SERVER['DOCUMENT_ROOT'].'/stalk/storage/images/students/university.xlsx';
+        
+                
+                $inputFileType = IOFactory::identify($inputFileName);
+                $reader = IOFactory::createReader($inputFileType);
+                $spreadsheet = $reader->load($inputFileName);
+                
+                // $sheetData = $spreadsheet->getActiveSheet();
+        
+        
+                $worksheet = $spreadsheet->getActiveSheet();
+                // Get the highest row and column numbers referenced in the worksheet
+
+                $highestRow = $worksheet->getHighestRow(); // e.g. 10
+                $highestColumn = $worksheet->getHighestColumn(); // e.g 'F'
+                $highestColumnIndex = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highestColumn); // e.g. 5
+        
+                echo '<table>' . "\n";
+                for ($row = 2; $row <= $highestRow; ++$row) {
+                    $val = array();
+                    echo '<tr>' . PHP_EOL;
+                    for ($col = 1; $col <= $highestColumnIndex; ++$col) {
+                        $value = $worksheet->getCellByColumnAndRow($col, $row);
+                        $val[] = $value->getValue();
+                        
+                        
+                    }
+        
+                    $id           = $val[0];
+                    $name         = $val[1];
+                    $gender       = $va[2];
+                    $account      = $val[3];
+                    $bank         = $val[4];
+                    $accomodation  = $val[5];
+                    $transport     = $val[6];
+                    $upkeep        = $val[7];
+                    $internship    = $val[8];
+                    $desertation   = $val[9];
+        
+                    $nche             = $val[10];
+                    $tution           = $val[11];
+                    $school           = $val[12];
+                    $course           = $val[13];
+                    $student_number   = $val[14];
+        
+                    $registration_number = $val[15];
+                    $year_start          = $val[16];
+                    $year_stop           = $val[17];
+                    $national_id         = $val[18];
+        
+                    $phone               = $val[19];
+                    $email               = $val[20];
+                    $hostel              = $val[21];
+                    $dob                 = $val[22];
+                    $health              = $val[24];
+        
+        
+                    $district         = $val[25];
+                    $subcounty        = $val[26];
+                    $village          = $val[27];
+                    $irish            = $val[28];
+                    $bio              = $val[29];
+        
+        
+        
+        
+        
+                    $create = Student::create([
+                        
+                        'name'           => trim(ucwords($name)),
+                        'dob'            => $dob,
+                        'level'          => 'university',
+                        'gender'         => trim($gender), 
+                        // 'ethnicity'      => $request->getParam('ethnicity'),
+                        // 'entry_grade'    => $request->getParam('entry_grade'),
+                        'student_phone'  => trim($phone),
+                        'national_id'    => trim($national_id),
+                        'registration_year' => $year_start, 
+                        'year_start'     => $year_start,
+                        'year_stop'      => $year_stop,
+                        // 'uce_grade'      => $request->getParam('uce_grade'),
+                        // 'uace_grade'     => $request->getParam('uace_grade'),
+                        'student_email'  => strtolower(trim($email)),
+                        // 'parent1_name'   => ucwords($request->getParam('parent1_name')),
+                        // 'parent1_phone'  => trim($request->getParam('parent1_phone')),
+                        // 'parent2_name'   => ucwords($request->getParam('parent2_name')),
+                        // 'parent2_phone'  => trim($request->getParam('parent2_phone')),
+                        'district'       => $district_id,
+                        'dist_name'      => $district,
+                        'subcounty'      => ucwords($subcounty),
+                        'village'        => ucwords($village),
+                        'current_state'  => 'continuing',
+                        // 'dropout_reason' => $request->getParam('dropout_reason'),
+                        'comments'       => nl2br($request->getParam('comments')),
+                        'notes'          => nl2br($request->getParam('notes')),
+                        'funder'         => $irish,
+                        // 'photo'          => $this->files->filename,
+                        'created_by'     => ucwords($this->auth->user()->name),
+                        'created_id'     => $this->auth->user()->id,
+        
+                        ]);
+        
+                // Generating burasry id         
+                $year = Carbon::parse($request->getParam('registration_year'))->format('Y');
+                $bursary_id = trim($year.$create->id);
+                
+                // pull the lastest student information
+               
+                if(!empty($request->getParam('bursary_id')))
+                {
+                    $bursary_id = $request->getParam('bursary_id');
+                }
+                else
+                {
+                    $bursary_id = $bursary_id;
+                }
+        
+                $create->update([
+                    'bursary_id' => $bursary_id
+                ]);
+        
+        
+                // setting last inserted id into session
+                 $_SESSION['student_id'] = $create->bursary_id;
+                 $_SESSION['year_start'] = $create->year_start;
+                 $_SESSION['year_stop'] = $create->year_stop;
+        
+        
+        
+                 $institution = Institution::create([
+                    'school_id'                => ucwords($request->getParam('institution_name')),
+                    'course_id'                => $request->getParam('course_id'),
+                    'student_id'               => $_SESSION['student_id'],
+                    'qualification'            => $request->getParam('qualification'),
+                    'student_number'           => $request->getParam('student_number'),
+                    'registration_number'      => $request->getParam('registration_number'),
+                    'hostel_id'                => $request->getParam('hostel_id'),
+                    's_form'                   => $request->getParam('s_form'),
+                    'student_bank_name'        => $request->getParam('student_bank_name'),
+                    'student_bank_account'     => $request->getParam('student_bank_account'),
+                    'student_bank_address'     => $request->getParam('student_bank_address'),
+                    'other_bank_name'          => $request->getParam('other_bank_name'),
+                    'other_bank_account'       => $request->getParam('other_bank_account'),
+                    'other_bank_address'       => $request->getParam('other_bank_address'),
+                    'myear_start'              => $_SESSION['year_start'],
+                    'myear_stop'              => $_SESSION['year_stop'],
+                    'created_by'               => ucwords($this->auth->user()->name)
+                ]);
+                  
+                  
+        
+        
+                    echo '<td>' . $bio. '</td>' . PHP_EOL;
+                    echo '</tr>' . PHP_EOL;
+                }
+                echo '</table>' . PHP_EOL;
+        
+        
+                // echo '<table>' . "\n";
+                // for ($row = 2; $row <= $highestRow; ++$row) {
+                //     $val = array();
+                //     echo '<tr>' . PHP_EOL;
+                //     for ($col = 1; $col <= $highestColumnIndex; ++$col) {
+                //         $value = $worksheet->getCellByColumnAndRow($col, $row);
+                //         $val[] = $value->getValue();
+                        
+                        
+                //     }
+                //     echo '<td>' . $val[0]. '</td>' . PHP_EOL;
+                //     echo '</tr>' . PHP_EOL;
+                // }
+                // echo '</table>' . PHP_EOL;
+        
+                
+                die();
+        
+               
+                die();
+        
     }
 
 }

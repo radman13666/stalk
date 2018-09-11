@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model 
 {
 
+    protected $dates = ['dob','year_start'];
+
     protected $fillable = [
        'bursary_id',
         'name' ,
@@ -38,6 +40,7 @@ class Student extends Model
         'school',
         's_form',
         'funder',
+        'health',
         'photo',
         'draft',
         'deleted_by',

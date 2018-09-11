@@ -587,11 +587,15 @@ class StudentController extends Controller
                            ->where('students.current_state','like',"%$status%")
                            ->where('students.s_form','like',"%$form%")
                            ->where('students.bursary_id','like',"%$bursary_id%")
-                           ->where('students.ethnicity','like',"%$tribe%")
+                        //    ->where('students.ethnicity','like',"%$tribe%")
                            ->where('students.subcounty','like',"%$subcounty%")
-                           ->where('deleted','0')
+                           ->where('students.draft','0')
                            ->orderBy('students.name','ASC')
                            ->get();
+                       
+
+    // var_dump($students);
+    // die();
                                         
         $path = $this->files->fileDir();
 

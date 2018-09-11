@@ -177,8 +177,8 @@ $app->group('', function(){
      $this->put('/students/{id}/trash','StudentController:trash')->setName('student.trash');
 
     //  upload student email
-    $this->get('/student/upload/secondary','StudentController:uploadSecondary')->setName('upload.secondary');
-    $this->post('/student/upload/secondary','StudentController:postuploadSecondary');
+    $this->get('/student/upload/secondary','ReportController:uploadSecondary')->setName('upload.secondary');
+    $this->post('/student/upload/secondary','ReportController:postuploadSecondary');
 
 
     

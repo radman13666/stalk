@@ -1,0 +1,24 @@
+{% extends 'layout/master.twig' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+
+<div>
+ <h3 class="text-primary">
+<i class="fa fa-cloud-upload" aria-hidden="true"></i>
+ &nbsp;&nbsp; Upload students</h3>
+
+
+
+<form method="post" action="{{ path_for('upload.secondary')}}" enctype="multipart/form-data">
+    <div class="form-row">
+
+    <input type="file" name="file" class="form-control" />
+        <button class="btn btn-primary"  type="submit"> Upload</button>
+        {{ csrf.field | raw}}
+    </div>
+<fom>
+ </div>
+
+ {% endblock %}
