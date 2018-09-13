@@ -625,10 +625,10 @@ class StudentController extends Controller
 
         // calculating student age
        
-        $con =Carbon::createFromFormat('d/m/Y', $student->dob);
-        $dob = Carbon::parse($con);
+        // $con =Carbon::createFromFormat('d/m/Y', $student->dob);
+        // $dob = Carbon::parse($con);
         
-        $now  = Carbon::now();
+        // $now  = Carbon::now();
 
       
         // check student level
@@ -661,7 +661,7 @@ class StudentController extends Controller
             'subjects'    => $subjects,
             'course'      => $course,
             'hostel'      => $hostel,
-            'age'         => $dob->diffInYears($now)
+            // 'age'         => $dob->diffInYears($now)
         ]);
            
     }

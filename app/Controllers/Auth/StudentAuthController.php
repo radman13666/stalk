@@ -45,11 +45,11 @@ class StudentAuthController extends Controller
     public function authenticate($request,$response,$args)
     {
         $name      = trim(ucwords($request->getParam('bursary_id')));
-        $password       =  trim($request->getParam('password'));
+        $password       =  trim(strtoupper($request->getParam('password')));
 
 
         $student = Student::where('bursary_id',$name)
-                            ->where('dob',$password)
+                            ->where('name','like',"%$password%")
                             ->first();
         
         if($student)
@@ -84,8 +84,8 @@ class StudentAuthController extends Controller
      $school = School::find($student->school);
 
     // calculating student age
-    $dob = Carbon::parse($student->dob);
-    $now  = Carbon::now();
+    // $dob = Carbon::parse($student->dob);
+    // $now  = Carbon::now();
 
 
    // $secondary  = Secondary::where('student_id',$student->bursary_id)->get();
@@ -109,7 +109,7 @@ class StudentAuthController extends Controller
         'subjects'    => $subjects,
         'course'      => $course,
         'complains'   => $complains,
-        'age'         => $dob->diffInYears($now)
+        // 'age'         => $dob->diffInYears($now)
     ]);
 
     }

@@ -121,7 +121,10 @@ class LoginController extends Controller
          */
         $reset_code  = bin2hex(openssl_random_pseudo_bytes(16));
 
-        $link  = "http://localhost/stalk/public/change_password/".$reset_code."/".$email;
+        $link  = "http://".$_SERVER['HTTP_HOST']."/stalk/public/change_password/".$reset_code."/".$email;
+
+        // echo $link;
+        // die();
 
         $headers  = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";

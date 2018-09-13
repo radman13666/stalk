@@ -49,7 +49,7 @@ class RegistrationController extends Controller
         $token  = openssl_random_pseudo_bytes(16);
         $api_token = bin2hex($token);
 
-        $password = "password";
+        $password = $api_token;
 
         //  password
         $headers  = 'MIME-Version: 1.0' . "\r\n";

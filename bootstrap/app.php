@@ -19,9 +19,9 @@ ini_set('display_errors','On');
          'db' => [
                     'driver'    => 'mysql',
                     'host'      => 'localhost',
-                    'database'  => 'bursary',
+                    'database'  => 'straight_talk',
                     'username'  => 'root',
-                    'password'  => 'HJy2]>kWN@474B+!+PsKg3',
+                    'password'  => 'toor',
                     'charset'   => 'utf8',
                     'collation' => 'utf8_unicode_ci',
                     'prefix'    => ''
