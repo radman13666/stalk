@@ -177,11 +177,15 @@ $app->group('', function(){
      $this->put('/students/{id}/trash','StudentController:trash')->setName('student.trash');
 
     //  upload student email
-    $this->get('/student/upload/secondary','ReportController:uploadSecondary')->setName('upload.secondary');
-    $this->post('/student/upload/secondary','ReportController:postuploadSecondary');
+    // $this->get('/student/upload/secondary','ReportController:uploadSecondary')->setName('upload.secondary');
+    // $this->post('/student/upload/secondary','ReportController:postuploadSecondary');
 
 
-    
+    // upload secondary student
+
+    // $this->get('/student/upload/university','ReportController:uploadSecondary');
+    // $this->post('/student/upload/university','ReportController:university')->setName('upload.university');
+
 
 })->add( new CrudMiddleware($container));
 

@@ -585,7 +585,7 @@ class StudentController extends Controller
                            ->where('students.school','like',"%$school%")
                            ->where('students.gender','like',"%$gender%")
                            ->where('students.current_state','like',"%$status%")
-                           ->where('students.s_form','like',"%$form%")
+                        //    ->where('students.s_form','like',"%$form%")
                            ->where('students.bursary_id','like',"%$bursary_id%")
                         //    ->where('students.ethnicity','like',"%$tribe%")
                            ->where('students.subcounty','like',"%$subcounty%")
@@ -624,7 +624,10 @@ class StudentController extends Controller
         $school = School::find($student->school);
 
         // calculating student age
-        $dob = Carbon::parse($student->dob);
+       
+        $con =Carbon::createFromFormat('d/m/Y', $student->dob);
+        $dob = Carbon::parse($con);
+        
         $now  = Carbon::now();
 
       

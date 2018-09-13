@@ -712,6 +712,9 @@ class ReportController extends Controller
                 
                 
             }
+        //  echo   time($val[2]);
+
+        //     die();
 
             $id           = $val[0];
             $name         = $val[1];
@@ -850,9 +853,17 @@ class ReportController extends Controller
     }
 
 
-    public function university()
+    /**
+     * Undocumented function
+     *
+     * @param [type] $request
+     * @param [type] $response
+     * @param [type] $args
+     * @return void
+     */
+    public function university($request,$response,$args)
     {
-        $inputFileName  = $_SERVER['DOCUMENT_ROOT'].'/stalk/storage/images/students/university.xlsx';
+        $inputFileName  = $_SERVER['DOCUMENT_ROOT'].'/stalk/storage/images/students/diploma.xlsx';
         
                 
                 $inputFileType = IOFactory::identify($inputFileName);
@@ -882,7 +893,7 @@ class ReportController extends Controller
         
                     $id           = $val[0];
                     $name         = $val[1];
-                    $gender       = $va[2];
+                    $gender       = $val[2];
                     $account      = $val[3];
                     $bank         = $val[4];
                     $accomodation  = $val[5];
@@ -902,7 +913,7 @@ class ReportController extends Controller
                     $year_stop           = $val[17];
                     $national_id         = $val[18];
         
-                    $phone               = $val[19];
+                    $phone               = trim($val[19]);
                     $email               = $val[20];
                     $hostel              = $val[21];
                     $dob                 = $val[22];
@@ -914,20 +925,23 @@ class ReportController extends Controller
                     $village          = $val[27];
                     $irish            = $val[28];
                     $bio              = $val[29];
+
+                    // echo $phone;
+                    // die();
         
-        
-        
+                    $schol_id = School::where('school_name','like',"%$school%")->first();
+                    $district_id = District::where('district_name','like',"%$district%")->first();
         
         
                     $create = Student::create([
                         
                         'name'           => trim(ucwords($name)),
                         'dob'            => $dob,
-                        'level'          => 'university',
+                        'level'          => 'tertiary',
                         'gender'         => trim($gender), 
                         // 'ethnicity'      => $request->getParam('ethnicity'),
                         // 'entry_grade'    => $request->getParam('entry_grade'),
-                        'student_phone'  => trim($phone),
+                        // 'student_phone'  => trim($phone),
                         'national_id'    => trim($national_id),
                         'registration_year' => $year_start, 
                         'year_start'     => $year_start,
@@ -939,68 +953,76 @@ class ReportController extends Controller
                         // 'parent1_phone'  => trim($request->getParam('parent1_phone')),
                         // 'parent2_name'   => ucwords($request->getParam('parent2_name')),
                         // 'parent2_phone'  => trim($request->getParam('parent2_phone')),
-                        'district'       => $district_id,
+                        'district'       => $district_id->id,
                         'dist_name'      => $district,
                         'subcounty'      => ucwords($subcounty),
                         'village'        => ucwords($village),
                         'current_state'  => 'continuing',
                         // 'dropout_reason' => $request->getParam('dropout_reason'),
-                        'comments'       => nl2br($request->getParam('comments')),
-                        'notes'          => nl2br($request->getParam('notes')),
+                        // 'comments'       => nl2br($request->getParam('comments')),
+                        'notes'          => nl2br($bio),
                         'funder'         => $irish,
                         // 'photo'          => $this->files->filename,
-                        'created_by'     => ucwords($this->auth->user()->name),
-                        'created_id'     => $this->auth->user()->id,
+                        // 'created_by'     => ucwords($this->auth->user()->name),
+                        // 'created_id'     => $this->auth->user()->id,
+
+                        'school' =>       $schol_id->id,
+                        's_form' =>  $form,
+                        'draft' =>        '0',
         
                         ]);
         
                 // Generating burasry id         
-                $year = Carbon::parse($request->getParam('registration_year'))->format('Y');
-                $bursary_id = trim($year.$create->id);
+               
+                $bursary_id = trim($year_start.$create->id);
+               
                 
                 // pull the lastest student information
                
-                if(!empty($request->getParam('bursary_id')))
-                {
-                    $bursary_id = $request->getParam('bursary_id');
-                }
-                else
-                {
-                    $bursary_id = $bursary_id;
-                }
+                // if(!empty($request->getParam('bursary_id')))
+                // {
+                //     $bursary_id = $request->getParam('bursary_id');
+                // }
+                // else
+                // {
+                //     $bursary_id = $bursary_id;
+                // }
         
                 $create->update([
                     'bursary_id' => $bursary_id
                 ]);
         
         
-                // setting last inserted id into session
-                 $_SESSION['student_id'] = $create->bursary_id;
-                 $_SESSION['year_start'] = $create->year_start;
-                 $_SESSION['year_stop'] = $create->year_stop;
-        
-        
+                if(($schol_id->id))
+                {
+
+              
         
                  $institution = Institution::create([
-                    'school_id'                => ucwords($request->getParam('institution_name')),
-                    'course_id'                => $request->getParam('course_id'),
-                    'student_id'               => $_SESSION['student_id'],
-                    'qualification'            => $request->getParam('qualification'),
-                    'student_number'           => $request->getParam('student_number'),
-                    'registration_number'      => $request->getParam('registration_number'),
-                    'hostel_id'                => $request->getParam('hostel_id'),
-                    's_form'                   => $request->getParam('s_form'),
-                    'student_bank_name'        => $request->getParam('student_bank_name'),
-                    'student_bank_account'     => $request->getParam('student_bank_account'),
-                    'student_bank_address'     => $request->getParam('student_bank_address'),
-                    'other_bank_name'          => $request->getParam('other_bank_name'),
-                    'other_bank_account'       => $request->getParam('other_bank_account'),
-                    'other_bank_address'       => $request->getParam('other_bank_address'),
-                    'myear_start'              => $_SESSION['year_start'],
-                    'myear_stop'              => $_SESSION['year_stop'],
-                    'created_by'               => ucwords($this->auth->user()->name)
+                    'school_id'                => $schol_id->id,
+                    // 'course_id'                => $request->getParam('course_id'),
+                    'student_id'               => $bursary_id,
+                    // 'qualification'            => $request->getParam('qualification'),
+                    'student_number'           => $student_number,
+                    'registration_number'      => $registration_number,
+                    // 'hostel_id'                => $request->getParam('hostel_id'),
+                    // 's_form'                   => $request->getParam('s_form'),
+                    'student_bank_name'        => $bank,
+                    'student_bank_account'     => $account,
+                    // 'student_bank_address'     => $request->getParam('student_bank_address'),
+                    // 'other_bank_name'          => $request->getParam('other_bank_name'),
+                    // 'other_bank_account'       => $request->getParam('other_bank_account'),
+                    // 'other_bank_address'       => $request->getParam('other_bank_address'),
+                    // 'myear_start'              => $_SESSION['year_start'],
+                    // 'myear_stop'              => $_SESSION['year_stop'],
+                    // 'created_by'               => ucwords($this->auth->user()->name)
                 ]);
                   
+                 }
+                 else
+                 {
+
+                 }
                   
         
         
@@ -1026,10 +1048,10 @@ class ReportController extends Controller
                 // echo '</table>' . PHP_EOL;
         
                 
-                die();
+                // die();
         
                
-                die();
+                // die();
         
     }
 
