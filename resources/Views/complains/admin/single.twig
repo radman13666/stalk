@@ -24,7 +24,7 @@
                      </span>
                      {% endif %}
                 </h3>
-                    <h6>Posted on <strong>{{ complain.created_at | date('j F, Y') }}</strong> at
+                    <h6 class="text-success">Posted on <strong>{{ complain.created_at | date('j F, Y') }}</strong> at
                     <strong>{{ complain.created_at | date("H:i:s")}}</strong></h6>
                      <p></p>
                     <p>{{ complain.body | raw }}</p>

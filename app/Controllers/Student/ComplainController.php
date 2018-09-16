@@ -47,20 +47,27 @@ class ComplainController extends Controller
          /**
          * Send email
          */
+        $link  = "http://".$_SERVER['HTTP_HOST']."/stalk/public/";
 
              $user = User::where('role_id','=','6')->first();
         
-                $headers  = 'MIME-Version: 1.0' . "\r\n";
-                $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+             $headers  = 'MIME-Version: 1.0' . "\r\n";
+             $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+     
+             $headers .= 'From: <admin@irishaiddatabase.com>' . "\r\n" .
+             'Reply-To: <admin@irishaiddatabase.com>';
         
-                $message = "Dear  <strong>".ucfirst($user->name)."</strong> <br><br>,
+                $message = "Dear  <strong>".ucfirst($user->name)."</strong>, <br><br>
                             You have received a grievance from a student! <br><br>
-                            <h2>".$request->getParam('title')."</h2> <br><br>
+                        
                             Please login the databse to view more details<br>
-
-                            Regards,<br> Admin";
+                            <br>
+                            
+                             <a href='".$link."'>'".$link."'</a><br>
+                            Regards,<br> Admin<br><br>
+                            THIS IS AN AUTOMATED MESSAGE - PLEASE DO NOT REPLY DIRECTLY TO THIS EMAIL";
         
-                @mail($user->email,$request->getParam('title').'- Student Grievance',$message,$header);
+                @mail($user->email,$request->getParam('title').'- Student Grievance',$message,$headers);
 
 
 

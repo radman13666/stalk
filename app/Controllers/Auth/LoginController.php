@@ -132,17 +132,19 @@ class LoginController extends Controller
         $headers .= 'From: <admin@irishaiddatabase.com>' . "\r\n" .
         'Reply-To: <admin@irishaiddatabase.com>';
 
-        $message = "Dear  <strong>".ucfirst($user->name)."</strong> <br><br>,
+        $message = "Dear  <strong>".ucfirst($user->name)."</strong>, <br><br>
                     We heard that you lost your Database password. Sorry about that! <br><br>
         
                     But don’t worry! You can use the following link to reset your password:<br><br>
                     ".$link."<br><br>
                     
-                    Regards,<br> Admin";
+                    Regards,<br> Admin<br><br>
+                    
+                    THIS IS AN AUTOMATED MESSAGE - PLEASE DO NOT REPLY DIRECTLY TO THIS EMAIL";
 
         @mail($email,"Irish Aid Bursary Database Password Reset",$message,$headers);
 
-        $this->phpMailer->sendEmail($email,"Irish Aid Bursary Database Password Reset",$message);
+        // $this->phpMailer->sendEmail($email,"Irish Aid Bursary Database Password Reset",$message);
 
         /**
          * Update user

@@ -52,17 +52,30 @@ class RegistrationController extends Controller
         $password = $api_token;
 
         //  password
+       
         $headers  = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
-        $message = "Dear  <strong>".ucfirst($name)."</strong> <br><br>,
+        $headers .= 'From: <admin@irishaiddatabase.com>' . "\r\n" .
+        'Reply-To: <admin@irishaiddatabase.com>';
+
+        $link  = "http://".$_SERVER['HTTP_HOST']."/stalk/public/";
+        
+
+        $message = "Dear  <strong>".ucfirst($name)."</strong>, <br><br>
                     Your password for the Irish Aid Bursary Database is <strong>".$password."</strong> .<br><br>
+
+                    Please click this link to login
+                    <br>
+
+                    <a href='".$link."'>'".$link."'</a><br>
                     Regards,<br><br>
-                    Admin";
+                    Admin<br><br><br>
+                    THIS IS AN AUTOMATED MESSAGE - PLEASE DO NOT REPLY DIRECTLY TO THIS EMAIL";
 
 
     
-       @mail($email,"Irish Aid Bursary Scheme Password",$message,$header);
+       @mail($email,"Irish Aid Bursary Scheme Password",$message,$headers);
    
        
         User::create([

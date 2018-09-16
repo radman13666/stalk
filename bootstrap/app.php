@@ -10,12 +10,12 @@ require_once  __DIR__ .'/../vendor/autoload.php';
 
  use Respect\Validation\Validator as v;
 
- error_reporting(E_ALL);
-ini_set('display_errors','On');
+//  error_reporting(E_ALL);
+// ini_set('display_errors','On');
 
  $app = new \Slim\App([
      'settings' => [
-         'displayErrorDetails' => true,
+         'displayErrorDetails' => false,
          'db' => [
                     'driver'    => 'mysql',
                     'host'      => 'localhost',
