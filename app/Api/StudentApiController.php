@@ -22,7 +22,7 @@ class StudentApiController  extends Controller
 {
     public $response;
 
-    public function create($request,$response,$args)
+    public function createstudent($request,$response,$args)
     {   
         $name          = trim(ucwords($request->getParam('name')));
         $parent1_phone = trim($request->getParam('parent1_phone'));
@@ -95,7 +95,7 @@ class StudentApiController  extends Controller
                  
          
 
-             $this->response= ['message'=>'Success','error'=>false,'code'=>'OK'];
+             $this->response=['message'=>'Success','error'=>false,'code'=>'OK','bursary_id'=>$bursary_id];
              return $response->withJson($this->response);
 
             }
@@ -108,17 +108,17 @@ class StudentApiController  extends Controller
     }
 
     /**
-     * Add additional information for secondary
+     * Add additional information for secondary schools students
      *
      * @param [type] $request
      * @param [type] $response
      * @return void
      */
-    public function createSecondary($request,$response)
+    public function createsecondaryinfo($request,$response)
     {
 
 
-        $student = Student::orderBy('id','DESC')->first();
+        $student = Student::where('bursary_id',$request->getParam('bursary_id'));
 
         $school_name = $request->getParam('school_name');
         
@@ -146,24 +146,24 @@ class StudentApiController  extends Controller
 
     // unset($_SESSION['student_id']);
 
-    $this->response= ['message'=>'Success','error'=>false,'session'=>$_SESSION['student_id']];
+    $this->response= ['message'=>'Success','error'=>false];
     return $response->withJson($this->response);
         
     }
 
     /**
-     * Add Institution
+     * Add Institution info for student
      *
      * @param [type] $request
      * @param [type] $response
      * @return void
      */
-    public function createInstitution($request,$response)
+    public function createinstitutioninfo($request,$response)
     {
 
 
 
-        $student = Student::orderBy('id','DESC')->first();
+        $student = Student::where('bursary_id',$request->getParam('bursary_id'));
         
         // institution
         $school   = School::where('school_name',$request->getParam('institution_name'))->first();
@@ -206,8 +206,29 @@ class StudentApiController  extends Controller
 
     // unset($_SESSION['student_id']);
 
-    $this->response= ['message'=>'Success','error'=>false,'session'=>$_SESSION['student_id']];
+    $this->response=['message'=>'Success','error'=>false];
     return $response->withJson($this->response);
 
+    }
+    
+    // to give a list of the currently registered hostels
+    public function gethostels($request,$response) {
+        $query = Hostel::select('hostel_name');
+        $this->response=['hostels'=>$query->result()];
+        return $response->withJson($this->response);
+    }
+    
+    // to give a list of the currently registered schools
+    public function getschools($request,$response) {
+        $query = School::select('school_name, level');
+        $this->response=['schools'=>$query->result()];
+        return $response->withJson($this->response);
+    }
+    
+    // to give a list of the currently registered courses
+    public function getcourses($request,$response) {
+        $query = Course::select('name, category, level');
+        $this->response=['courses'=>$query->result()];
+        return $response->withJson($this->response);
     }
 }
